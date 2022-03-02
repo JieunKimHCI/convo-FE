@@ -1,18 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Conversational Agent for Multilingual Group
-        </p>
-      </header>
-    </div>
-  );
-}
+import App from './app.js'
 
 ReactDOM.render(
   <React.StrictMode>
