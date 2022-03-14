@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import Agreement from './components/agreement';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Hi from './components/hi';
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import Emotions from './components/emotions';
 
 class App extends Component{
 
     handleSubmit = (character) => {
         // this.setState({characters: [...this.state.characters, character]});
-        console.log(character['name']);
-        console.log(character['netId']);
-        fetch('http://localhost:3000/userconsent', {
+        const url = 'http://localhost:3000/userconsent'
+        fetch(url, {
             method: 'POST',
             mode: 'cors', 
             headers: {
@@ -22,12 +21,14 @@ class App extends Component{
 
     render() {
         return (
+            <div className='App'> 
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<Agreement initialState={this.state} handleSubmit={this.handleSubmit}/>}/>
-                    <Route path="/hi" element={<Hi />}/>
+                    <Route path="/" element={<Agreement initialState={this.state} handleSubmit={this.handleSubmit} />}/>
+                    <Route path="/emotions" element={<Emotions />}/>
                 </Routes>
             </BrowserRouter>
+            </div>
         );
     }
 }

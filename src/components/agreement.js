@@ -1,4 +1,5 @@
 import { Component } from "react";
+import { useNavigate } from 'react-router-dom';
 
 class Agreement extends Component{
     
