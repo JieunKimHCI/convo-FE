@@ -7,7 +7,21 @@ class App extends Component{
 
     handleSubmit = (character) => {
         // this.setState({characters: [...this.state.characters, character]});
-        const url = 'http://localhost:3000/userconsent'
+        const url = 'http://127.0.0.1:5000/userconsent'
+        fetch(url, {
+            method: 'POST',
+            mode: 'cors', 
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(character),
+        })
+    }
+
+    handleEmotion = (character) => {
+        // this.setState({characters: [...this.state.characters, character]});
+        const url = 'http://127.0.0.1:000/emotions'
         fetch(url, {
             method: 'POST',
             mode: 'cors', 
