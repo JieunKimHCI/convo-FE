@@ -6,7 +6,7 @@ function EmotionDetection() {
     const [angry, setAngry] = useState(0.0);
     const [happy, setHappy] = useState(0.0);
     const [fear, setFear] = useState(0.0);
-    const [suprise, setSuprise] = useState(0.0);
+    const [surprise, setSurprise] = useState(0.0);
     const [sad, setSad] = useState(0.0);
 
     const emotionDetectionPopupStyle = {
@@ -73,7 +73,7 @@ function EmotionDetection() {
                         setFear(response.emotions.Fear);
                         setHappy(response.emotions.Happy);
                         setSad(response.emotions.Sad);
-                        setSuprise(response.emotions.Suprise);
+                        setSurprise(response.emotions.Surprise);
                     });
                 }
                 else{
@@ -86,7 +86,7 @@ function EmotionDetection() {
             setFear(0);
             setHappy(0);
             setSad(0);
-            setSuprise(0);
+            setSurprise(0);
             alert('Something went wrong please refresh!');
         }
     }
@@ -113,7 +113,7 @@ function EmotionDetection() {
             <br></br>
             <b style={padding_top}>Happy: </b> {happy}
             <b style={padding_left}>Sad: </b> {sad}
-            <b style={padding_left}>Suprise: </b> {suprise}
+            <b style={padding_left}>Surprise: </b> {surprise}
             <b style={padding_left}>Fear: </b> {fear}
             <b style={padding_left}>Angry: </b> {angry}
         </div>
