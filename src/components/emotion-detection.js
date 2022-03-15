@@ -53,36 +53,42 @@ function EmotionDetection() {
     }
 
     function handleEmotion(){
-        const url = 'http://localhost:3000/emotions'
-        fetch(url, {
-            method: 'POST',
-            mode: 'cors', 
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                'sentence': sentence,
-            }),
-        })
-        .then(response => {
-            response.json();
-            if(response.status === 200){
-                setAngry(response.emotions.Angry);
-                setFear(response.emotions.Fear);
-                setHappy(response.emotions.Happy);
-                setSad(response.emotions.Sad);
-                setSuprise(response.emotions.Suprise);
-            }
-            else{
-                setAngry(0);
-                setFear(0);
-                setHappy(0);
-                setSad(0);
-                setSuprise(0);
-                alert('Something went wrong please refresh!');
-            }
-        });
+        try{
+            const url = 'http://localhost:3000/emotions'
+            fetch(url, {
+                method: 'POST',
+                mode: 'cors', 
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    'sentence': sentence,
+                }),
+            })
+            .then(response => {
+                if(response.status === 200){
+                    response.json().then( response => {
+                        setAngry(response.emotions.Angry);
+                        setFear(response.emotions.Fear);
+                        setHappy(response.emotions.Happy);
+                        setSad(response.emotions.Sad);
+                        setSuprise(response.emotions.Suprise);
+                    });
+                }
+                else{
+                    throw new Error();
+                }
+            });
+        }
+        catch(error){
+            setAngry(0);
+            setFear(0);
+            setHappy(0);
+            setSad(0);
+            setSuprise(0);
+            alert('Something went wrong please refresh!');
+        }
     }
 
     function handleTextInputChange(event){

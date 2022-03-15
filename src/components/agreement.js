@@ -25,26 +25,31 @@ function Agreement (){
     }
 
     function submitForm() {
-        const url = 'http://localhost:3000/userconsent'
-        fetch(url, {
-            method: 'POST',
-            mode: 'cors', 
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                'name': name,
-                'netId': netId,
-                'purposeOfStudyAgreement': purposeOfStudyAgreement,
-                'procedureAgreement': procedureAgreement,
-            }),
-        })
-        .then(response => {
-            response.json()
-            if(response.status === 200) history.push('/emotion-detection');
-            else alert('Something went wrong please refresh!')
-        })
+        try{
+            const url = 'http://localhost:3000/userconsent'
+            fetch(url, {
+                method: 'POST',
+                mode: 'cors', 
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    'name': name,
+                    'netId': netId,
+                    'purposeOfStudyAgreement': purposeOfStudyAgreement,
+                    'procedureAgreement': procedureAgreement,
+                }),
+            })
+            .then(response => {
+                response.json()
+                if(response.status === 200) history.push('/emotion-detection');
+                else throw new Error();
+            });
+        }
+        catch(error){
+            alert('Something went wrong please refresh!')
+        }
     }
 
     const agreementPopupStyle = {
