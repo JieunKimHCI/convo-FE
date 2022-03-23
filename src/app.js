@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Agreement from './components/agreement';
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import Emotions from './components/emotions';
+import Dictaphone from './components/speechtotext';
 
 class App extends Component{
 
@@ -40,6 +41,7 @@ class App extends Component{
                 <Routes>
                     <Route path="/" element={<Agreement initialState={this.state} handleSubmit={this.handleSubmit} />}/>
                     <Route path="/emotions" element={<Emotions />}/>
+                    <Route path="/speech" element={<Dictaphone />}/>
                 </Routes>
             </BrowserRouter>
             </div>

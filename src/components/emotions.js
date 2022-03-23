@@ -1,8 +1,10 @@
 import { Component } from "react";
+import React from 'react';
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import Dictaphone from "./speechtotext";
 
 class EmotionDetection extends Component{
-
-
+    
     submitForm = () => {
         this.props.handleEmotion(this.state)
     }
@@ -26,11 +28,6 @@ class EmotionDetection extends Component{
             paddingTop : '2vh',
         }
 
-        const textareaStyle = {
-            maxWidth: '99%',
-            width: '99%'
-        }
-
         const buttonDisabledStyle = {
             backgroundColor: 'grey',
             color: 'black',
@@ -39,12 +36,12 @@ class EmotionDetection extends Component{
             width: '99%',
             padding: '2vh',
         }
+        
        return(
             <div style = {emotionPopupStyle} id = 'emotion-detection'>
-                <p>
-                        <b>Please Speak Any Word or Sentence</b>
-                        <textarea style = {textareaStyle} rows = "10" readOnly></textarea>
-                </p>
+                <div>
+                    <Dictaphone/>
+                </div>
                 <div style={padding_top}>
                         <input 
                             type="button"
