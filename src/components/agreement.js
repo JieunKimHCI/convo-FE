@@ -26,7 +26,7 @@ function Agreement (){
 
     function submitForm() {
         try{
-            const url = 'http://localhost:3000/userconsent'
+            const url = 'http://127.0.0.1:5000/userconsent'
             fetch(url, {
                 method: 'POST',
                 mode: 'cors', 

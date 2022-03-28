@@ -1,4 +1,5 @@
 import { useState } from "react";
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
 function EmotionDetection() {
 
@@ -54,7 +55,7 @@ function EmotionDetection() {
 
     function handleEmotion(){
         try{
-            const url = 'http://localhost:3000/emotions'
+            const url = 'http://127.0.0.1:5000/emotions'
             fetch(url, {
                 method: 'POST',
                 mode: 'cors', 
@@ -63,7 +64,7 @@ function EmotionDetection() {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    'sentence': sentence,
+                    'sentence': transcript,
                 }),
             })
             .then(response => {
@@ -91,24 +92,33 @@ function EmotionDetection() {
         }
     }
 
-    function handleTextInputChange(event){
-        const value = event.target.value
-        setSentence(value)
-    }
+    const{
+        transcript,
+        listening,
+        resetTranscript,
+        browserSupportsSpeechRecognition
+    } = useSpeechRecognition();
 
+    if (!browserSupportsSpeechRecognition) {
+        return <span>Browser doesn't support speech recognition.</span>;
+    }
     return(
         <div style = {emotionDetectionPopupStyle} id = 'emotion-detection'>
-            <p>
-                <b>Please speak any word or sentence</b>
-                <textarea id='input' style = {textareaStyle} rows = "10" onChange={handleTextInputChange}></textarea>
-            </p> 
+            <div>
+                <b>Please Speak Any Word or Sentence</b>
+                <p>Microphone: {listening ? 'on' : 'off'}</p>
+                <button onClick={SpeechRecognition.startListening}>Start</button>
+                <button onClick={SpeechRecognition.stopListening}>Stop</button>
+                <button onClick={resetTranscript}>Reset</button>
+                <textarea style={textareaStyle} value={transcript}></textarea>
+            </div> 
             <div style={padding_top}>
-                <input 
+                <input
                 type="button" 
-                style={ (sentence === "") ? buttonDisabledStyle : buttonEnabledStyle } 
+                style={ (transcript === "") ? buttonDisabledStyle : buttonEnabledStyle } 
                 value="Show Emotions" 
                 onClick= {handleEmotion}
-                disabled={ (sentence === "") } />
+                disabled={ (transcript === "") } />
             </div>
             <br></br>
             <b style={padding_top}>Happy: </b> {happy}
