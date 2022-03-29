@@ -26,7 +26,7 @@ function Agreement (){
 
     function submitForm() {
         try{
-            const url = 'http://127.0.0.1:5000/userconsent'
+            const url = 'https://convo-test-1.herokuapp.com/userconsent'
             fetch(url, {
                 method: 'POST',
                 mode: 'cors', 

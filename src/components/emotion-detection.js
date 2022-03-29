@@ -57,7 +57,7 @@ function EmotionDetection() {
 
     function handleEmotion(){
         try{
-            const url = 'https://ibm-convo.herokuapp.com/ibm/emotions'
+            const url = 'https://convo-test-1.herokuapp.com/emotions'
             fetch(url, {
                 method: 'POST',
                 mode: 'cors', 
