@@ -4,11 +4,13 @@ import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognitio
 function EmotionDetection() {
 
     const [sentence, setSentence] = useState('');
-    const [angry, setAngry] = useState(0.0);
-    const [happy, setHappy] = useState(0.0);
-    const [fear, setFear] = useState(0.0);
-    const [surprise, setSurprise] = useState(0.0);
+    const [excited, setExcited] = useState(0.0);
+    const [frustrated, setFrustrated] = useState(0.0);
+    const [impolite, setImpolite] = useState(0.0);
+    const [polite, setPolite] = useState(0.0);
     const [sad, setSad] = useState(0.0);
+    const [satisfied, setSatisfied] = useState(0.0);
+    const [sympathetic, setSympathetic] = useState(0.0);
 
     const emotionDetectionPopupStyle = {
         backgroundColor: 'white',
@@ -55,7 +57,7 @@ function EmotionDetection() {
 
     function handleEmotion(){
         try{
-            const url = 'http://127.0.0.1:5000/emotions'
+            const url = 'https://ibm-convo.herokuapp.com/ibm/emotions'
             fetch(url, {
                 method: 'POST',
                 mode: 'cors', 
@@ -70,11 +72,13 @@ function EmotionDetection() {
             .then(response => {
                 if(response.status === 200){
                     response.json().then( response => {
-                        setAngry(response.emotions.Angry);
-                        setFear(response.emotions.Fear);
-                        setHappy(response.emotions.Happy);
-                        setSad(response.emotions.Sad);
-                        setSurprise(response.emotions.Surprise);
+                        setExcited(response.emotions.excited);
+                        setFrustrated(response.emotions.frustrated);
+                        setPolite(response.emotions.polite);
+                        setImpolite(response.emotions.impolite);
+                        setSad(response.emotions.sad);
+                        setSatisfied(response.emotions.satisfied);
+                        setSympathetic(response.emotions.sympathetic);
                     });
                 }
                 else{
@@ -83,11 +87,13 @@ function EmotionDetection() {
             });
         }
         catch(error){
-            setAngry(0);
-            setFear(0);
-            setHappy(0);
+            setExcited(0);
+            setFrustrated(0);
+            setPolite(0);
+            setImpolite(0);
             setSad(0);
-            setSurprise(0);
+            setSatisfied(0);
+            setSympathetic(0);
             alert('Something went wrong please refresh!');
         }
     }
@@ -121,11 +127,13 @@ function EmotionDetection() {
                 disabled={ (transcript === "") } />
             </div>
             <br></br>
-            <b style={padding_top}>Happy: </b> {happy}
+            <b style={padding_top}>Excited: </b> {excited}
+            <b style={padding_left}>Frustrated: </b> {frustrated}
+            <b style={padding_left}>Polite: </b> {polite}
+            <b style={padding_left}>Impolite: </b> {impolite}
             <b style={padding_left}>Sad: </b> {sad}
-            <b style={padding_left}>Surprise: </b> {surprise}
-            <b style={padding_left}>Fear: </b> {fear}
-            <b style={padding_left}>Angry: </b> {angry}
+            <b style={padding_left}>Satisfied: </b> {satisfied}
+            <b style={padding_left}>Sympathetic: </b> {sympathetic}
         </div>
     );
 }
