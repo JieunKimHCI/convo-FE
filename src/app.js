@@ -2,6 +2,7 @@ import React from 'react';
 import Agreement from './components/agreement';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import EmotionDetection from './components/emotion-detection';
+import Instructions from './components/instructions';
 
 function App() {
     return (
@@ -11,8 +12,11 @@ function App() {
                     <Route path="/emotion-detection">
                         <EmotionDetection />
                     </Route>
-                    <Route path="/">
+                    <Route path="/agreement">
                         <Agreement />
+                    </Route>
+                    <Route path="/">
+                        <Instructions />
                     </Route> 
                 </Switch>
             </BrowserRouter>    

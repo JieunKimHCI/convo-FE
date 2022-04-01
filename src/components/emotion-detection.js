@@ -1,5 +1,9 @@
 import { useState } from "react";
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import Button from '@mui/material/Button'
+import MicIcon from '@mui/icons-material/Mic';
+import MicOffIcon from '@mui/icons-material/MicOff';
+import ReplayIcon from '@mui/icons-material/Replay';
 
 function EmotionDetection() {
 
@@ -108,14 +112,17 @@ function EmotionDetection() {
     if (!browserSupportsSpeechRecognition) {
         return <span>Browser doesn't support speech recognition.</span>;
     }
+    function MicrophoneOn(){
+        SpeechRecognition.startListening({continuous:true})
+    }
     return(
         <div style = {emotionDetectionPopupStyle} id = 'emotion-detection'>
             <div>
                 <b>Please Speak Any Word or Sentence</b>
                 <p>Microphone: {listening ? 'on' : 'off'}</p>
-                <button onClick={SpeechRecognition.startListening}>Start</button>
-                <button onClick={SpeechRecognition.stopListening}>Stop</button>
-                <button onClick={resetTranscript}>Reset</button>
+                <Button variant="outlined" sx={{color:'black', border: 1}} startIcon={<MicIcon sx={{ color: 'black' }}/>} onClick={MicrophoneOn}>Start</Button>
+                <Button variant="outlined" sx={{color:'black', border: 1}} startIcon={<MicOffIcon sx={{ color: 'black' }}/>} onClick={SpeechRecognition.stopListening}>Stop</Button>
+                <Button variant="outlined" sx={{color:'black', border: 1}} startIcon={<ReplayIcon sx={{ color: 'black' }}/>} onClick={resetTranscript}>Reset</Button>
                 <textarea style={textareaStyle} value={transcript}></textarea>
             </div> 
             <div style={padding_top}>
