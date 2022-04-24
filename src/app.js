@@ -3,6 +3,7 @@ import Agreement from './components/agreement';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import EmotionDetection from './components/emotion-detection';
 import Instructions from './components/instructions';
+import ClientMain from './components/client-main';
 
 function App() {
     return (
@@ -11,6 +12,9 @@ function App() {
                 <Switch>
                     <Route path="/emotion-detection">
                         <EmotionDetection />
+                    </Route>
+                    <Route path="/client">
+                        <ClientMain />
                     </Route>
                     <Route path="/agreement">
                         <Agreement />

@@ -5,6 +5,7 @@ function Agreement (){
 
     const [name, setName] = useState('');
     const [netId, setNetId] = useState('');
+    const [meetingId, setMeetingId] = useState('');
     const [purposeOfStudyAgreement, setPurposeOfStudyAgreement] = useState(false);
     const [procedureAgreement, setProcedureAgreement] = useState(false);
     
@@ -21,12 +22,15 @@ function Agreement (){
         const name = event.target.id
         const value = event.target.value
         if(name === 'name') setName(value)
-        else setNetId(value)
+        else if (name == 'netId') setNetId(value)
+        else setMeetingId(value)
     }
 
-    function submitForm() {
+    async function submitForm() {
+        let stream = null
+        stream = await navigator.mediaDevices.getUserMedia({audio:true})
         try{
-            const url = 'https://convo-test-1.herokuapp.com/userconsent'
+            const url = 'http://localhost:5000/userconsent'
             fetch(url, {
                 method: 'POST',
                 mode: 'cors', 
@@ -37,13 +41,22 @@ function Agreement (){
                 body: JSON.stringify({
                     'name': name,
                     'netId': netId,
+                    'meetingId': meetingId,
                     'purposeOfStudyAgreement': purposeOfStudyAgreement,
                     'procedureAgreement': procedureAgreement,
                 }),
             })
             .then(response => {
-                response.json()
-                if(response.status === 200) history.push('/emotion-detection');
+                response.json();
+                if(response.status === 200){
+                    history.push({
+                        pathname: '/client',
+                        state: {
+                            netId: netId,
+                            meetingId: meetingId,
+                        },
+                    });
+                }
                 else throw new Error();
             });
         }
@@ -126,16 +139,20 @@ function Agreement (){
                     <input type="text" name="name" id="name" onChange={handleTextInputChange} />
                 </div>
                 <div>
-                    <label style = {padding_right} htmlFor="job"><b>Net Id</b></label>
+                    <label style = {padding_right} htmlFor="netId"><b>Net Id</b></label>
                     <input type="text" name="netId" id="netId" onChange={handleTextInputChange} />
+                </div>
+                <div>
+                    <label style = {padding_right} htmlFor="meetingId"><b>Meeting Id</b></label>
+                    <input type="text" name="meetingId" id="meetingId" onChange={handleTextInputChange} />
                 </div>
                 <div style={padding_top}>
                     <input 
-                        style = {(!purposeOfStudyAgreement || !procedureAgreement || name === "" || netId === "") ? nextButtonDisabledStyle : nextButtonEnabledStyle } 
+                        style = {(!purposeOfStudyAgreement || !procedureAgreement || name === "" || netId === "" || meetingId === "") ? nextButtonDisabledStyle : nextButtonEnabledStyle } 
                         type="button" 
                         value="Next" 
                         onClick={submitForm}
-                        disabled = {(!purposeOfStudyAgreement || !procedureAgreement || name === "" || netId === "")} 
+                        disabled = {(!purposeOfStudyAgreement || !procedureAgreement || name === "" || netId === "" || meetingId === "")} 
                     />   
                 </div>
             </form>
