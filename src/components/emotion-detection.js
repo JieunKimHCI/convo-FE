@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 function EmotionDetection() {
 
+    const location = useLocation();
+    const [activeParticipants, setActiveParticipants] = useState("");
     const [excited, setExcited] = useState(0.0);
     const [frustrated, setFrustrated] = useState(0.0);
     const [impolite, setImpolite] = useState(0.0);
@@ -56,19 +59,16 @@ function EmotionDetection() {
         width: '100%',
     }
 
-    function handleEmotion(){
+    function handleEmotion(meetingId){
         try{
-            const url = 'http://localhost:5000/emotions'
+            const url = 'http://localhost:5000/emotions?meetingId=' + meetingId;
             fetch(url, {
-                method: 'POST',
+                method: 'GET',
                 mode: 'cors', 
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    'sentence': transcript,
-                }),
             })
             .then(response => {
                 if(response.status === 200){
@@ -80,6 +80,10 @@ function EmotionDetection() {
                         setSad(response.emotions.sad);
                         setSatisfied(response.emotions.satisfied);
                         setSympathetic(response.emotions.sympathetic);
+                        setActiveParticipants(response.participants);
+                        let activeParticipantsList = "";
+                        for (let i of response.participants) activeParticipantsList += i + '\n';
+                        setActiveParticipants(activeParticipantsList);
                     });
                 }
                 else{
@@ -110,10 +114,19 @@ function EmotionDetection() {
         else if(key == "d"){
             alert('Its upto you');
         }
-    }
+    }  
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            // Create a page for admin to input the meeting id
+            handleEmotion("1234567")
+            // handleEmotion(location.state.meetingId);
+        }, 15000);
+        return () => clearInterval(interval);
+    }, [location]);
 
     return(
-        <div id="keyboard" onKeyDown={handleKeyPress} tabIndex="0"  style = {emotionDetectionPopupStyle}>
+        <div style = {emotionDetectionPopupStyle}>
             <div style={rowStyle}>
                 <div style={column1Style}>
                     <div style={fullWidth}>
@@ -134,11 +147,7 @@ function EmotionDetection() {
                 </div>
                 <div style={column2Style}>
                     <h3>Active Participants</h3>
-                    <p>Jieun</p>
-                    <p>Anjali</p>
-                    <p>Berk</p>
-                    <p>Jayesh</p>
-                    <p>Ojas</p>
+                    <p>{activeParticipants}</p>
                 </div>
             </div>
         </div>

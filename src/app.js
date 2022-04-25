@@ -10,7 +10,7 @@ function App() {
         <div className='App'>
             <BrowserRouter>
                 <Switch>
-                    <Route path="/emotion-detection">
+                    <Route path="/admin">
                         <EmotionDetection />
                     </Route>
                     <Route path="/client">

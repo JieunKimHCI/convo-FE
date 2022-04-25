@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition/lib/SpeechRecognition";
+// import cloneDeep from './lodash';
 
 function ClientMain(){
 
     const location = useLocation();
     const [sendDataBool, setSendDataBool] = useState(true);
+    const [MeetingId, setMeetingId] = useState('');
+    const [NetId, setNetId] = useState('');
     
     const instructionsPopupStyle = {
         backgroundColor: 'white',
@@ -30,8 +33,7 @@ function ClientMain(){
     const {
         transcript,
         listening,
-        resetTranscipt,
-
+        resetTranscript,
     } = useSpeechRecognition();
 
     const hideStyle = {
@@ -40,12 +42,7 @@ function ClientMain(){
 
     function endMeeting(){
         setSendDataBool(false);
-    }
-
-    function sendData(netId, meetingId){
-        const url = 'http://localhost:5000/pollconversation';
-        let z = document.getElementById('transcript_text').textContent;
-        // resetTranscipt();
+        const url = 'http://localhost:5000/finish'
         fetch(url, {
             method: 'POST',
             mode: 'cors', 
@@ -54,7 +51,28 @@ function ClientMain(){
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                'text': z,
+                'meetingId': MeetingId,
+                'netId': NetId,
+            }),
+        })
+        .then(response => {
+            console.log('response', response);
+        });
+    }
+
+    function sendData(netId, meetingId){
+        const url = 'http://localhost:5000/pollconversation';
+        let text = document.getElementById('transcript_text').textContent;
+        resetTranscript();
+        fetch(url, {
+            method: 'POST',
+            mode: 'cors', 
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                'text': text,
                 'netId': netId,
                 'meetingId': meetingId,
                 'timestamp': new Date().toISOString(),
@@ -67,16 +85,17 @@ function ClientMain(){
 
     useEffect(() => {
         const interval = setInterval(() => {
+            setNetId(location.state.netId);
+            setMeetingId(location.state.meetingId);
             if(sendDataBool){
                 sendData(location.state.netId, location.state.meetingId);
             }
             else {
                 // request for mic permissions
             }
-        }, 15000);
+        }, 5000);
         return () => clearInterval(interval);
     }, [location]);
-
 
     return(
         <div onLoadStart = {SpeechRecognition.startListening({continuous: true})} style={instructionsPopupStyle} id = 'clientMain'>
