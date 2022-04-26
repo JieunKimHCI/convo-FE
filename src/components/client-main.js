@@ -3,12 +3,13 @@ import { useLocation } from "react-router-dom";
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition/lib/SpeechRecognition";
 // import cloneDeep from './lodash';
 
+let MeetingId = '';
+let NetId = '';
+let sendDataBool = true;
+
 function ClientMain(){
 
     const location = useLocation();
-    const [sendDataBool, setSendDataBool] = useState(true);
-    const [MeetingId, setMeetingId] = useState('');
-    const [NetId, setNetId] = useState('');
     
     const instructionsPopupStyle = {
         backgroundColor: 'white',
@@ -28,7 +29,7 @@ function ClientMain(){
         cursor: 'pointer',
         width: '99%',
         padding: '2vh',
-    }
+    };
 
     const {
         transcript,
@@ -38,11 +39,11 @@ function ClientMain(){
 
     const hideStyle = {
         display: 'None',
-    }
+    };
 
     function endMeeting(){
-        setSendDataBool(false);
-        const url = 'http://localhost:5000/finish'
+        sendDataBool = false;
+        const url = 'http://localhost:5000/finish';
         fetch(url, {
             method: 'POST',
             mode: 'cors', 
@@ -57,12 +58,13 @@ function ClientMain(){
         })
         .then(response => {
             console.log('response', response);
+            SpeechRecognition.stopListening();
         });
     }
 
-    function sendData(netId, meetingId){
+    function sendData(netId, meetingId, transcript){
         const url = 'http://localhost:5000/pollconversation';
-        let text = document.getElementById('transcript_text').textContent;
+        const text = transcript;
         resetTranscript();
         fetch(url, {
             method: 'POST',
@@ -85,23 +87,22 @@ function ClientMain(){
 
     useEffect(() => {
         const interval = setInterval(() => {
-            setNetId(location.state.netId);
-            setMeetingId(location.state.meetingId);
+            NetId = location.state.netId;
+            MeetingId = location.state.meetingId;
             if(sendDataBool){
-                sendData(location.state.netId, location.state.meetingId);
+                sendData(location.state.netId, location.state.meetingId, transcript);
             }
             else {
                 // request for mic permissions
             }
         }, 5000);
         return () => clearInterval(interval);
-    }, [location]);
+    }, [location, transcript]);
 
     return(
         <div onLoadStart = {SpeechRecognition.startListening({continuous: true})} style={instructionsPopupStyle} id = 'clientMain'>
             {sendDataBool && <div>
                 <h3>The meeting is underway</h3>
-                <p style={hideStyle} id='transcript_text'>{transcript}</p>
                 <button style={finishButtonStyle} onClick={endMeeting}>End meeting</button>
             </div>}
             {!sendDataBool && <div>
