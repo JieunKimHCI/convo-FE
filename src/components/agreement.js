@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
 function Agreement (){
 
@@ -23,34 +24,35 @@ function Agreement (){
         if(name === 'name') setName(value)
         else setNetId(value)
     }
-
-    function submitForm() {
-        try{
-            const url = 'https://convo-test-1.herokuapp.com/userconsent'
-            fetch(url, {
-                method: 'POST',
-                mode: 'cors', 
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    'name': name,
-                    'netId': netId,
-                    'purposeOfStudyAgreement': purposeOfStudyAgreement,
-                    'procedureAgreement': procedureAgreement,
-                }),
-            })
-            .then(response => {
-                response.json()
-                if(response.status === 200) history.push('/emotion-detection');
-                else throw new Error();
-            });
+    async function submitForm() {
+        let stream = null;
+            stream = await navigator.mediaDevices.getUserMedia({audio:true});
+            try{
+                const url = 'http://127.0.0.1:5000//userconsent'
+                fetch(url, {
+                    method: 'POST',
+                    mode: 'cors', 
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        'name': name,
+                        'netId': netId,
+                        'purposeOfStudyAgreement': purposeOfStudyAgreement,
+                        'procedureAgreement': procedureAgreement,
+                    }),
+                })
+                .then(response => {
+                    response.json()
+                    if(response.status === 200) history.push('/emotion-detection');
+                    else throw new Error();
+                });
+            }
+            catch(error){
+                alert('Something went wrong please refresh!')
+            }
         }
-        catch(error){
-            alert('Something went wrong please refresh!')
-        }
-    }
 
     const agreementPopupStyle = {
         backgroundColor: 'white',
@@ -97,7 +99,7 @@ function Agreement (){
     const smallText = {
         fontSize: '0.75em',
     }
-
+    
     const purposeOfStudyMessage = "A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message.";
     const procedureMessage = "A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message.";
     const statementOfConsentMessage = "I give the researchers permission to use my recorded screen data, including still images, in publications and at conferences or presentations."

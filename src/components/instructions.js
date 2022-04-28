@@ -1,4 +1,4 @@
-import { useState } from "react";    
+import { useHistory } from "react-router-dom";
     
 function Instructions(){
     const instructionsPopupStyle = {
@@ -28,10 +28,12 @@ function Instructions(){
         width: '99%',
         padding: '2vh',
     }
-
+    const history = useHistory();
+    
     function nextPage(){
         history.push('/agreement')
     }
+
     return(
         <div style={instructionsPopupStyle} id = 'instructions'>
                 <h1>INSTRUCTIONS</h1>

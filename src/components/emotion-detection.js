@@ -28,9 +28,9 @@ function EmotionDetection() {
     };
 
     const textareaStyle = {
-        maxWidth: '99%',
-        width: '99%',
-        height: '40vh',
+        maxWidth: '0%',
+        width: '0%',
+        height: '0',
     }
 
     const padding_top = {
