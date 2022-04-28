@@ -1,6 +1,9 @@
 import { useHistory } from "react-router-dom";
     
 function Instructions(){
+
+    const history = useHistory();
+    
     const instructionsPopupStyle = {
         backgroundColor: 'white',
         color: 'black',
@@ -44,6 +47,7 @@ function Instructions(){
                             <li>Click on the Microphone Icon to start recording </li>
                             <li>Double click on the Microphone Icon to stop recording </li>
                             <li>Click on the show emotions button to analyze emotions</li>
+                            <li><b>PLEASE AVOID GOING ON MUTE</b></li>
                         </ol>
                     </p>
                 <button style={nextButtonStyle} onClick={nextPage}>BEGIN</button>

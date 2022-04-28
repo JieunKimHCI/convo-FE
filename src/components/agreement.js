@@ -6,6 +6,7 @@ function Agreement (){
 
     const [name, setName] = useState('');
     const [netId, setNetId] = useState('');
+    const [meetingId, setMeetingId] = useState('');
     const [purposeOfStudyAgreement, setPurposeOfStudyAgreement] = useState(false);
     const [procedureAgreement, setProcedureAgreement] = useState(false);
     
@@ -22,36 +23,47 @@ function Agreement (){
         const name = event.target.id
         const value = event.target.value
         if(name === 'name') setName(value)
-        else setNetId(value)
+        else if (name == 'netId') setNetId(value)
+        else setMeetingId(value)
     }
+
     async function submitForm() {
-        let stream = null;
-            stream = await navigator.mediaDevices.getUserMedia({audio:true});
-            try{
-                const url = 'http://127.0.0.1:5000//userconsent'
-                fetch(url, {
-                    method: 'POST',
-                    mode: 'cors', 
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        'name': name,
-                        'netId': netId,
-                        'purposeOfStudyAgreement': purposeOfStudyAgreement,
-                        'procedureAgreement': procedureAgreement,
-                    }),
-                })
-                .then(response => {
-                    response.json()
-                    if(response.status === 200) history.push('/emotion-detection');
-                    else throw new Error();
-                });
-            }
-            catch(error){
-                alert('Something went wrong please refresh!')
-            }
+        let stream = null
+        stream = await navigator.mediaDevices.getUserMedia({audio:true})
+        try{
+            const url = 'http://localhost:5000/userconsent'
+            fetch(url, {
+                method: 'POST',
+                mode: 'cors', 
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    'name': name,
+                    'netId': netId,
+                    'meetingId': meetingId,
+                    'purposeOfStudyAgreement': purposeOfStudyAgreement,
+                    'procedureAgreement': procedureAgreement,
+                }),
+            })
+            .then(response => {
+                response.json();
+                if(response.status === 200){
+                    history.push({
+                        pathname: '/client',
+                        state: {
+                            netId: netId,
+                            meetingId: meetingId,
+                        },
+                    });
+                }
+                else throw new Error();
+            });
+        }
+        catch{
+            alert("Unable to get data")
+        }
         }
 
     const agreementPopupStyle = {
@@ -128,16 +140,20 @@ function Agreement (){
                     <input type="text" name="name" id="name" onChange={handleTextInputChange} />
                 </div>
                 <div>
-                    <label style = {padding_right} htmlFor="job"><b>Net Id</b></label>
+                    <label style = {padding_right} htmlFor="netId"><b>Net Id</b></label>
                     <input type="text" name="netId" id="netId" onChange={handleTextInputChange} />
+                </div>
+                <div>
+                    <label style = {padding_right} htmlFor="meetingId"><b>Meeting Id</b></label>
+                    <input type="text" name="meetingId" id="meetingId" onChange={handleTextInputChange} />
                 </div>
                 <div style={padding_top}>
                     <input 
-                        style = {(!purposeOfStudyAgreement || !procedureAgreement || name === "" || netId === "") ? nextButtonDisabledStyle : nextButtonEnabledStyle } 
+                        style = {(!purposeOfStudyAgreement || !procedureAgreement || name === "" || netId === "" || meetingId === "") ? nextButtonDisabledStyle : nextButtonEnabledStyle } 
                         type="button" 
                         value="Next" 
                         onClick={submitForm}
-                        disabled = {(!purposeOfStudyAgreement || !procedureAgreement || name === "" || netId === "")} 
+                        disabled = {(!purposeOfStudyAgreement || !procedureAgreement || name === "" || netId === "" || meetingId === "")} 
                     />   
                 </div>
             </form>
