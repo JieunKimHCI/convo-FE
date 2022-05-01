@@ -82,7 +82,7 @@ function EmotionDetection() {
       }
     function handleEmotion(meetingId){
         try{
-            const url = 'http://127.0.0.1:5000/emotions?meetingId=' + meetingId;
+            const url = 'https://convo-test-1.herokuapp.com/emotions?meetingId=' + meetingId;
             fetch(url, {
                 method: 'GET',
                 mode: 'cors', 

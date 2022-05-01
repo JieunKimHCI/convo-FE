@@ -38,7 +38,7 @@ function ClientMain(){
 
     function endMeeting(){
         sendDataBool = false;
-        const url = 'http://localhost:5000/finish';
+        const url = 'https://convo-test-1.herokuapp.com/finish';
         fetch(url, {
             method: 'POST',
             mode: 'cors', 
@@ -58,7 +58,7 @@ function ClientMain(){
     }
 
     function sendData(netId, meetingId, transcript){
-        const url = 'http://localhost:5000/pollconversation';
+        const url = 'https://convo-test-1.herokuapp.com/pollconversation';
         const text = transcript;
         resetTranscript();
         fetch(url, {
