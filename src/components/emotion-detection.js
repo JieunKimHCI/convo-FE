@@ -128,8 +128,7 @@ function EmotionDetection() {
     useEffect(() => {
         const interval = setInterval(() => {
             // Create a page for admin to input the meeting id
-            handleEmotion("1234567")
-            // handleEmotion(location.state.meetingId);
+            handleEmotion(location.state.meetingId)
         }, 15000);
         return () => clearInterval(interval);
     }, [location]);

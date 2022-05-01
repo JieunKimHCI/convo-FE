@@ -48,7 +48,12 @@ function Login (){
     }
 
     function login(){
-        history.push("/admin")
+        history.push({
+            pathname: '/admin',
+            state: {
+                meetingId: meetingId,
+            },
+        });
     }
     function displayKeywords(meetingId){
         const url = 'https://convo-test-1.herokuapp.com/keywords';
