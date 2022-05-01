@@ -31,7 +31,7 @@ function Agreement (){
         let stream = null
         stream = await navigator.mediaDevices.getUserMedia({audio:true})
         try{
-            const url = 'http://localhost:5000/userconsent'
+            const url = 'https://convo-test-1.herokuapp.com/userconsent'
             fetch(url, {
                 method: 'POST',
                 mode: 'cors', 
