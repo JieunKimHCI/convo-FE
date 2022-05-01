@@ -31,7 +31,6 @@ function Instructions(){
         width: '99%',
         padding: '2vh',
     }
-    const history = useHistory();
     
     function nextPage(){
         history.push('/agreement')

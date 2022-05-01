@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, KeyboardEvent} from "react";
 import { useLocation } from "react-router-dom";
+
 
 function EmotionDetection() {
 
@@ -12,6 +13,7 @@ function EmotionDetection() {
     const [sad, setSad] = useState(0.0);
     const [satisfied, setSatisfied] = useState(0.0);
     const [sympathetic, setSympathetic] = useState(0.0);
+    const [interjection, setInterjection] = useState("");
 
     const emotionDetectionPopupStyle = {
         backgroundColor: 'white',
@@ -59,9 +61,28 @@ function EmotionDetection() {
         width: '100%',
     }
 
+    const handleKeyDown = (event) => {
+        const key = event.code; 
+        switch (key) {
+          case 'KeyW':
+            setInterjection("Interjection Statement 1")
+            break;
+          case 'KeyA':
+            setInterjection("Interjection Statement 2");
+            break;
+          case 'KeyS':
+            setInterjection("Interjection Statement 3");
+            break;
+          case 'KeyD':
+            setInterjection("Interjection Statement 4");
+            break;
+          default:
+            alert("HELLO");  
+        }
+      }
     function handleEmotion(meetingId){
         try{
-            const url = 'http://localhost:5000/emotions?meetingId=' + meetingId;
+            const url = 'http://127.0.0.1:5000/emotions?meetingId=' + meetingId;
             fetch(url, {
                 method: 'GET',
                 mode: 'cors', 
@@ -102,19 +123,7 @@ function EmotionDetection() {
             alert('Something went wrong please refresh!');
         }
     }
-
-    function handleKeyPress(e) {
-        var key = e.key;
-        if (key == "a") {
-            alert('Shut the fuck up');
-        }
-        else if (key == "s") {
-            alert('Start the fuck up');
-        }
-        else if(key == "d"){
-            alert('Its upto you');
-        }
-    }  
+ 
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -142,8 +151,10 @@ function EmotionDetection() {
                                 <b style={padding_left}>Satisfied: </b> {satisfied}
                                 <b style={padding_left}>Sympathetic: </b> {sympathetic}
                             </h2>
+                            <textarea style={{width: '99%'}} rows = '5' value = {interjection} onKeyDown={handleKeyDown} />
                         </center>
                     </div>
+                            
                 </div>
                 <div style={column2Style}>
                     <h3>Active Participants</h3>

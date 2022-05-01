@@ -4,12 +4,16 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import EmotionDetection from './components/emotion-detection';
 import Instructions from './components/instructions';
 import ClientMain from './components/client-main';
+import Login from './components/login';
 
 function App() {
     return (
         <div className='App'>
             <BrowserRouter>
                 <Switch>
+                <Route path="/login">
+                        <Login />
+                    </Route>
                     <Route path="/admin">
                         <EmotionDetection />
                     </Route>

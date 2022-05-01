@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition/lib/SpeechRecognition";
 // import cloneDeep from './lodash';
@@ -33,13 +33,8 @@ function ClientMain(){
 
     const {
         transcript,
-        listening,
         resetTranscript,
     } = useSpeechRecognition();
-
-    const hideStyle = {
-        display: 'None',
-    };
 
     function endMeeting(){
         sendDataBool = false;
@@ -103,7 +98,7 @@ function ClientMain(){
         <div onLoadStart = {SpeechRecognition.startListening({continuous: true})} style={instructionsPopupStyle} id = 'clientMain'>
             {sendDataBool && <div>
                 <h3>The meeting is underway</h3>
-                <button style={finishButtonStyle} onClick={endMeeting}>End meeting</button>
+                <button style={finishButtonStyle} onClick={() => {endMeeting();SpeechRecognition.startListening();}}>End meeting</button>
             </div>}
             {!sendDataBool && <div>
                 <h3>The meeting has ended.</h3>
