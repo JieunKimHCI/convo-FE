@@ -6,10 +6,8 @@ function Login (){
     
     const history = useHistory();
     const [meetingId, setMeetingId] = useState("");
-    const [keywords, setKeywords] = useState("");
-    const [summary, setSummary] = useState("");
 
-    const agreementPopupStyle = {
+    const loginPopupStyle = {
         backgroundColor: 'white',
         color: 'black',
         zIndex : '9',
@@ -20,15 +18,11 @@ function Login (){
         overflowY: 'auto',
     };
 
-    const padding_right = {
-        paddingRight : '2vh',
-    }
-
     const padding_top = {
         paddingTop : '5vh',
     }
 
-    const nextButtonEnabledStyle = {
+    const loginButtonEnabledStyle = {
         backgroundColor: '#282c34',
         color: 'white',
         border: 'none',
@@ -37,12 +31,16 @@ function Login (){
         padding: '2vh',
     }
 
-    const textBoxStyle = {
-        width: '200px',
-        height: '30px',
+    const loginButtonDisabledStyle = {
+        backgroundColor: 'grey',
+        color: 'white',
+        border: 'none',
+        cursor: 'pointer',
+        width: '99%',
+        padding: '2vh',
     }
 
-    function onChangeHandler(event){
+    function handleTextInputChange(event){
         const value = event.target.value
         setMeetingId(value)
     }
@@ -55,72 +53,30 @@ function Login (){
             },
         });
     }
-    function displayKeywords(meetingId){
-        const url = 'https://convo-test-1.herokuapp.com/keywords';
-        fetch(url, {
-            method: 'POST',
-            mode: 'cors', 
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                'meetingId': meetingId,
-            }),
-        })
-        .then(response => {
-            setKeywords(response)
-        });
-    }
-    function displaySummary(meetingId){
-        const url = 'https://convo-test-1.herokuapp.com/summary';
-        fetch(url, {
-            method: 'POST',
-            mode: 'cors', 
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                'meetingId': meetingId,
-            }),
-        })
-        .then(response => {
-            setSummary(response)
-        });
-    }
+
     return(
-        <div style = {agreementPopupStyle} id = 'agreement'>
+        <div style = {loginPopupStyle} id = 'login'>
             <form>
-                <center>
                 <div style={padding_top}>
                     <b>Meeting ID</b>&nbsp;&nbsp;
-                    <textarea id = 'meetingId' name='meetingId' onChange={onChangeHandler} style={textBoxStyle}></textarea>
+                    <input id = 'meetingId' name='meetingId' onChange={handleTextInputChange} />
                 </div>
-                </center>
                 <div style={padding_top}>
                     <input 
-                        style={nextButtonEnabledStyle}
+                        style = {meetingId === "" ? loginButtonDisabledStyle : loginButtonEnabledStyle } 
                         type="button" 
-                        value="NEXT" 
+                        value="Start Meeting" 
                         onClick={login}
+                        disabled = {meetingId === ""} 
                     /> 
-                    <textarea rows = "3" >{keywords}</textarea>
-                    <input 
-                        style={nextButtonEnabledStyle}
-                        type="button" 
-                        value="SHOW KEYWORDS" 
-                        onClick={displayKeywords}
-                    />
-                    <textarea rows = "3">{summary}</textarea>  
-                    <input 
-                        style={nextButtonEnabledStyle}
-                        type="button" 
-                        value="SHOW SUMMARY" 
-                        onClick={displaySummary}
-                    />
                 </div>
             </form>
+            <div>
+                <h4>INSTRUCTIONS</h4>
+                <ol>
+                    <li>Please share the next screen on Zoom</li>
+                </ol>
+            </div>
         </div>
     );
 }

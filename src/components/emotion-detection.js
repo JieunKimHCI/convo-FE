@@ -1,11 +1,11 @@
 import { useState, useEffect, KeyboardEvent} from "react";
 import { useLocation } from "react-router-dom";
+import { restUrl } from "..";
 
 
 function EmotionDetection() {
 
     const location = useLocation();
-    const [activeParticipants, setActiveParticipants] = useState("");
     const [excited, setExcited] = useState(0.0);
     const [frustrated, setFrustrated] = useState(0.0);
     const [impolite, setImpolite] = useState(0.0);
@@ -59,30 +59,36 @@ function EmotionDetection() {
 
     const fullWidth = {
         width: '100%',
+        height: '66vh'
+    }
+
+    const textBoxStyle = {
+        width: '98%',
+        height: '7vh',
+        paddingTop: '2vh',
     }
 
     const handleKeyDown = (event) => {
         const key = event.code; 
         switch (key) {
           case 'KeyW':
-            setInterjection("Interjection Statement 1")
+            setInterjection("Let others speak")
             break;
           case 'KeyA':
-            setInterjection("Interjection Statement 2");
+            setInterjection("You are being too aggressive");
             break;
           case 'KeyS':
-            setInterjection("Interjection Statement 3");
+            setInterjection("Your are being too passive");
             break;
           case 'KeyD':
-            setInterjection("Interjection Statement 4");
+            setInterjection("Participants are confused");
             break;
-          default:
-            alert("HELLO");  
         }
-      }
+    }
+
     function handleEmotion(meetingId){
         try{
-            const url = 'https://convo-test-1.herokuapp.com/emotions?meetingId=' + meetingId;
+            const url = restUrl + 'emotions?meetingId=' + meetingId;
             fetch(url, {
                 method: 'GET',
                 mode: 'cors', 
@@ -101,10 +107,9 @@ function EmotionDetection() {
                         setSad(response.emotions.sad);
                         setSatisfied(response.emotions.satisfied);
                         setSympathetic(response.emotions.sympathetic);
-                        setActiveParticipants(response.participants);
                         let activeParticipantsList = "";
-                        for (let i of response.participants) activeParticipantsList += i + '\n';
-                        setActiveParticipants(activeParticipantsList);
+                        for (let i of response.participants) activeParticipantsList += '<li>' + i + '</li>';
+                        document.getElementById('activeParticipants').innerHTML = activeParticipantsList;
                     });
                 }
                 else{
@@ -127,7 +132,6 @@ function EmotionDetection() {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            // Create a page for admin to input the meeting id
             handleEmotion(location.state.meetingId)
         }, 15000);
         return () => clearInterval(interval);
@@ -141,23 +145,32 @@ function EmotionDetection() {
                         <center>
                             <h2>
                                 <b style={padding_top}>Excited: </b> {excited}
+                            </h2>
+                            <h2>
                                 <b style={padding_left}>Frustrated: </b> {frustrated}
+                            </h2>
+                            <h2>
                                 <b style={padding_left}>Polite: </b> {polite}
+                            </h2>
+                            <h2>
                                 <b style={padding_left}>Impolite: </b> {impolite}
                             </h2>
                             <h2>
                                 <b style={padding_left}>Sad: </b> {sad}
+                            </h2>
+                            <h2>
                                 <b style={padding_left}>Satisfied: </b> {satisfied}
+                            </h2>
+                            <h2>
                                 <b style={padding_left}>Sympathetic: </b> {sympathetic}
                             </h2>
-                            <textarea style={{width: '99%'}} rows = '5' value = {interjection} onKeyDown={handleKeyDown} />
+                            <textarea style={textBoxStyle} autoFocus value = {interjection} onKeyDown={handleKeyDown} readOnly/> 
                         </center>
                     </div>
-                            
                 </div>
                 <div style={column2Style}>
                     <h3>Active Participants</h3>
-                    <p>{activeParticipants}</p>
+                    <ol id="activeParticipants"></ol>
                 </div>
             </div>
         </div>

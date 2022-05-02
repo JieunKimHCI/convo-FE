@@ -5,6 +5,7 @@ import EmotionDetection from './components/emotion-detection';
 import Instructions from './components/instructions';
 import ClientMain from './components/client-main';
 import Login from './components/login';
+import Summary from './components/summary';
 
 function App() {
     return (
@@ -19,6 +20,9 @@ function App() {
                     </Route>
                     <Route path="/client">
                         <ClientMain />
+                    </Route>
+                    <Route path="/summary">
+                        <Summary />
                     </Route>
                     <Route path="/agreement">
                         <Agreement />

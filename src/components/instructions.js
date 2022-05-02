@@ -39,16 +39,14 @@ function Instructions(){
     return(
         <div style={instructionsPopupStyle} id = 'instructions'>
                 <h1>INSTRUCTIONS</h1>
-                    <p>
-                        <ol>
-                            <li>Fill out the agreement to start using the software and participate in this study</li>
-                            <li>Enable Microphone access on your browser when prompted</li>
-                            <li>Click on the Microphone Icon to start recording </li>
-                            <li>Double click on the Microphone Icon to stop recording </li>
-                            <li>Click on the show emotions button to analyze emotions</li>
-                            <li><b>PLEASE AVOID GOING ON MUTE</b></li>
-                        </ol>
-                    </p>
+                    <ol>
+                        <li>Fill out the agreement to start using the software and participate in this study</li>
+                        <li>Enable Microphone access on your browser when prompted</li>
+                        <li>Click on the Microphone Icon to start recording </li>
+                        <li>Double click on the Microphone Icon to stop recording </li>
+                        <li>Click on the show emotions button to analyze emotions</li>
+                        <li><b>PLEASE AVOID GOING ON MUTE</b></li>
+                    </ol>
                 <button style={nextButtonStyle} onClick={nextPage}>BEGIN</button>
             </div>
         );

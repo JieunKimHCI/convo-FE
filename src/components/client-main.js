@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition/lib/SpeechRecognition";
-// import cloneDeep from './lodash';
+import { restUrl } from "..";
 
 let MeetingId = '';
 let NetId = '';
@@ -36,9 +36,11 @@ function ClientMain(){
         resetTranscript,
     } = useSpeechRecognition();
 
+    navigator.mediaDevices.getUserMedia({audio:true})
+
     function endMeeting(){
         sendDataBool = false;
-        const url = 'https://convo-test-1.herokuapp.com/finish';
+        const url = restUrl + 'finish';
         fetch(url, {
             method: 'POST',
             mode: 'cors', 
@@ -58,7 +60,7 @@ function ClientMain(){
     }
 
     function sendData(netId, meetingId, transcript){
-        const url = 'https://convo-test-1.herokuapp.com/pollconversation';
+        const url = restUrl + 'pollconversation';
         const text = transcript;
         resetTranscript();
         fetch(url, {

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import { restUrl } from "..";
 
 function Agreement (){
 
@@ -28,10 +29,8 @@ function Agreement (){
     }
 
     async function submitForm() {
-        let stream = null
-        stream = await navigator.mediaDevices.getUserMedia({audio:true})
         try{
-            const url = 'https://convo-test-1.herokuapp.com/userconsent'
+            const url = restUrl + 'userconsent'
             fetch(url, {
                 method: 'POST',
                 mode: 'cors', 
@@ -121,30 +120,30 @@ function Agreement (){
             <form>
                 <p>
                     <b>Purpose of study</b>
-                    <textarea style = {textareaStyle} rows = "3" readOnly>{purposeOfStudyMessage}</textarea>
+                    <textarea style = {textareaStyle} rows = "3" value = {purposeOfStudyMessage} readOnly></textarea>
                     <input type="checkbox" id="purposeOfStudyAgreement" name="purposeOfStudyAgreement" value={purposeOfStudyAgreement} onChange={handleCheckboxInputChange}/>
-                    <label style={smallText} for="purposeOfStudyAgreement">I have read and agree</label>
+                    <label style={smallText} htmlFor="purposeOfStudyAgreement">I have read and agree</label>
                 </p>
                 <p>
                     <b>Procedure</b>
-                    <textarea style = {textareaStyle} rows = "3" readOnly>{procedureMessage}</textarea>
+                    <textarea style = {textareaStyle} rows = "3" value = {procedureMessage} readOnly></textarea>
                     <input type="checkbox" id="procedureAgreement" name="procedureAgreement" value={procedureAgreement} onChange={handleCheckboxInputChange}/>
-                    <label style={smallText} for="procedureAgreement">I have read and agree</label>
+                    <label style={smallText} htmlFor="procedureAgreement">I have read and agree</label>
                 </p>
                 <p>
                     <b>Statement of Consent</b><br></br>
                     {statementOfConsentMessage}
                 </p>
                 <div>
-                    <label style = {padding_right} htmlFor="name"><b>Name</b></label>
+                    <label style = {padding_right}><b>Name</b></label>
                     <input type="text" name="name" id="name" onChange={handleTextInputChange} />
                 </div>
                 <div>
-                    <label style = {padding_right} htmlFor="netId"><b>Net Id</b></label>
+                    <label style = {padding_right}><b>Net Id</b></label>
                     <input type="text" name="netId" id="netId" onChange={handleTextInputChange} />
                 </div>
                 <div>
-                    <label style = {padding_right} htmlFor="meetingId"><b>Meeting Id</b></label>
+                    <label style = {padding_right}><b>Meeting Id</b></label>
                     <input type="text" name="meetingId" id="meetingId" onChange={handleTextInputChange} />
                 </div>
                 <div style={padding_top}>
