@@ -47,7 +47,7 @@ function Instructions(){
                         <li>Click on the show emotions button to analyze emotions</li>
                         <li><b>PLEASE AVOID GOING ON MUTE</b></li>
                     </ol>
-                <button style={nextButtonStyle} onClick={nextPage}>BEGIN</button>
+                <button style={nextButtonStyle} onClick={nextPage}>Next</button>
             </div>
         );
     }

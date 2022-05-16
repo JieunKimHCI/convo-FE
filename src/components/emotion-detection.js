@@ -2,18 +2,18 @@ import { useState, useEffect, KeyboardEvent} from "react";
 import { useLocation } from "react-router-dom";
 import { restUrl } from "..";
 
+var activeParticipants = [];
+var MeetingActive = true;
 
 function EmotionDetection() {
 
     const location = useLocation();
-    const [excited, setExcited] = useState(0.0);
-    const [frustrated, setFrustrated] = useState(0.0);
-    const [impolite, setImpolite] = useState(0.0);
-    const [polite, setPolite] = useState(0.0);
-    const [sad, setSad] = useState(0.0);
-    const [satisfied, setSatisfied] = useState(0.0);
-    const [sympathetic, setSympathetic] = useState(0.0);
-    const [interjection, setInterjection] = useState("");
+    const [meetingId, setMeetingId] = useState("");
+    const [accumulatedTranscript, setAccumulatedTranscript] = useState(""); 
+    // const [activeParticipants, setActiveParticipants] = useState([]);
+    const [message, setMessage] = useState();
+    const [dropdownOptionChose, setDropdownOptionChose] = useState("");
+    const [meetingActive, setMeetingActive] = useState(true);
 
     const emotionDetectionPopupStyle = {
         backgroundColor: 'white',
@@ -26,37 +26,6 @@ function EmotionDetection() {
         overflowY: 'auto',
     };
 
-    const padding_top = {
-        paddingTop : '2vh',
-    }
-
-    const padding_left = {
-        paddingLeft : '2vh',
-    }
-
-    const rowStyle = {
-        display: 'table',
-        clear: 'both',
-        width: '100%'
-    }
-
-    const column1Style = {
-        float: 'left',
-        width: '75%',
-        height: '90%',
-        border: '1px',
-        border: '1px solid',
-    
-    }
-
-    const column2Style = {
-        float: 'left',
-        width: '22%',
-        height: '69vh',
-        border: '1px solid',
-        paddingLeft: '1vh'
-    }
-
     const fullWidth = {
         width: '100%',
         height: '66vh'
@@ -68,23 +37,14 @@ function EmotionDetection() {
         paddingTop: '2vh',
     }
 
-    const handleKeyDown = (event) => {
-        const key = event.code; 
-        switch (key) {
-          case 'KeyW':
-            setInterjection("Let others speak")
-            break;
-          case 'KeyA':
-            setInterjection("You are being too aggressive");
-            break;
-          case 'KeyS':
-            setInterjection("Your are being too passive");
-            break;
-          case 'KeyD':
-            setInterjection("Participants are confused");
-            break;
-        }
-    }
+    const finishButtonStyle = {
+        backgroundColor: '#282c34',
+        color: 'white',
+        border: 'none',
+        cursor: 'pointer',
+        width: '99%',
+        padding: '2vh',
+    };
 
     function handleEmotion(meetingId){
         try{
@@ -100,16 +60,24 @@ function EmotionDetection() {
             .then(response => {
                 if(response.status === 200){
                     response.json().then( response => {
-                        setExcited(response.emotions.excited);
-                        setFrustrated(response.emotions.frustrated);
-                        setPolite(response.emotions.polite);
-                        setImpolite(response.emotions.impolite);
-                        setSad(response.emotions.sad);
-                        setSatisfied(response.emotions.satisfied);
-                        setSympathetic(response.emotions.sympathetic);
-                        let activeParticipantsList = "";
-                        for (let i of response.participants) activeParticipantsList += '<li>' + i + '</li>';
-                        document.getElementById('activeParticipants').innerHTML = activeParticipantsList;
+                        let same = true;
+                        if(activeParticipants.length == response.participants.length){
+                            for(let activeParticipant in activeParticipants){
+                                if(activeParticipants[activeParticipant] != response.participants[activeParticipant]){
+                                    same = false;
+                                    break;
+                                }
+                            }
+                        }
+                        else same = false;
+                        if(!same){
+                            activeParticipants = response.participants;
+                            let dropdownOptions = "<option value=''/>";
+                            for (let activeParticipant in response.participants){
+                                dropdownOptions += "<option value=" + response.participants[activeParticipant] + ">" + response.participants[activeParticipant] + "</option>"
+                            }
+                            document.getElementById('dropdown').innerHTML = dropdownOptions;
+                        }
                     });
                 }
                 else{
@@ -118,61 +86,122 @@ function EmotionDetection() {
             });
         }
         catch(error){
-            setExcited(0);
-            setFrustrated(0);
-            setPolite(0);
-            setImpolite(0);
-            setSad(0);
-            setSatisfied(0);
-            setSympathetic(0);
             alert('Something went wrong please refresh!');
         }
     }
- 
+    
+    function handleMessageInputChange(event) {
+        const value = event.target.value;
+        setMessage(value);
+    }
+
+    function handleDropdownOptionChange(event){
+        const value = event.target.value;
+        setDropdownOptionChose(value);
+    }
+
+    function sendMessage(event) {
+        const value = event.target.value
+        if(dropdownOptionChose === "") alert('Select a valid participant!')
+        else alert('Sending message ' + message + ' to ' + dropdownOptionChose);
+    }
+      
+    function getAccumulatedTranscript(meetingId){
+        try{
+            const url = restUrl + 'transcript?meetingId=' + meetingId;
+            fetch(url, {
+                method: 'GET',
+                mode: 'cors', 
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => {
+                if(response.status === 200){
+                    response.json().then( response => {
+                        setAccumulatedTranscript(response.transcript);
+                    });
+                }
+                else{
+                    alert('Something went wrong!')
+                    throw new Error();
+                }
+            });
+        }
+        catch(error){
+            console.log(error);
+        }
+    }
+
+    function endMeeting(){
+        try{
+            const url = restUrl + 'endMeeting';
+            fetch(url, {
+                method: 'POST',
+                mode: 'cors', 
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    'meetingId': meetingId,
+                }),
+            })
+            .then(response => {
+                if(response.status === 200){
+                   // do nothing
+                   MeetingActive = false;
+                   setMeetingActive(false);
+                }
+                else{
+                    alert('Something went wrong! Please try to end the meeting again.');
+                    throw new Error();
+                }
+            });
+        }
+        catch(error){
+            alert('Something went wrong! Please try to end the meeting again.');
+        }
+    }
 
     useEffect(() => {
         const interval = setInterval(() => {
-            handleEmotion(location.state.meetingId)
-        }, 15000);
+            if(MeetingActive){
+                setMeetingId(location.state.meetingId);
+                handleEmotion(location.state.meetingId);
+                getAccumulatedTranscript(location.state.meetingId);
+            }
+        }, 5000);
         return () => clearInterval(interval);
     }, [location]);
 
     return(
         <div style = {emotionDetectionPopupStyle}>
-            <div style={rowStyle}>
-                <div style={column1Style}>
-                    <div style={fullWidth}>
-                        <center>
-                            <h2>
-                                <b style={padding_top}>Excited: </b> {excited}
-                            </h2>
-                            <h2>
-                                <b style={padding_left}>Frustrated: </b> {frustrated}
-                            </h2>
-                            <h2>
-                                <b style={padding_left}>Polite: </b> {polite}
-                            </h2>
-                            <h2>
-                                <b style={padding_left}>Impolite: </b> {impolite}
-                            </h2>
-                            <h2>
-                                <b style={padding_left}>Sad: </b> {sad}
-                            </h2>
-                            <h2>
-                                <b style={padding_left}>Satisfied: </b> {satisfied}
-                            </h2>
-                            <h2>
-                                <b style={padding_left}>Sympathetic: </b> {sympathetic}
-                            </h2>
-                            <textarea style={textBoxStyle} autoFocus value = {interjection} onKeyDown={handleKeyDown} readOnly/> 
-                        </center>
-                    </div>
+            {MeetingActive && <div>
+                <div style={fullWidth}>
+                    <center>
+                        <h2>Meeting ID: {meetingId}</h2>
+                        <textarea style={textBoxStyle} value = {accumulatedTranscript} readOnly/>
+                    </center>
                 </div>
-                <div style={column2Style}>
-                    <h3>Active Participants</h3>
-                    <ol id="activeParticipants"></ol>
+                <div>
+                    <label>Message: </label>
+                    &nbsp;&nbsp;
+                    <input type="text" name="text" onChange={handleMessageInputChange} />
+                    <label>Send To: </label>
+                    <select id='dropdown' onChange={handleDropdownOptionChange}/>
+                    <button onClick={sendMessage}>Send</button>
                 </div>
-            </div>
+                <button style={finishButtonStyle} onClick={endMeeting}>End meeting</button>
+            </div>}
+            {!MeetingActive && <div>
+                <div style={fullWidth}>
+                    <center>
+                        <h2>Meeting ID: {meetingId} was ended by the admin.</h2>
+                    </center>
+                </div>
+            </div>}
         </div>
     );
 }

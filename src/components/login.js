@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import { restUrl } from "..";
 
 function Login (){
     
@@ -45,13 +45,40 @@ function Login (){
         setMeetingId(value)
     }
 
-    function login(){
-        history.push({
-            pathname: '/admin',
-            state: {
-                meetingId: meetingId,
-            },
-        });
+    function createMeeting(){
+        try{
+            const url = restUrl + 'createMeeting';
+            fetch(url, {
+                method: 'POST',
+                mode: 'cors', 
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    'meetingId': meetingId,
+                }),
+            })
+            .then(response => {
+                if(response.status === 200){
+                    history.push({
+                        pathname: '/admin',
+                        state: {
+                            meetingId: meetingId,
+                        },
+                    });
+                }
+                else if(response.status === 300){
+                    alert('The meeting id that was entered was used previously. Please enter a new meeting id.')
+                }
+                else{
+                    throw new Error();
+                }
+            })
+        }
+        catch(error){
+            console.log('error', error);
+        }
     }
 
     return(
@@ -65,18 +92,12 @@ function Login (){
                     <input 
                         style = {meetingId === "" ? loginButtonDisabledStyle : loginButtonEnabledStyle } 
                         type="button" 
-                        value="Start Meeting" 
-                        onClick={login}
+                        value="Create Meeting" 
+                        onClick={createMeeting}
                         disabled = {meetingId === ""} 
                     /> 
                 </div>
             </form>
-            <div>
-                <h4>INSTRUCTIONS</h4>
-                <ol>
-                    <li>Please share the next screen on Zoom</li>
-                </ol>
-            </div>
         </div>
     );
 }

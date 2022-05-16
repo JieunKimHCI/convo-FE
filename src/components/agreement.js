@@ -57,13 +57,16 @@ function Agreement (){
                         },
                     });
                 }
+                if(response.status === 300){
+                    alert("Please check the meeting id. If the issue persists, please contact the admin.")
+                }
                 else throw new Error();
             });
         }
         catch{
-            alert("Unable to get data")
+            alert("Please check the meeting id. If the issue persists, please contact the admin.")
         }
-        }
+    }
 
     const agreementPopupStyle = {
         backgroundColor: 'white',
