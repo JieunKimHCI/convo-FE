@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import { restUrl } from "..";
 
-function Agreement (){
+function UserConsent (){
 
     const [name, setName] = useState('');
     const [netId, setNetId] = useState('');
@@ -57,10 +57,12 @@ function Agreement (){
                         },
                     });
                 }
-                if(response.status === 300){
+                else if(response.status === 300){
                     alert("Please check the meeting id. If the issue persists, please contact the admin.")
                 }
-                else throw new Error();
+                else{
+                    throw new Error();
+                }
             });
         }
         catch{
@@ -163,4 +165,4 @@ function Agreement (){
     );
 }
 
-export default Agreement;
+export default UserConsent;

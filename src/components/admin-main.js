@@ -6,24 +6,19 @@ var activeParticipants = [];
 var MeetingActive = true;
 let record = null;
 const { DeepstreamClient } = window.DeepstreamClient;
-const client = new DeepstreamClient('localhost:6020');
-// const client = new DeepstreamClient(deepStreamUrl);
+const client = new DeepstreamClient('wss://desolate-spire-52971.herokuapp.com:6020');
 client.login();
 
-function EmotionDetection() {
+function AdminMain() {
 
     const location = useLocation();
     const [meetingId, setMeetingId] = useState("");
     const [accumulatedTranscript, setAccumulatedTranscript] = useState(""); 
-    // const [activeParticipants, setActiveParticipants] = useState([]);
     const [message, setMessage] = useState();
     const [dropdownOptionChose, setDropdownOptionChose] = useState("");
     const [meetingActive, setMeetingActive] = useState(true);
     const [summary, setSummary] = useState("");
     const [keywords, setKeywords] = useState("");
-    // const { DeepstreamClient } = window.DeepstreamClient;
-    // const client = new DeepstreamClient(deepStreamUrl);
-    // client.login();
 
     const emotionDetectionPopupStyle = {
         backgroundColor: 'white',
@@ -109,7 +104,7 @@ function EmotionDetection() {
 
     function handleEmotion(meetingId){
         try{
-            const url = restUrl + 'emotions?meetingId=' + meetingId;
+            const url = restUrl + 'participants?meetingId=' + meetingId;
             fetch(url, {
                 method: 'GET',
                 mode: 'cors', 
@@ -166,7 +161,9 @@ function EmotionDetection() {
         else if(message === "") alert('Message is empty!');
         else{
             record.set(dropdownOptionChose, message);
-            // alert('Sending message ' + message + ' to ' + dropdownOptionChose);
+            alert('Message sent to ' + dropdownOptionChose);
+            setMessage("");
+            setDropdownOptionChose("");
         }
     }
       
@@ -323,9 +320,9 @@ function EmotionDetection() {
                 <div>
                     <center>
                         <label>Message: </label>
-                        <input style={inputTextStyle} type="text" name="text" onChange={handleMessageInputChange} />
+                        <input style={inputTextStyle} id='messageInput' type="text" value={message} onChange={handleMessageInputChange} />
                         <label>  Send To: </label>
-                        <select style={dropDownStyle} id='dropdown' onChange={handleDropdownOptionChange}/>
+                        <select style={dropDownStyle} id='dropdown' value={dropdownOptionChose} onChange={handleDropdownOptionChange}/>
                         &nbsp;&nbsp;
                         <button style={(message == "" || dropdownOptionChose == "") ? sendButtonStyleDisabled : sendButtonStyleEnabled} onClick={sendMessage} disabled={message == "" || dropdownOptionChose == ""}>Send</button>
                     </center>
@@ -363,4 +360,4 @@ function EmotionDetection() {
         </div>
     );
 }
-export default EmotionDetection;
+export default AdminMain;

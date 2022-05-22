@@ -42,7 +42,7 @@ function Instructions(){
     }
     
     function nextPage(){
-        history.push('/agreement')
+        history.push('/user-consent')
     }
 
     return(

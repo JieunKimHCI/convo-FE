@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { restUrl } from "..";
 
-function Login (){
+function CreateMeeting (){
     
     const history = useHistory();
     const [meetingId, setMeetingId] = useState("");
@@ -108,4 +108,4 @@ function Login (){
     );
 }
 
-export default Login;
+export default CreateMeeting;

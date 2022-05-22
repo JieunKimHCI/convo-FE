@@ -9,8 +9,7 @@ let NetId = '';
 let sendDataBool = true;
 let record = null;
 const { DeepstreamClient } = window.DeepstreamClient;
-const client = new DeepstreamClient('localhost:6020');
-// const client = new DeepstreamClient(deepStreamUrl);
+const client = new DeepstreamClient('wss://desolate-spire-52971.herokuapp.com:6020');
 client.login();
 
 function ClientMain(){
@@ -25,10 +24,6 @@ function ClientMain(){
     const [sympathetic, setSympathetic] = useState('0.00');
     const [currentTranscript, setCurrentTranscipt] = useState("");
     const [meetingId, setMeetingId] = useState("");
-    // const { DeepstreamClient } = window.DeepstreamClient;
-    // const client = new DeepstreamClient(deepStreamUrl);
-    // client.login();
-
     
     const instructionsPopupStyle = {
         backgroundColor: 'white',
@@ -160,7 +155,7 @@ function ClientMain(){
                 <center>
                     <h3>Now you are joining in a meeting</h3>
                     <h3>Meeting ID: {meetingId}</h3>
-                    <textarea style={textareaStyle} rows = "10" value={currentTranscript}></textarea>
+                    <textarea style={textareaStyle} rows = "10" value={currentTranscript} readOnly></textarea>
                     <h3>Your emotion is detected by the agent</h3>
                     <p>
                         Excited: {excited}, Frustrated: {frustrated}, Polite: {polite}, Impolite: {impolite}, Sad: {sad}, Satisfied: {satisfied}, Sympathetic: {sympathetic}

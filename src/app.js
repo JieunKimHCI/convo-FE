@@ -1,10 +1,10 @@
 import React from 'react';
-import Agreement from './components/agreement';
+import UserConsent from './components/user-consent';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import EmotionDetection from './components/emotion-detection';
+import AdminMain from './components/admin-main';
 import Instructions from './components/instructions';
 import ClientMain from './components/client-main';
-import Login from './components/login';
+import CreateMeeting from './components/create-meeting';
 import Summary from './components/summary';
 
 function App() {
@@ -12,11 +12,11 @@ function App() {
         <div className='App'>
             <BrowserRouter>
                 <Switch>
-                <Route path="/login">
-                        <Login />
+                    <Route path="/create-meeting">
+                        <CreateMeeting />
                     </Route>
                     <Route path="/admin">
-                        <EmotionDetection />
+                        <AdminMain />
                     </Route>
                     <Route path="/client">
                         <ClientMain />
@@ -24,8 +24,8 @@ function App() {
                     <Route path="/summary">
                         <Summary />
                     </Route>
-                    <Route path="/agreement">
-                        <Agreement />
+                    <Route path="/user-consent">
+                        <UserConsent />
                     </Route>
                     <Route path="/">
                         <Instructions />
