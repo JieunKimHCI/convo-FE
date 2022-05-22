@@ -165,7 +165,7 @@ function ClientMain(){
                     <p>
                         Excited: {excited}, Frustrated: {frustrated}, Polite: {polite}, Impolite: {impolite}, Sad: {sad}, Satisfied: {satisfied}, Sympathetic: {sympathetic}
                     </p>
-                    <button style={finishButtonStyle} onClick={() => {endMeeting();SpeechRecognition.stopListening();}}>End meeting</button>
+                    <button style={finishButtonStyle} onClick={endMeeting}>End meeting</button>
                 </center>
             </div>}
             {!sendDataBool && <div>
