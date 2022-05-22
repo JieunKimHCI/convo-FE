@@ -80,7 +80,7 @@ function ClientMain(){
 
     function sendData(netId, meetingId, transcript){
         try{
-            if(transcript != ""){
+            // if(transcript != ""){
                 const url = restUrl + 'pollconversation';
                 const text = transcript;
                 setCurrentTranscipt(currentTranscript + (currentTranscript=="" ? "" : ". ") + text);
@@ -115,7 +115,7 @@ function ClientMain(){
                         throw new Error();
                     }
                 });
-            }
+            // }
         }
         catch(error){
             console.log(error);
