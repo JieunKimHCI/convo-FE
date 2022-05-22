@@ -250,7 +250,7 @@ function EmotionDetection() {
                         setSummary(response.summary);
                     });
                 }
-                else if(response.status === 300){
+                else if(response.status === 404){
                     alert('Enter a valid meeting ID');
                 }
                 else{
@@ -283,7 +283,7 @@ function EmotionDetection() {
                         setKeywords(response.keywords);
                     });
                 }
-                else if(response.status === 300){
+                else if(response.status === 404){
                     alert('Enter a valid meeting ID');
                 }
                 else{
