@@ -4,8 +4,9 @@ import './index.css';
 import App from './app.js'
 
 // make this variable false for remote
-const useLocal = true;
+const useLocal = false;
 export const restUrl = useLocal ? "http://localhost:5000/" : "https://convo-may.herokuapp.com/";
+export const deepStreamUrl = useLocal ? "http://localhost:6020" : "https://convo-may.herokuapp.com/";
 
 ReactDOM.render(
   <React.StrictMode>

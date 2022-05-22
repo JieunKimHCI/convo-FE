@@ -2,14 +2,14 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition/lib/SpeechRecognition";
-import { restUrl } from "..";
+import { restUrl, deepStreamUrl } from "..";
 
 let MeetingId = '';
 let NetId = '';
 let sendDataBool = true;
 let record = null;
 const { DeepstreamClient } = window.DeepstreamClient;
-const client = new DeepstreamClient('localhost:6020');
+const client = new DeepstreamClient(deepStreamUrl);
 client.login();
 
 function ClientMain(){

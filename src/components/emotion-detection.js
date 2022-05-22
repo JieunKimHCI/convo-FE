@@ -6,7 +6,7 @@ var activeParticipants = [];
 var MeetingActive = true;
 let record = null;
 const { DeepstreamClient } = window.DeepstreamClient;
-const client = new DeepstreamClient('localhost:6020');
+const client = new DeepstreamClient(deepStreamUrl);
 client.login();
 
 function EmotionDetection() {
