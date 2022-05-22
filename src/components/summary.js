@@ -53,61 +53,79 @@ function Summary (){
     }
     
     function getSummary(){
-        const url = restUrl + 'summary';
-        fetch(url, {
-            method: 'POST',
-            mode: 'cors', 
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                'meetingId': meetingId,
-            }),
-        })
-        .then(response => {
-            if(response.status === 200){
-                response.json().then( response => {
-                    setSummary(response.summary);
-                });
-            }
-            else{
-                throw new Error();
-            }
-        });
+        try{
+            const url = restUrl + 'summary';
+            fetch(url, {
+                method: 'POST',
+                mode: 'cors', 
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    'meetingId': meetingId,
+                }),
+            })
+            .then(response => {
+                if(response.status === 200){
+                    response.json().then( response => {
+                        setSummary(response.summary);
+                    });
+                }
+                else if(response.status === 300){
+                    alert('Enter a valid meeting ID');
+                }
+                else{
+                    throw new Error();
+                }
+            });
+        }
+        catch(error){
+            alert('Something went wrong!');
+        }
     }
 
     function getKeywords(){
-        const url = restUrl + 'keywords';
-        fetch(url, {
-            method: 'POST',
-            mode: 'cors', 
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                'meetingId': meetingId,
-            }),
-        })
-        .then(response => {
-            if(response.status === 200){
-                response.json().then( response => {
-                    setKeywords(response.keywords);
-                });
-            }
-            else{
-                throw new Error();
-            }
-        });
+        try{
+            const url = restUrl + 'keywords';
+            fetch(url, {
+                method: 'POST',
+                mode: 'cors', 
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    'meetingId': meetingId,
+                }),
+            })
+            .then(response => {
+                if(response.status === 200){
+                    response.json().then( response => {
+                        setKeywords(response.keywords);
+                    });
+                }
+                else if(response.status === 300){
+                    alert('Enter a valid meeting ID');
+                }
+                else{
+                    throw new Error();
+                }
+            });
+        }
+        catch(error){
+            alert('Something went wrong!');
+        }
     }
 
     return(
         <div style = {summaryPopupStyle} id = 'summary'>
             <form>
                 <div style={padding_top}>
-                    <b>Meeting ID</b>&nbsp;&nbsp;
-                    <input id = 'meetingId' name='meetingId' onChange={handleTextInputChange} />
+                    <center>
+                        <b>Meeting ID</b>&nbsp;&nbsp;
+                        <input id = 'meetingId' name='meetingId' onChange={handleTextInputChange} />
+                    </center>
                 </div>
                 <div style={padding_top}>
                     <input 

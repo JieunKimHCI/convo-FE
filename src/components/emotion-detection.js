@@ -1,12 +1,13 @@
 import { useState, useEffect, KeyboardEvent} from "react";
 import { useLocation } from "react-router-dom";
-import { restUrl } from "..";
+import { restUrl, deepStreamUrl } from "..";
 
 var activeParticipants = [];
 var MeetingActive = true;
 let record = null;
 const { DeepstreamClient } = window.DeepstreamClient;
-const client = new DeepstreamClient(deepStreamUrl);
+const client = new DeepstreamClient('localhost:6020');
+// const client = new DeepstreamClient(deepStreamUrl);
 client.login();
 
 function EmotionDetection() {
@@ -18,6 +19,11 @@ function EmotionDetection() {
     const [message, setMessage] = useState();
     const [dropdownOptionChose, setDropdownOptionChose] = useState("");
     const [meetingActive, setMeetingActive] = useState(true);
+    const [summary, setSummary] = useState("");
+    const [keywords, setKeywords] = useState("");
+    // const { DeepstreamClient } = window.DeepstreamClient;
+    // const client = new DeepstreamClient(deepStreamUrl);
+    // client.login();
 
     const emotionDetectionPopupStyle = {
         backgroundColor: 'white',
@@ -48,13 +54,49 @@ function EmotionDetection() {
         padding: '2vh',
     };
 
-    const sendButtonStyle = {
+    const sendButtonStyleEnabled = {
         backgroundColor: '#282c34',
         color: 'white',
         border: 'none',
         cursor: 'pointer',
         width: '10%',
         padding: '0.5vh',
+    }
+
+    const sendButtonStyleDisabled = {
+        backgroundColor: 'grey',
+        color: 'white',
+        border: 'none',
+        cursor: 'pointer',
+        width: '10%',
+        padding: '0.5vh',
+    }
+
+    const padding_top = {
+        paddingTop : '5vh',
+    }
+
+    const buttonEnabledStyle = {
+        backgroundColor: '#282c34',
+        color: 'white',
+        border: 'none',
+        cursor: 'pointer',
+        width: '99%',
+        padding: '2vh',
+    }
+
+    const buttonDisabledStyle = {
+        backgroundColor: 'grey',
+        color: 'white',
+        border: 'none',
+        cursor: 'pointer',
+        width: '99%',
+        padding: '2vh',
+    }
+
+    const summaryTextBoxStyle = {
+        width: '98%',
+        height: '15vh',
     }
 
     const inputTextStyle = {
@@ -120,9 +162,10 @@ function EmotionDetection() {
     }
 
     function sendMessage(event) {
-        if(dropdownOptionChose === "") alert('Select a valid participant!')
+        if(dropdownOptionChose === "") alert('Select a valid participant!');
+        else if(message === "") alert('Message is empty!');
         else{
-            record.set('intervention', message);
+            record.set(dropdownOptionChose, message);
             // alert('Sending message ' + message + ' to ' + dropdownOptionChose);
         }
     }
@@ -187,6 +230,72 @@ function EmotionDetection() {
         }
     }
 
+    function getSummary(){
+        try{
+            const url = restUrl + 'summary';
+            fetch(url, {
+                method: 'POST',
+                mode: 'cors', 
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    'meetingId': meetingId,
+                }),
+            })
+            .then(response => {
+                if(response.status === 200){
+                    response.json().then( response => {
+                        setSummary(response.summary);
+                    });
+                }
+                else if(response.status === 300){
+                    alert('Enter a valid meeting ID');
+                }
+                else{
+                    throw new Error();
+                }
+            });
+        }
+        catch(error){
+            alert('Something went wrong!');
+        }
+    }
+
+    function getKeywords(){
+        try{
+            const url = restUrl + 'keywords';
+            fetch(url, {
+                method: 'POST',
+                mode: 'cors', 
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    'meetingId': meetingId,
+                }),
+            })
+            .then(response => {
+                if(response.status === 200){
+                    response.json().then( response => {
+                        setKeywords(response.keywords);
+                    });
+                }
+                else if(response.status === 300){
+                    alert('Enter a valid meeting ID');
+                }
+                else{
+                    throw new Error();
+                }
+            });
+        }
+        catch(error){
+            alert('Something went wrong!');
+        }
+    }
+
     useEffect(() => {
         const interval = setInterval(() => {
             if(MeetingActive){
@@ -218,7 +327,7 @@ function EmotionDetection() {
                         <label>  Send To: </label>
                         <select style={dropDownStyle} id='dropdown' onChange={handleDropdownOptionChange}/>
                         &nbsp;&nbsp;
-                        <button style={sendButtonStyle} onClick={sendMessage}>Send</button>
+                        <button style={(message == "" || dropdownOptionChose == "") ? sendButtonStyleDisabled : sendButtonStyleEnabled} onClick={sendMessage} disabled={message == "" || dropdownOptionChose == ""}>Send</button>
                     </center>
                 </div>
                 <br></br>
@@ -229,6 +338,26 @@ function EmotionDetection() {
                     <center>
                         <h2>Meeting ID: {meetingId} was ended by the admin.</h2>
                     </center>
+                    <div style={padding_top}>
+                        <input 
+                            style = {meetingId === "" ? buttonDisabledStyle : buttonEnabledStyle } 
+                            type="button" 
+                            value="Get Summary" 
+                            onClick={getSummary}
+                            disabled = {meetingId === ""} 
+                        /> 
+                        <textarea value={summary} style={summaryTextBoxStyle} readOnly></textarea>
+                    </div>
+                    <div style={padding_top}>
+                        <input 
+                            style = {meetingId === "" ? buttonDisabledStyle : buttonEnabledStyle } 
+                            type="button" 
+                            value="Get Keywords" 
+                            onClick={getKeywords}
+                            disabled = {meetingId === ""} 
+                        /> 
+                        <textarea value={keywords} style={summaryTextBoxStyle} readOnly></textarea>
+                    </div>
                 </div>
             </div>}
         </div>

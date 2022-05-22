@@ -9,7 +9,8 @@ let NetId = '';
 let sendDataBool = true;
 let record = null;
 const { DeepstreamClient } = window.DeepstreamClient;
-const client = new DeepstreamClient(deepStreamUrl);
+const client = new DeepstreamClient('localhost:6020');
+// const client = new DeepstreamClient(deepStreamUrl);
 client.login();
 
 function ClientMain(){
@@ -24,6 +25,9 @@ function ClientMain(){
     const [sympathetic, setSympathetic] = useState('0.00');
     const [currentTranscript, setCurrentTranscipt] = useState("");
     const [meetingId, setMeetingId] = useState("");
+    // const { DeepstreamClient } = window.DeepstreamClient;
+    // const client = new DeepstreamClient(deepStreamUrl);
+    // client.login();
 
     
     const instructionsPopupStyle = {
@@ -131,7 +135,7 @@ function ClientMain(){
             setMeetingId(MeetingId);
             if(record == null){
                 record = client.record.getRecord(location.state.meetingId);
-                record.subscribe('intervention', function(value) {
+                record.subscribe(location.state.netId, function(value) {
                     alert('Intervention: ' + value);
                 }); 
                 record.subscribe('endMeeting', function(value) {
