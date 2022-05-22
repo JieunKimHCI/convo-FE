@@ -27,7 +27,7 @@ function Login (){
         color: 'white',
         border: 'none',
         cursor: 'pointer',
-        width: '99%',
+        width: '40%',
         padding: '2vh',
     }
 
@@ -36,8 +36,12 @@ function Login (){
         color: 'white',
         border: 'none',
         cursor: 'pointer',
-        width: '99%',
+        width: '40%',
         padding: '2vh',
+    }
+
+    const innerBoxStyle = {
+        padding: '20vh',
     }
 
     function handleTextInputChange(event){
@@ -83,21 +87,23 @@ function Login (){
 
     return(
         <div style = {loginPopupStyle} id = 'login'>
-            <form>
-                <div style={padding_top}>
-                    <b>Meeting ID</b>&nbsp;&nbsp;
-                    <input id = 'meetingId' name='meetingId' onChange={handleTextInputChange} />
-                </div>
-                <div style={padding_top}>
-                    <input 
-                        style = {meetingId === "" ? loginButtonDisabledStyle : loginButtonEnabledStyle } 
-                        type="button" 
-                        value="Create Meeting" 
-                        onClick={createMeeting}
-                        disabled = {meetingId === ""} 
-                    /> 
-                </div>
-            </form>
+            <center>
+                <form style={innerBoxStyle}>
+                    <div style={padding_top}>
+                        <b>Meeting ID</b>&nbsp;&nbsp;
+                        <input id = 'meetingId' name='meetingId' onChange={handleTextInputChange} />
+                    </div>
+                    <div style={padding_top}>
+                        <input 
+                            style = {meetingId === "" ? loginButtonDisabledStyle : loginButtonEnabledStyle } 
+                            type="button" 
+                            value="Create Meeting" 
+                            onClick={createMeeting}
+                            disabled = {meetingId === ""} 
+                        /> 
+                    </div>
+                </form>
+            </center>
         </div>
     );
 }

@@ -4,6 +4,10 @@ import { restUrl } from "..";
 
 var activeParticipants = [];
 var MeetingActive = true;
+let record = null;
+const { DeepstreamClient } = window.DeepstreamClient;
+const client = new DeepstreamClient('localhost:6020');
+client.login();
 
 function EmotionDetection() {
 
@@ -28,13 +32,11 @@ function EmotionDetection() {
 
     const fullWidth = {
         width: '100%',
-        height: '66vh'
     }
 
     const textBoxStyle = {
-        width: '98%',
-        height: '7vh',
-        paddingTop: '2vh',
+        maxWidth: '99%',
+        width: '99%',
     }
 
     const finishButtonStyle = {
@@ -42,9 +44,26 @@ function EmotionDetection() {
         color: 'white',
         border: 'none',
         cursor: 'pointer',
-        width: '99%',
+        width: '100%',
         padding: '2vh',
     };
+
+    const sendButtonStyle = {
+        backgroundColor: '#282c34',
+        color: 'white',
+        border: 'none',
+        cursor: 'pointer',
+        width: '10%',
+        padding: '0.5vh',
+    }
+
+    const inputTextStyle = {
+        width: '50%',
+    };
+
+    const dropDownStyle = {
+        width: '15%',
+    }
 
     function handleEmotion(meetingId){
         try{
@@ -101,9 +120,11 @@ function EmotionDetection() {
     }
 
     function sendMessage(event) {
-        const value = event.target.value
         if(dropdownOptionChose === "") alert('Select a valid participant!')
-        else alert('Sending message ' + message + ' to ' + dropdownOptionChose);
+        else{
+            record.set('intervention', message);
+            // alert('Sending message ' + message + ' to ' + dropdownOptionChose);
+        }
     }
       
     function getAccumulatedTranscript(meetingId){
@@ -153,6 +174,7 @@ function EmotionDetection() {
                    // do nothing
                    MeetingActive = false;
                    setMeetingActive(false);
+                   record.set('endMeeting', 'true');
                 }
                 else{
                     alert('Something went wrong! Please try to end the meeting again.');
@@ -172,6 +194,9 @@ function EmotionDetection() {
                 handleEmotion(location.state.meetingId);
                 getAccumulatedTranscript(location.state.meetingId);
             }
+            if(record == null){
+                record = client.record.getRecord(location.state.meetingId);
+            }
         }, 5000);
         return () => clearInterval(interval);
     }, [location]);
@@ -182,17 +207,21 @@ function EmotionDetection() {
                 <div style={fullWidth}>
                     <center>
                         <h2>Meeting ID: {meetingId}</h2>
-                        <textarea style={textBoxStyle} value = {accumulatedTranscript} readOnly/>
+                        <textarea rows = "14" style={textBoxStyle} value = {accumulatedTranscript} readOnly/>
                     </center>
                 </div>
+                <br></br>
                 <div>
-                    <label>Message: </label>
-                    &nbsp;&nbsp;
-                    <input type="text" name="text" onChange={handleMessageInputChange} />
-                    <label>Send To: </label>
-                    <select id='dropdown' onChange={handleDropdownOptionChange}/>
-                    <button onClick={sendMessage}>Send</button>
+                    <center>
+                        <label>Message: </label>
+                        <input style={inputTextStyle} type="text" name="text" onChange={handleMessageInputChange} />
+                        <label>  Send To: </label>
+                        <select style={dropDownStyle} id='dropdown' onChange={handleDropdownOptionChange}/>
+                        &nbsp;&nbsp;
+                        <button style={sendButtonStyle} onClick={sendMessage}>Send</button>
+                    </center>
                 </div>
+                <br></br>
                 <button style={finishButtonStyle} onClick={endMeeting}>End meeting</button>
             </div>}
             {!MeetingActive && <div>

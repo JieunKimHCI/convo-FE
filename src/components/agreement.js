@@ -73,7 +73,7 @@ function Agreement (){
         color: 'black',
         zIndex : '9',
         width : '125vh',
-        height : '70vh',
+        height : '75vh',
         textAlign : 'left',
         padding : '2vh',
         overflowY: 'auto',

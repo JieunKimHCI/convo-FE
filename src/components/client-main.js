@@ -7,18 +7,23 @@ import { restUrl } from "..";
 let MeetingId = '';
 let NetId = '';
 let sendDataBool = true;
+let record = null;
+const { DeepstreamClient } = window.DeepstreamClient;
+const client = new DeepstreamClient('localhost:6020');
+client.login();
 
 function ClientMain(){
 
     const location = useLocation();
-    const [excited, setExcited] = useState(0.0);
-    const [frustrated, setFrustrated] = useState(0.0);
-    const [impolite, setImpolite] = useState(0.0);
-    const [polite, setPolite] = useState(0.0);
-    const [sad, setSad] = useState(0.0);
-    const [satisfied, setSatisfied] = useState(0.0);
-    const [sympathetic, setSympathetic] = useState(0.0);
+    const [excited, setExcited] = useState('0.00');
+    const [frustrated, setFrustrated] = useState('0.00');
+    const [impolite, setImpolite] = useState('0.00');
+    const [polite, setPolite] = useState('0.00');
+    const [sad, setSad] = useState('0.00');
+    const [satisfied, setSatisfied] = useState('0.00');
+    const [sympathetic, setSympathetic] = useState('0.00');
     const [currentTranscript, setCurrentTranscipt] = useState("");
+    const [meetingId, setMeetingId] = useState("");
 
     
     const instructionsPopupStyle = {
@@ -40,6 +45,11 @@ function ClientMain(){
         width: '99%',
         padding: '2vh',
     };
+
+    const textareaStyle = {
+        maxWidth: '99%',
+        width: '99%',
+    }
 
     const {
         transcript,
@@ -74,7 +84,7 @@ function ClientMain(){
             if(transcript != ""){
                 const url = restUrl + 'pollconversation';
                 const text = transcript;
-                setCurrentTranscipt(currentTranscript + text);
+                setCurrentTranscipt(currentTranscript + (currentTranscript=="" ? "" : ". ") + text);
                 resetTranscript();
                 fetch(url, {
                     method: 'POST',
@@ -93,13 +103,13 @@ function ClientMain(){
                 .then(response => {
                     if(response.status === 200){
                         response.json().then( response => {
-                            setExcited(response.emotions.excited);
-                            setFrustrated(response.emotions.frustrated);
-                            setPolite(response.emotions.polite);
-                            setImpolite(response.emotions.impolite);
-                            setSad(response.emotions.sad);
-                            setSatisfied(response.emotions.satisfied);
-                            setSympathetic(response.emotions.sympathetic);
+                            setExcited(Math.round(response.emotions.excited).toFixed(2));
+                            setFrustrated(Math.round(response.emotions.frustrated).toFixed(2));
+                            setPolite(Math.round(response.emotions.polite).toFixed(2));
+                            setImpolite(Math.round(response.emotions.impolite).toFixed(2));
+                            setSad(Math.round(response.emotions.sad).toFixed(2));
+                            setSatisfied(Math.round(response.emotions.satisfied).toFixed(2));
+                            setSympathetic(Math.round(response.emotions.sympathetic).toFixed(2));
                         });
                     }
                     else{
@@ -118,6 +128,18 @@ function ClientMain(){
         const interval = setInterval(() => {
             NetId = location.state.netId;
             MeetingId = location.state.meetingId;
+            setMeetingId(MeetingId);
+            if(record == null){
+                record = client.record.getRecord(location.state.meetingId);
+                record.subscribe('intervention', function(value) {
+                    alert('Intervention: ' + value);
+                }); 
+                record.subscribe('endMeeting', function(value) {
+                    if(value == 'true'){
+                        endMeeting();
+                    }
+                })
+            }
             if(sendDataBool){
                 sendData(location.state.netId, location.state.meetingId, transcript);
             }
@@ -131,17 +153,21 @@ function ClientMain(){
     return(
         <div onLoadStart = {SpeechRecognition.startListening({continuous: true})} style={instructionsPopupStyle} id = 'clientMain'>
             {sendDataBool && <div>
-                <h3>Now you are joining in a meeting</h3>
-                <h3>Meeting ID: {MeetingId}</h3>
-                <textarea value={currentTranscript}></textarea>
-                <h3>Your emotion is detected by the agent</h3>
-                <p>
-                    Excited: {excited}, Frustrated: {frustrated}, Polite: {polite}, Impolite: {impolite}, Sad: {sad}, Satisfied: {satisfied}, Sympathetic: {sympathetic}
-                </p>
-                <button style={finishButtonStyle} onClick={() => {endMeeting();SpeechRecognition.startListening();}}>End meeting</button>
+                <center>
+                    <h3>Now you are joining in a meeting</h3>
+                    <h3>Meeting ID: {meetingId}</h3>
+                    <textarea style={textareaStyle} rows = "10" value={currentTranscript}></textarea>
+                    <h3>Your emotion is detected by the agent</h3>
+                    <p>
+                        Excited: {excited}, Frustrated: {frustrated}, Polite: {polite}, Impolite: {impolite}, Sad: {sad}, Satisfied: {satisfied}, Sympathetic: {sympathetic}
+                    </p>
+                    <button style={finishButtonStyle} onClick={() => {endMeeting();SpeechRecognition.stopListening();}}>End meeting</button>
+                </center>
             </div>}
             {!sendDataBool && <div>
-                <h3>The meeting has ended.</h3>
+                <center>
+                    <h3>The meeting has ended.</h3>
+                </center>
             </div>}
         </div>
         );

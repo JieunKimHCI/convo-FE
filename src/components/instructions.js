@@ -23,12 +23,21 @@ function Instructions(){
         paddingTop : '2vh',
     }
 
+    const bulletStyle = {
+        padding : '2vh',
+        textAlign: 'left',
+    }
+
+    const innerBoxStyle = {
+        width : '70%',
+    }
+
     const nextButtonStyle = {
         backgroundColor: '#282c34',
         color: 'white',
         border: 'none',
         cursor: 'pointer',
-        width: '99%',
+        width: '40%',
         padding: '2vh',
     }
     
@@ -38,17 +47,19 @@ function Instructions(){
 
     return(
         <div style={instructionsPopupStyle} id = 'instructions'>
-                <h1>INSTRUCTIONS</h1>
+            <center>
+                <div style={innerBoxStyle}>
+                    <h2>Please follow the instructions carefully and check the box next to each instruction</h2>
                     <ol>
-                        <li>Fill out the agreement to start using the software and participate in this study</li>
-                        <li>Enable Microphone access on your browser when prompted</li>
-                        <li>Click on the Microphone Icon to start recording </li>
-                        <li>Double click on the Microphone Icon to stop recording </li>
-                        <li>Click on the show emotions button to analyze emotions</li>
-                        <li><b>PLEASE AVOID GOING ON MUTE</b></li>
+                        <li style={bulletStyle}>Enable Microphone access on your browser when prompted</li>
+                        <li style={bulletStyle}>Fill out the consent form to start using the software and participate in the study</li>
+                        <li style={bulletStyle}>Enter the meeting ID given by the researcher</li>
+                        <li style={bulletStyle}><b>PLEASE AVOID GOING ON MUTE</b></li>
                     </ol>
-                <button style={nextButtonStyle} onClick={nextPage}>Next</button>
-            </div>
+                    <button style={nextButtonStyle} onClick={nextPage}>Begin</button>
+                </div>      
+            </center>  
+        </div>
         );
     }
 export default Instructions;
