@@ -9,7 +9,7 @@ let NetId = '';
 let sendDataBool = true;
 let record = null;
 const { DeepstreamClient } = window.DeepstreamClient;
-const client = new DeepstreamClient('wss://desolate-spire-52971.herokuapp.com:6020');
+const client = new DeepstreamClient('wss://desolate-spire-52971.herokuapp.com');
 client.login();
 
 function ClientMain(){
@@ -83,7 +83,9 @@ function ClientMain(){
             // if(transcript != ""){
                 const url = restUrl + 'pollconversation';
                 const text = transcript;
-                setCurrentTranscipt(currentTranscript + (currentTranscript=="" ? "" : ". ") + text);
+                if(text != ""){
+                    setCurrentTranscipt(currentTranscript + (currentTranscript=="" ? "" : ". ") + text);
+                }
                 resetTranscript();
                 fetch(url, {
                     method: 'POST',
@@ -102,13 +104,13 @@ function ClientMain(){
                 .then(response => {
                     if(response.status === 200){
                         response.json().then( response => {
-                            setExcited(Math.round(response.emotions.excited).toFixed(2));
-                            setFrustrated(Math.round(response.emotions.frustrated).toFixed(2));
-                            setPolite(Math.round(response.emotions.polite).toFixed(2));
-                            setImpolite(Math.round(response.emotions.impolite).toFixed(2));
-                            setSad(Math.round(response.emotions.sad).toFixed(2));
-                            setSatisfied(Math.round(response.emotions.satisfied).toFixed(2));
-                            setSympathetic(Math.round(response.emotions.sympathetic).toFixed(2));
+                            setExcited(Math.round(response.emotions.excited * 100) / 100);
+                            setFrustrated(Math.round(response.emotions.frustrated * 100) / 100);
+                            setPolite(Math.round(response.emotions.polite * 100) / 100);
+                            setImpolite(Math.round(response.emotions.impolite * 100) / 100);
+                            setSad(Math.round(response.emotions.sad * 100) / 100);
+                            setSatisfied(Math.round(response.emotions.satisfied * 100) / 100);
+                            setSympathetic(Math.round(response.emotions.sympathetic * 100) / 100);
                         });
                     }
                     else{

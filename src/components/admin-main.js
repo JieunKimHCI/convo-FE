@@ -6,7 +6,7 @@ var activeParticipants = [];
 var MeetingActive = true;
 let record = null;
 const { DeepstreamClient } = window.DeepstreamClient;
-const client = new DeepstreamClient('wss://desolate-spire-52971.herokuapp.com:6020');
+const client = new DeepstreamClient('wss://desolate-spire-52971.herokuapp.com');
 client.login();
 
 function AdminMain() {
