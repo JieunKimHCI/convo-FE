@@ -41,7 +41,7 @@ function AdminMain() {
     }
 
     const finishButtonStyle = {
-        backgroundColor: '#282c34',
+        backgroundColor: 'red',
         color: 'white',
         border: 'none',
         cursor: 'pointer',
@@ -313,7 +313,7 @@ function AdminMain() {
                 <div style={fullWidth}>
                     <center>
                         <h2>Meeting ID: {meetingId}</h2>
-                        <textarea rows = "14" style={textBoxStyle} value = {accumulatedTranscript} readOnly/>
+                        <textarea rows = "10" style={textBoxStyle} value = {accumulatedTranscript} readOnly/>
                     </center>
                 </div>
                 <br></br>
@@ -327,7 +327,7 @@ function AdminMain() {
                         <button style={(message == "" || dropdownOptionChose == "") ? sendButtonStyleDisabled : sendButtonStyleEnabled} onClick={sendMessage} disabled={message == "" || dropdownOptionChose == ""}>Send</button>
                     </center>
                 </div>
-                <br></br>
+                <br></br><br></br><br></br><br></br>
                 <button style={finishButtonStyle} onClick={endMeeting}>End meeting</button>
             </div>}
             {!MeetingActive && <div>
