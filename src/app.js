@@ -21,7 +21,7 @@ function App() {
                     <Route path="/client">
                         <ClientMain />
                     </Route>
-                    <Route path="/summary">
+                    <Route path="/get-summary">
                         <Summary />
                     </Route>
                     <Route path="/user-consent">
