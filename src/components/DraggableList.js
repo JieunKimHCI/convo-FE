@@ -1,14 +1,19 @@
 import { useHistory } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import React, { Component } from "react";
 import { Draggable } from "react-drag-reorder";
-import { restUrl } from "..";    
+import { restUrl } from "..";  
 
-export const TestDrag = () => {
+export const DraggableList = ({setIsSubmiitedSetter}) => {
 
   const history = useHistory();
-  const [choices, setChoices] = useState(["1","2","3","4","5","6","7","8","9","10"])
+  const [choices, setChoices] = useState(["torch 🔦","knife 🔪","raincoat ☂️","bandage 🩹","pistol 🔫","parachute 🪂","water 🥛","sunglasses 🕶️","coat 🧥","mirror 🪞"])
+  const [childIsSubmitted, childSetIsSubmitted] = useState(false);
   
+  useEffect(() => {
+    setIsSubmiitedSetter(childIsSubmitted);
+  }, [setIsSubmiitedSetter, childIsSubmitted]);
+
   const itemList = {
       borderWidth: '1px',
       margin: '0.4rem',
@@ -24,6 +29,16 @@ export const TestDrag = () => {
       verticalAlign:'middle',
       padding: '0.1rem',
       textAlign: 'center',
+    }
+
+    const submitChoicesButtonStyle = {
+        backgroundColor: '#282c34',
+        color: 'white',
+        border: 'none',
+        cursor: 'pointer',
+        width: '80%',
+        padding: '2vh',
+        margin: '2vh'
     }
     
     const submitChoices = () => {
@@ -43,12 +58,13 @@ export const TestDrag = () => {
             .then(response => {
                 if(response.status === 200){
                     alert('Successfully submitted Choices.')
-                    history.push({
-                        pathname: '/test-drag',
-                        state: {
-                            choices: choices,
-                        },
-                    });
+                    childSetIsSubmitted(true)
+                    // history.push({
+                    //     pathname: '/draggable-list',
+                    //     state: {
+                    //         choices: choices,
+                    //     },
+                    // });
                 }
                 else if(response.status === 300){
                     alert('Failed to post to db.')
@@ -81,9 +97,9 @@ export const TestDrag = () => {
               })}
             </Draggable>
             <input 
-              // style = {submitChoicesButton} 
+              style = {submitChoicesButtonStyle} 
               type="button" 
-              value="choices" 
+              value="Submit" 
               onClick={submitChoices} 
             /> 
           </form>
@@ -93,5 +109,5 @@ export const TestDrag = () => {
   }
 
 
-export default TestDrag;
+export default DraggableList;
         

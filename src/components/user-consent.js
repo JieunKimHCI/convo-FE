@@ -50,7 +50,7 @@ function UserConsent (){
                 response.json();
                 if(response.status === 200){
                     history.push({
-                        pathname: '/client',
+                        pathname: '/desert-problem',
                         state: {
                             netId: netId,
                             meetingId: meetingId,

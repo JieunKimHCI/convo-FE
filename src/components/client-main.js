@@ -24,6 +24,10 @@ function ClientMain(){
     const [sympathetic, setSympathetic] = useState('0.00');
     const [currentTranscript, setCurrentTranscipt] = useState("");
     const [meetingId, setMeetingId] = useState("");
+
+     const container = {
+        padding: '10vh',
+    }
     
     const instructionsPopupStyle = {
         backgroundColor: 'white',
@@ -152,6 +156,7 @@ function ClientMain(){
     }, [location, transcript]);
 
     return(
+        <div style={container}>
         <div onLoadStart = {SpeechRecognition.startListening({continuous: true})} style={instructionsPopupStyle} id = 'clientMain'>
             {sendDataBool && <div>
                 <center>
@@ -170,6 +175,7 @@ function ClientMain(){
                     <h3>The meeting has ended.</h3>
                 </center>
             </div>}
+        </div>
         </div>
         );
     }

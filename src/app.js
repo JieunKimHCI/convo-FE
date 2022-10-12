@@ -4,8 +4,9 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import AdminMain from './components/admin-main';
 import Instructions from './components/instructions';
-import TestDrag from './components/TestDrag';
+import DraggableList from './components/DraggableList';
 import DesertProblem from './components/desert-problem';
+import DesertProblemShared from './components/desert-problem-shared';
 import ClientMain from './components/client-main';
 import CreateMeeting from './components/create-meeting';
 import Summary from './components/summary';
@@ -23,7 +24,7 @@ function App() {
                         <AdminMain />
                     </Route>
                     <Route path="/client">
-                        <DesertProblem />
+                        <DesertProblemShared />
                         <ClientMain />
                     </Route>
                     <Route path="/get-summary">
@@ -32,8 +33,8 @@ function App() {
                     <Route path="/user-consent">
                         <UserConsent />
                     </Route>
-                    <Route path="/test-drag">
-                        <TestDrag />
+                    <Route path="/draggable-list">
+                        <DraggableList />
                     </Route>
                     <Route path="/desert-problem">
                         <DesertProblem />
