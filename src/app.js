@@ -1,6 +1,7 @@
 import React from 'react';
 import UserConsent from './components/user-consent';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+
 import AdminMain from './components/admin-main';
 import Instructions from './components/instructions';
 import TestDrag from './components/TestDrag';
@@ -8,6 +9,7 @@ import DesertProblem from './components/desert-problem';
 import ClientMain from './components/client-main';
 import CreateMeeting from './components/create-meeting';
 import Summary from './components/summary';
+import Timer from './components/timer';
 
 function App() {
     return (
@@ -36,6 +38,9 @@ function App() {
                     <Route path="/desert-problem">
                         <DesertProblem />
                     </Route>
+                     <Route path="/timer">
+                        <Timer fontSize='5em' />
+                    </Route> 
                     <Route path="/">
                         <Instructions />
                     </Route> 
