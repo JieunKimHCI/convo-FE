@@ -3,6 +3,8 @@ import UserConsent from './components/user-consent';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import AdminMain from './components/admin-main';
 import Instructions from './components/instructions';
+import TestDrag from './components/TestDrag';
+import DesertProblem from './components/desert-problem';
 import ClientMain from './components/client-main';
 import CreateMeeting from './components/create-meeting';
 import Summary from './components/summary';
@@ -19,6 +21,7 @@ function App() {
                         <AdminMain />
                     </Route>
                     <Route path="/client">
+                        <DesertProblem />
                         <ClientMain />
                     </Route>
                     <Route path="/get-summary">
@@ -26,6 +29,12 @@ function App() {
                     </Route>
                     <Route path="/user-consent">
                         <UserConsent />
+                    </Route>
+                    <Route path="/test-drag">
+                        <TestDrag />
+                    </Route>
+                    <Route path="/desert-problem">
+                        <DesertProblem />
                     </Route>
                     <Route path="/">
                         <Instructions />

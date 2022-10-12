@@ -4,7 +4,7 @@ import './index.css';
 import App from './app.js'
 
 // make this variable false for remote
-const useLocal = false;
+const useLocal = true;
 export const restUrl = useLocal ? "http://localhost:5000/" : "https://convo-may.herokuapp.com/";
 export const deepStreamUrl = useLocal ? "localhost:6020" : "wss://desolate-spire-52971.herokuapp.com";
 
