@@ -1,9 +1,9 @@
 import React from 'react';
 import { useTimer } from 'react-timer-hook';
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function MyTimer({ expiryTimestamp, fontSize}) {
-    const history = useHistory();
+    const navigate = useNavigate();
 
   const {
     seconds,
@@ -32,11 +32,7 @@ function MyTimer({ expiryTimestamp, fontSize}) {
         time.setSeconds(time.getSeconds() + 300);
         restart(time)
       }}>Restart</button> */}
-      {!isRunning && 
-            
-            history.push({
-                pathname: '/client',
-            })}
+      {!isRunning && navigate('/client')}
     </div>
   );
 }

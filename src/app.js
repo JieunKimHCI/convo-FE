@@ -1,6 +1,6 @@
 import React from 'react';
 import UserConsent from './components/user-consent';
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import AdminMain from './components/admin-main';
 import Instructions from './components/instructions';
@@ -15,38 +15,38 @@ import Timer from './components/timer';
 function App() {
     return (
         <div className='App'>
-            <BrowserRouter>
-                <Switch>
-                    <Route path="/create-meeting">
-                        <CreateMeeting />
+                <Routes>
+                    <Route path="/create-meeting" element={<CreateMeeting />} >
+                        {/* <CreateMeeting /> */}
                     </Route>
-                    <Route path="/admin">
-                        <AdminMain />
+                    <Route path="/admin" element={<AdminMain />} >
+                        {/* <AdminMain /> */}
                     </Route>
-                    <Route path="/client">
-                        <DesertProblemShared />
-                        <ClientMain />
+                    <Route path="/client" element={<><DesertProblemShared />
+                        <ClientMain /></>}>
+                        {/* <DesertProblemShared />
+                        <ClientMain /> */}
                     </Route>
-                    <Route path="/get-summary">
-                        <Summary />
+                    <Route path="/get-summary" element={<Summary />} >
+                        {/* <Summary /> */}
                     </Route>
-                    <Route path="/user-consent">
-                        <UserConsent />
+                    <Route path="/user-consent" element={<UserConsent />} >
+                        {/* <UserConsent /> */}
                     </Route>
-                    <Route path="/draggable-list">
-                        <DraggableList />
+                    <Route path="/draggable-list" element={<DraggableList />} >
+                        {/* <DraggableList /> */}
                     </Route>
-                    <Route path="/desert-problem">
-                        <DesertProblem />
+                    <Route path="/desert-problem" element={<DesertProblem />} >
+                        {/* <DesertProblem /> */}
                     </Route>
-                     <Route path="/timer">
-                        <Timer fontSize='5em' />
+                     <Route path="/timer" element={<Timer fontSize='5em' />} >
+                        {/* <Timer fontSize='5em' /> */}
                     </Route> 
-                    <Route path="/">
-                        <Instructions />
+                    <Route path="/" element={<Instructions />} >
+                        {/* <Instructions /> */}
                     </Route> 
-                </Switch>
-            </BrowserRouter>    
+                </Routes>
+             
         </div>
     );
 }

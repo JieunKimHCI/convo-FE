@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { restUrl } from "..";
 
 function CreateMeeting (){
     
-    const history = useHistory();
+    const navigate = useNavigate();
     const [meetingId, setMeetingId] = useState("");
 
     const loginPopupStyle = {
@@ -65,8 +65,7 @@ function CreateMeeting (){
             })
             .then(response => {
                 if(response.status === 200){
-                    history.push({
-                        pathname: '/admin',
+                    navigate('/admin',{
                         state: {
                             meetingId: meetingId,
                         },

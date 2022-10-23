@@ -1,4 +1,4 @@
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import React, { Component } from "react";
 import { Draggable } from "react-drag-reorder";
@@ -6,7 +6,7 @@ import { restUrl } from "..";
 
 export const DraggableList = ({setIsSubmiitedSetter}) => {
 
-  const history = useHistory();
+  const navigate = useNavigate();
   const [choices, setChoices] = useState(["torch 🔦","knife 🔪","raincoat ☂️","bandage 🩹","pistol 🔫","parachute 🪂","water 🥛","sunglasses 🕶️","coat 🧥","mirror 🪞"])
   const [childIsSubmitted, childSetIsSubmitted] = useState(false);
   
@@ -59,8 +59,10 @@ export const DraggableList = ({setIsSubmiitedSetter}) => {
                 if(response.status === 200){
                     alert('Successfully submitted Choices.')
                     childSetIsSubmitted(true)
-                    // history.push({
-                    //     pathname: '/draggable-list',
+                  // navigate(
+                        // '/draggable-list',
+                          // {
+                    //     
                     //     state: {
                     //         choices: choices,
                     //     },

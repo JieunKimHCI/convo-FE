@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import { restUrl } from "..";
 
@@ -11,7 +11,7 @@ function UserConsent (){
     const [purposeOfStudyAgreement, setPurposeOfStudyAgreement] = useState(false);
     const [procedureAgreement, setProcedureAgreement] = useState(false);
     
-    const history = useHistory();
+    const navigate = useNavigate();
 
     function handleCheckboxInputChange(event) {
         const name = event.target.id
@@ -49,8 +49,7 @@ function UserConsent (){
             .then(response => {
                 response.json();
                 if(response.status === 200){
-                    history.push({
-                        pathname: '/desert-problem',
+                    navigate('/desert-problem',{
                         state: {
                             netId: netId,
                             meetingId: meetingId,
