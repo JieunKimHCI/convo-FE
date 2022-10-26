@@ -2,6 +2,7 @@ import React from 'react';
 import UserConsent from './components/user-consent';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
+import DragAndDropWrapper from './components/dragAndDrop/dragAndDropWrapper';
 import AdminMain from './components/admin-main';
 import Instructions from './components/instructions';
 import DraggableList from './components/DraggableList';
@@ -15,7 +16,10 @@ import Timer from './components/timer';
 function App() {
     return (
         <div className='App'>
-                <Routes>
+            <Routes>
+                <Route path="/dragAndDrop" element={<DragAndDropWrapper />} >
+                        {/* <CreateMeeting /> */}
+                    </Route>
                     <Route path="/create-meeting" element={<CreateMeeting />} >
                         {/* <CreateMeeting /> */}
                     </Route>
