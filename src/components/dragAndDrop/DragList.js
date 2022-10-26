@@ -10,7 +10,8 @@ import { restUrl } from "../../index";
 
 
 const DragDropContextContainer = styled.div`
-  padding: 20px;
+  padding: 10px;
+  height: 42rem;
   border: 4px solid indianred;
   border-radius: 6px;
 `;
@@ -24,14 +25,15 @@ const ListGrid = styled.div`
     display: grid;
     grid-template-columns: 1fr 2fr;
     grid-template-rows: 1fr 1fr;
-    grid-column-gap: 20px;
-    grid-row-gap: 40px;
+    grid-column-gap: 5px;
+    grid-row-gap: 5px;
     width: 20rem;
 `;
 
 const ColumnHeader = styled.div`
   text-transform: uppercase;
   margin-bottom: 20px;
+  text-align: center;
 `;
 
 const SerialNumberColumn = styled.div`
@@ -60,8 +62,8 @@ const SubmitElementsButton = styled.input`
     border: none;
     cursor: pointer;
     width: 80%;
-    padding: 2vh;
-    margin: 2vh;
+    padding: 1rem;
+    margin: 0.5rem;
     border-radius: 6px;
 `;
 

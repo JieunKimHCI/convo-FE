@@ -1,6 +1,7 @@
 import {DraggableList} from './DraggableList';
 import Timer from './timer'; 
 import { useState, useCallback } from "react"; 
+import DragAndDropWrapper from '../components/dragAndDrop/dragAndDropWrapper'
 
 function DesertProblem() {
 
@@ -11,19 +12,19 @@ function DesertProblem() {
     }, [setIsSubmitted]);
 
     const container = {
-        padding: '5vh',
+        padding: '1vh',
     }
     const emotionDetectionPopupStyle = {
         display: 'grid',
-        gridTemplateColumns: 'repeat(3, 1fr)',
-        gap: '10px',
+        gridTemplateColumns: '1fr 2fr',
+        gap: '20px',
         gridAutoRows: 'minmax(100px, auto)',
         backgroundColor: 'white',
         color: 'black',
         zIndex : '9',
-        width : '100vh',
-        height : '80vh',
-        textAlign : 'left',
+        width : '75rem',
+        height : '43rem',
+        textAlign : 'center',
         padding : '2vh',
         overflowY: 'auto',
         margin:'3vh'
@@ -52,12 +53,7 @@ function DesertProblem() {
     const textArea ={
         overflowY: 'scroll',
         width: '100%',
-        height: '50vh',
-    }
-
-    const itemList = {
-        borderWidth: '1px',
-        height: '400px',
+        height: '30rem',
     }
 
     return (
@@ -72,11 +68,7 @@ function DesertProblem() {
                     {/* <Timer fontSize='2em' /> */}
                 </div> 
                 <div style={itemWidth}>
-                    <center>
-                        <h3>ITEM LIST</h3>
-                        {/* <textarea style={itemList} /> */}
-                        <DraggableList setIsSubmiitedSetter={wrapperSetIsSubmitted}/>
-                    </center>
+                   <DragAndDropWrapper/>
                 </div>
             </div>}
             {isSubmitted && 
