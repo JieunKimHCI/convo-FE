@@ -1,6 +1,6 @@
 import React from 'react';
 import UserConsent from './components/user-consent';
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 import DragAndDropWrapper from './components/dragAndDrop/dragAndDropWrapper';
 import AdminMain from './components/admin-main';
@@ -12,6 +12,8 @@ import ClientMain from './components/client-main';
 import CreateMeeting from './components/create-meeting';
 import Summary from './components/summary';
 import Timer from './components/timer';
+import Waiting from './components/waiting-screen';
+import Survey from './components/survey';
 
 function App() {
     return (
@@ -43,12 +45,18 @@ function App() {
                     <Route path="/desert-problem" element={<><DesertProblem /></>} >
                         {/* <DesertProblem /> */}
                     </Route>
+                    <Route path="/waiting" element={<Waiting />} >
+                        {/* <WaitingRoom /> */}
+                    </Route>
                      <Route path="/timer" element={<Timer fontSize='5em' />} >
                         {/* <Timer fontSize='5em' /> */}
                     </Route> 
                     <Route path="/" element={<Instructions />} >
                         {/* <Instructions /> */}
                     </Route> 
+                    <Route path="/survey" element={<Survey />} >
+                        {/* <WaitingRoom /> */}
+                    </Route>
                 </Routes>
              
         </div>
