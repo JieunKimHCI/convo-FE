@@ -4,15 +4,8 @@ import { useState, useCallback } from "react";
 import DragAndDropWrapper from '../components/dragAndDrop/dragAndDropWrapper';
 import styled from "styled-components";
 
-function DesertProblem() {
 
-    const [isSubmitted, setIsSubmitted] = useState(false);
-
-    const wrapperSetIsSubmitted = useCallback(val => {
-        setIsSubmitted(val);
-    }, [setIsSubmitted]);
-
-    const Container = styled.div`
+const Container = styled.div`
         padding: 1vh;
     `;
 
@@ -53,6 +46,8 @@ function DesertProblem() {
         font-size: 25px;
     `;
 
+
+function DesertProblem() {
     return (
         <Container>
             <EmotionDetectionPopupStyle>

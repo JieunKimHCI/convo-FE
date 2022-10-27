@@ -3,9 +3,10 @@ import styled from "styled-components";
 import { DragDropContext } from "react-beautiful-dnd";
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
-
+import { useNavigate } from "react-router-dom";
 import DraggableElement from "./DraggableElement";
 import { restUrl } from "../../index";  
+
 
 
 
@@ -125,6 +126,7 @@ const generateLists = () =>
 function DragList() {
     const [elements, setElements] = React.useState(generateLists());
     
+  const navigate = useNavigate();
   useEffect(() => {
     setElements(generateLists());
   }, []);
@@ -175,7 +177,9 @@ function DragList() {
                       alert('Successfully submitted Choices.')
                       console.log(response)
                       console.log(response.body)
-                        // navigate(
+                      navigate('/waiting');  
+                      
+                      // navigate(
                         // '/draggable-list',
                         // {
                         //     
