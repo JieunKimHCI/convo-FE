@@ -40,7 +40,7 @@ function App() {
                     <Route path="/draggable-list" element={<DraggableList />} >
                         {/* <DraggableList /> */}
                     </Route>
-                    <Route path="/desert-problem" element={<DesertProblem />} >
+                    <Route path="/desert-problem" element={<><DesertProblem /></>} >
                         {/* <DesertProblem /> */}
                     </Route>
                      <Route path="/timer" element={<Timer fontSize='5em' />} >

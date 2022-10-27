@@ -1,7 +1,8 @@
-import {DraggableList} from './DraggableList';
 import Timer from './timer'; 
 import { useState, useCallback } from "react"; 
-import DragAndDropWrapper from '../components/dragAndDrop/dragAndDropWrapper'
+// import DragAndDropList from '../components/dragAndDrop/DragList';
+import DragAndDropWrapper from '../components/dragAndDrop/dragAndDropWrapper';
+import styled from "styled-components";
 
 function DesertProblem() {
 
@@ -11,73 +12,62 @@ function DesertProblem() {
         setIsSubmitted(val);
     }, [setIsSubmitted]);
 
-    const container = {
-        padding: '1vh',
-    }
-    const emotionDetectionPopupStyle = {
-        display: 'grid',
-        gridTemplateColumns: '1fr 2fr',
-        gap: '20px',
-        gridAutoRows: 'minmax(100px, auto)',
-        backgroundColor: 'white',
-        color: 'black',
-        zIndex : '9',
-        width : '75rem',
-        height : '43rem',
-        textAlign : 'center',
-        padding : '2vh',
-        overflowY: 'auto',
-        margin:'3vh'
-    };
-    
-    const rowStyle = {
-        // display: 'table',
-        // clear: 'both',
-        // width: '100%'
-    }
+    const Container = styled.div`
+        padding: 1vh;
+    `;
 
-    const areaWidth = {
-        // width: '70%',
-        // float: 'left',
-        gridColumn: '1 / 3',
-        gridRow: '1',
-    }
+    const EmotionDetectionPopupStyle = styled.div`
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        grid-gap: 20px;
+        grid-auto-rows: minmax(100px, auto);
+        background-color: white;
+        color: black;
+        z-index: 9;
+        width: 75rem;
+        height: 43rem;
+        text-align: center;
+        padding: 2vh;
+        overflow-y: auto;
+        margin:3vh;
+    `;
 
-    const itemWidth = {
-        // width: '30%',
-        // float: 'right',
-        gridColumn: '3',
-        gridRow: '1',
-    }
+    const AreaWidth = styled.div`
+        grid-column: 1 / 3;
+        grid-row: 1;
+    `;
 
-    const textArea ={
-        overflowY: 'scroll',
-        width: '100%',
-        height: '30rem',
-    }
+    const ItemWidth = styled.div`
+        grid-column: 3;
+        grid-row: 1;
+    `;
+
+    const TextArea = styled.textarea`
+        overflow-y: scroll;
+        width: 100%;
+        height: 30rem;
+        color:  black;
+    `;
+   
+    const H3 = styled.h3`
+        font-size: 25px;
+    `;
 
     return (
-        <div style={container}>
-{!isSubmitted && 
-            <div style = {emotionDetectionPopupStyle}>
-                <div style={areaWidth}>
-                    <center>
-                        <h3>DESERT PROBLEM</h3>
-                        <textarea style={textArea} rows={5} value='It  is  approximately  10am  in  mid-July  and  you have just  crash  landed  in  the  Sonora  Desert, near  the  Mexico-USA  border.  The  plane  has completely  burnt out,  only  the  frame  remains. Miraculously,  the  10  passengers  are  uninjured but the pilot has been killed. The  pilot  was  unable  to  tell  anyone  of  your position  before  the  crash. However,  ground sightings taken shortly before the crash suggest that you are about 65 miles off the course filed in your  flight  plan. A  few  moments  before  the crash,  the  pilot  indicated  you  were  about  70 miles south east of a mining camp. The camp is the nearest known settlement. The immediate area is quite flat and, except for the  occasional  thorn  bush  and  cacti,  is  rather barren.     Before the plane caught fire, your group was able to save the 10 items on the desk.Your task is to rank them according to their importance to your survival in the desert. In pairs, rank the items starting with 1 for the most important, down to 10 for the least important. Be prepared to justify your decisions!' />
-                    </center>
-                    {/* <Timer fontSize='2em' /> */}
-                </div> 
-                <div style={itemWidth}>
+        <Container>
+            <EmotionDetectionPopupStyle>
+                <AreaWidth>
+                    <>
+                        <H3>DESERT PROBLEM</H3>
+                        <TextArea rows={5} defaultValue='It  is  approximately  10am  in  mid-July  and  you have just  crash  landed  in  the  Sonora  Desert, near  the  Mexico-USA  border.  The  plane  has completely  burnt out,  only  the  frame  remains. Miraculously,  the  10  passengers  are  uninjured but the pilot has been killed. The  pilot  was  unable  to  tell  anyone  of  your position  before  the  crash. However,  ground sightings taken shortly before the crash suggest that you are about 65 miles off the course filed in your  flight  plan. A  few  moments  before  the crash,  the  pilot  indicated  you  were  about  70 miles south east of a mining camp. The camp is the nearest known settlement. The immediate area is quite flat and, except for the  occasional  thorn  bush  and  cacti,  is  rather barren.     Before the plane caught fire, your group was able to save the 10 items on the desk.Your task is to rank them according to their importance to your survival in the desert. In pairs, rank the items starting with 1 for the most important, down to 10 for the least important. Be prepared to justify your decisions!' />
+                    </>
+                    
+                </AreaWidth> 
+                <ItemWidth>
                    <DragAndDropWrapper/>
-                </div>
-            </div>}
-            {isSubmitted && 
-            <>
-             <Timer fontSize='10em' sec={30}/>
-             <p>Waiting for other's to submit....</p>
-            </>
-             }
-        </div>
+                </ItemWidth>
+            </EmotionDetectionPopupStyle>
+        </Container>
     );
 }
 export default DesertProblem;

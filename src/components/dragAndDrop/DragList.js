@@ -148,7 +148,7 @@ function DragList() {
       removedElement
     );
 
-    //   console.log(elements,listCopy);
+      console.log(elements,listCopy);
     setElements(listCopy);
     };
     
@@ -172,7 +172,9 @@ function DragList() {
                 })
                 .then(response => {
                     if (response.status === 200) {
-                        alert('Successfully submitted Choices.')
+                      alert('Successfully submitted Choices.')
+                      console.log(response)
+                      console.log(response.body)
                         // navigate(
                         // '/draggable-list',
                         // {
@@ -242,7 +244,7 @@ function DragList() {
             type="button" 
             value="Submit" 
             onClick={confirmSubmit}
-            elements={elements}      
+            elements={elements}    
             />      
      </form>
     </DragDropContextContainer>
