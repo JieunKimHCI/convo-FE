@@ -39,7 +39,7 @@ function MyTimer({ expiryTimestamp, fontSize}) {
 
 export default function Timer({fontSize, sec}) {
   const time = new Date();
-  time.setSeconds(time.getSeconds() + sec); // 30 sec timer
+  time.setSeconds(time.getSeconds() + sec);
   return (
     <div>
       <MyTimer expiryTimestamp={time} fontSize={fontSize}/>

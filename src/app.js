@@ -3,6 +3,7 @@ import UserConsent from './components/user-consent';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import AdminMain from './components/admin-main';
+import AdminUserControl from './components/admin-user-control';
 import Instructions from './components/instructions';
 import DraggableList from './components/DraggableList';
 import DesertProblem from './components/desert-problem';
@@ -19,7 +20,7 @@ function App() {
                     <Route path="/create-meeting" element={<CreateMeeting />} >
                         {/* <CreateMeeting /> */}
                     </Route>
-                    <Route path="/admin" element={<AdminMain />} >
+                    <Route path="/admin" element={ <><AdminUserControl/> <AdminMain /></>} >
                         {/* <AdminMain /> */}
                     </Route>
                     <Route path="/client" element={<><DesertProblemShared />

@@ -1,6 +1,8 @@
 import { useState, useEffect, KeyboardEvent} from "react";
 import { useLocation } from "react-router-dom";
 import { restUrl, deepStreamUrl } from "..";
+import Timer from './timer'; 
+import DataTable from 'react-data-table-component';
 
 var activeParticipants = [];
 var MeetingActive = true;
@@ -29,6 +31,7 @@ function AdminMain() {
         textAlign : 'left',
         padding : '2vh',
         overflowY: 'auto',
+        margin:'3vh'
     };
 
     const fullWidth = {
@@ -67,6 +70,25 @@ function AdminMain() {
         padding: '0.5vh',
     }
 
+    const userButtonStyleSubmitted = {
+        backgroundColor: 'green',
+        color: 'white',
+        border: 'none',
+        cursor: 'pointer',
+        width: '10%',
+        padding: '0.5vh', 
+        margin: '10px',
+        
+    }
+
+    const userButtonStyleNotSubmitted = {
+        backgroundColor: 'blue',
+        color: 'white',
+        border: 'none',
+        cursor: 'pointer',
+        width: '10%',
+        padding: '0.5vh',
+    }
     const padding_top = {
         paddingTop : '5vh',
     }
@@ -102,6 +124,25 @@ function AdminMain() {
         width: '15%',
     }
 
+    const tableStyle = {
+        rows: {
+            style: {
+               // override the row height
+                alignment: 'center',
+                color: 'black',
+            },
+        },
+        headCells: {
+            style: {
+             
+            },
+        },
+        cells: {
+            style: {
+               
+            },
+        },
+    };
     function handleEmotion(meetingId){
         try{
             const url = restUrl + 'participants?meetingId=' + meetingId;
@@ -309,6 +350,7 @@ function AdminMain() {
 
     return(
         <div style = {emotionDetectionPopupStyle}>
+      
             {MeetingActive && <div>
                 <div style={fullWidth}>
                     <center>
