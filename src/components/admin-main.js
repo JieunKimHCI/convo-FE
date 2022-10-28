@@ -337,7 +337,7 @@ function AdminMain() {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            if(MeetingActive){
+            if (MeetingActive) {
                 setMeetingId(location.state.meetingId);
                 handleEmotion(location.state.meetingId);
                 getAccumulatedTranscript(location.state.meetingId);

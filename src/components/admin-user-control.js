@@ -187,7 +187,8 @@ function AdminUserControl({activeParticipants, meetingId}) {
     };
 
     function getParticipantCounts(){
-        try{
+        try {
+            console.log(meetingId);
             const url = restUrl + 'participantCounts?meetingId=' + meetingId;
             console.log(url)
             fetch(url, {
@@ -201,7 +202,7 @@ function AdminUserControl({activeParticipants, meetingId}) {
             .then(response => {
                 if(response.status === 200){
                     response.json().then(response => {
-                        console.log("wordCounts Response", response);
+                        console.log("wordCounts Response",response);
                         setWordCounts(response.wordCounts);
                         setTurnCounts(response.turnCounts);
                     });
@@ -221,7 +222,9 @@ function AdminUserControl({activeParticipants, meetingId}) {
         console.log(activeParticipants);
         console.log(meetingId);
         try{
+            console.log("Making request now! getParticipant")
             const url = restUrl + 'participants?meetingId=' + meetingId;
+            console.log(url)
             fetch(url, {
                 method: 'GET',
                 mode: 'cors', 
@@ -232,7 +235,9 @@ function AdminUserControl({activeParticipants, meetingId}) {
             })
             .then(response => {
                 if(response.status === 200){
-                    response.json().then( response => {
+                    response.json().then(response => {
+                        console.log(`response: ${response}`)
+                        console.log(response.participants);
                         setParticipants(response.participants);
                         
                     });
@@ -259,8 +264,11 @@ function AdminUserControl({activeParticipants, meetingId}) {
     return (
         <>
             <div style= {gridContainer}  >
-                <label style={labelStyle}>Participants joined: </label>
-                <button style={true ? userButtonStyleNotSubmitted : userButtonStyleSubmitted} >User 1</button>
+                <label style={labelStyle}>Participants joined:</label>
+                {/* {wordCounts && <label style={labelStyle}> {wordCounts}</label>} */}
+                {/* {turnCounts && <label style={labelStyle}> {turnCounts}</label>} */}
+                {/* {participants && <label style={labelStyle}> {participants}</label>} */}
+                <button style={true ? userButtonStyleNotSubmitted : userButtonStyleSubmitted} >{meetingId}</button>
                 <button style={true ? userButtonStyleNotSubmitted : userButtonStyleSubmitted}>User 2</button>
                 <button style={true ? userButtonStyleNotSubmitted : userButtonStyleSubmitted}>User 3</button>
                 <button style={true ? userButtonStyleNotSubmitted : userButtonStyleSubmitted}>User 4</button>    
