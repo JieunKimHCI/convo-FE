@@ -155,7 +155,7 @@ function DragList({meetingId, netId}) {
     };
     
     const submitElements = () => {
-        try{
+      try {
             const url = restUrl + 'submitChoices';
             if (elements.sink.length === 0) {
                 alert("Submission with empty spaces is not allowed!!!!")
@@ -169,7 +169,10 @@ function DragList({meetingId, netId}) {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        'choices': elements,
+                      'choices': elements,
+                      'meetingId': meetingId,
+                      'netId': netId,
+                      'timestamp': new Date().toISOString(),
                     }),
                 })
                 .then(response => {
