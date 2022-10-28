@@ -8,7 +8,7 @@ const { DeepstreamClient } = window.DeepstreamClient;
 const client = new DeepstreamClient('wss://desolate-spire-52971.herokuapp.com');
 client.login();
 
-function AdminUserControl({activeParticipants}) {
+function AdminUserControl({activeParticipants, meetingId}) {
     const location = useLocation();
     const [wordCounts, setWordCounts] = useState({});
     const [turnCounts, setTurnCounts] = useState({});
@@ -186,10 +186,10 @@ function AdminUserControl({activeParticipants}) {
         },
     };
 
-    function getParticipantCounts(meetingId){
-        meetingId=12345
+    function getParticipantCounts(){
         try{
             const url = restUrl + 'participantCounts?meetingId=' + meetingId;
+            console.log(url)
             fetch(url, {
                 method: 'GET',
                 mode: 'cors', 
@@ -200,9 +200,10 @@ function AdminUserControl({activeParticipants}) {
             })
             .then(response => {
                 if(response.status === 200){
-                    response.json().then( response => {
+                    response.json().then(response => {
+                        console.log("wordCounts Response", response);
                         setWordCounts(response.wordCounts);
-                        // setTurnCounts(response.turnCounts);
+                        setTurnCounts(response.turnCounts);
                     });
                 }
                 else{
@@ -216,9 +217,9 @@ function AdminUserControl({activeParticipants}) {
         }
     }
 
-    function getParticipants(meetingId){
-        console.log(activeParticipants)
-        meetingId = 12345
+    function getParticipants(){
+        console.log(activeParticipants);
+        console.log(meetingId);
         try{
             const url = restUrl + 'participants?meetingId=' + meetingId;
             fetch(url, {
@@ -246,11 +247,19 @@ function AdminUserControl({activeParticipants}) {
             console.log(error);
         }
     }
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            console.log("Calling participants count now")
+            getParticipantCounts();    
+        }, 10000);
+        return () => clearInterval(interval);
+    },[]);
   
     return (
         <>
             <div style= {gridContainer}  >
-                <label style={labelStyle}>Participants joined:</label>
+                <label style={labelStyle}>Participants joined: </label>
                 <button style={true ? userButtonStyleNotSubmitted : userButtonStyleSubmitted} >User 1</button>
                 <button style={true ? userButtonStyleNotSubmitted : userButtonStyleSubmitted}>User 2</button>
                 <button style={true ? userButtonStyleNotSubmitted : userButtonStyleSubmitted}>User 3</button>

@@ -350,7 +350,7 @@ function AdminMain() {
     }, [location]);
 
     return (
-        <><AdminUserControl activeParticipants={activeParticipants} />
+        <><AdminUserControl meetingId={meetingId} activeParticipants={activeParticipants} />
         <div style = {emotionDetectionPopupStyle}>
       
             {MeetingActive && <div>
