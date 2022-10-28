@@ -218,7 +218,8 @@ function AdminUserControl({activeParticipants, meetingId}) {
         }
     }
 
-    function getParticipants(){
+    function getParticipants() {
+        getParticipantCounts();
         console.log(activeParticipants);
         console.log(meetingId);
         try{
@@ -257,9 +258,9 @@ function AdminUserControl({activeParticipants, meetingId}) {
         const interval = setInterval(() => {
             console.log("Calling participants count now")
             getParticipantCounts();    
-        }, 10000);
+        }, 9000);
         return () => clearInterval(interval);
-    },[]);
+    });
   
     return (
         <>
