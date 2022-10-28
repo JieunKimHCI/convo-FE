@@ -11,7 +11,7 @@ import { restUrl } from "../../index";
 
 
 const DragDropContextContainer = styled.div`
-  padding: 10px;
+  padding: 1rem;
   height: 42rem;
   border: 4px solid indianred;
   border-radius: 6px;
@@ -123,7 +123,7 @@ const generateLists = () =>
     {}
   );
 
-function DragList() {
+function DragList({meetingId, netId}) {
     const [elements, setElements] = React.useState(generateLists());
     
   const navigate = useNavigate();
@@ -177,16 +177,17 @@ function DragList() {
                       alert('Successfully submitted Choices.')
                       console.log(response)
                       console.log(response.body)
-                      navigate('/waiting');  
+                      console.log(netId, meetingId)
+                      // navigate('/waiting');  
                       
-                      // navigate(
-                        // '/draggable-list',
-                        // {
-                        //     
-                        //     state: {
-                        //         choices: choices,
-                        //     },
-                        // });
+                      navigate(
+                        '/client',
+                        { 
+                            state: {
+                              netId: netId,
+                              meetingId: meetingId
+                            },
+                        });
                     }
                     else if (response.status === 300) {
                         alert('Failed to post to db.')

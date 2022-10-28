@@ -1,56 +1,67 @@
 import Timer from './timer'; 
 import { useState, useCallback } from "react"; 
-// import DragAndDropList from '../components/dragAndDrop/DragList';
+import { useLocation } from "react-router-dom";
 import DragAndDropWrapper from '../components/dragAndDrop/dragAndDropWrapper';
 import styled from "styled-components";
 
 
 const Container = styled.div`
-        padding: 1vh;
+        margin: 2rem;
+        display:grid;
     `;
 
     const EmotionDetectionPopupStyle = styled.div`
         display: grid;
-        grid-template-columns: 1fr 2fr;
-        grid-gap: 20px;
-        grid-auto-rows: minmax(100px, auto);
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: 10rem 30rem;
+        grid-column-gap: 20px;
         background-color: white;
         color: black;
         z-index: 9;
         width: 75rem;
-        height: 43rem;
+        height: 55rem;
         text-align: center;
-        padding: 2vh;
-        overflow-y: auto;
-        margin:3vh;
+        padding: 0rem 2rem;
     `;
 
     const AreaWidth = styled.div`
-        grid-column: 1 / 3;
-        grid-row: 1;
+        grid-area: 2 / 1 / 3 / 3;
+        height: 20rem; 
     `;
 
     const ItemWidth = styled.div`
-        grid-column: 3;
-        grid-row: 1;
+        grid-area: 2 / 3 / 3 / 4;
+        height:20rem;
     `;
 
     const TextArea = styled.textarea`
         overflow-y: scroll;
         width: 100%;
-        height: 30rem;
+        height: 20rem;
         color:  black;
     `;
    
     const H3 = styled.h3`
         font-size: 25px;
     `;
-
+const InstructionsBar = styled.div`
+    grid-area: 1 / 1 / 2 / 4;
+    height: 5rem;
+    `;
 
 function DesertProblem() {
+    const {state} = useLocation();
+
+    console.log(state)
+    const { meetingId, netId } = state;
+
     return (
         <Container>
             <EmotionDetectionPopupStyle>
+                <InstructionsBar>
+                    <h2>Individual Decision-Making Task</h2>
+                    <p><strong>Read the Desert Survival scenario and rank the items according to their importance to your survival in the desert</strong> -- Drag and rank items from 1 (the most important) to 10 (the least important).</p>
+                </InstructionsBar>
                 <AreaWidth>
                     <>
                         <H3>DESERT PROBLEM</H3>
@@ -59,7 +70,7 @@ function DesertProblem() {
                     
                 </AreaWidth> 
                 <ItemWidth>
-                   <DragAndDropWrapper/>
+                   <DragAndDropWrapper meetingId={meetingId} netId={netId} />
                 </ItemWidth>
             </EmotionDetectionPopupStyle>
         </Container>

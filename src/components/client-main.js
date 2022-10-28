@@ -131,6 +131,7 @@ function ClientMain(){
 
     useEffect(() => {
         const interval = setInterval(() => {
+            console.log(location)
             NetId = location.state.netId;
             MeetingId = location.state.meetingId;
             setMeetingId(MeetingId);

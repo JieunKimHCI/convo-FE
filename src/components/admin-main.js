@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { restUrl, deepStreamUrl } from "..";
 import Timer from './timer'; 
 import DataTable from 'react-data-table-component';
+import AdminUserControl from '../components/admin-user-control';
 
 var activeParticipants = [];
 var MeetingActive = true;
@@ -348,7 +349,8 @@ function AdminMain() {
         return () => clearInterval(interval);
     }, [location]);
 
-    return(
+    return (
+        <><AdminUserControl activeParticipants={activeParticipants} />
         <div style = {emotionDetectionPopupStyle}>
       
             {MeetingActive && <div>
@@ -399,7 +401,8 @@ function AdminMain() {
                     </div>
                 </div>
             </div>}
-        </div>
+            </div>
+            </>
     );
 }
 export default AdminMain;

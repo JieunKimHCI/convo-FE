@@ -4,7 +4,7 @@ import { Route, Routes } from "react-router-dom";
 
 import DragAndDropWrapper from './components/dragAndDrop/dragAndDropWrapper';
 import AdminMain from './components/admin-main';
-import AdminUserControl from './components/admin-user-control';
+
 import Instructions from './components/instructions';
 import DraggableList from './components/DraggableList';
 import DesertProblem from './components/desert-problem';
@@ -26,7 +26,7 @@ function App() {
                     <Route path="/create-meeting" element={<CreateMeeting />} >
                         {/* <CreateMeeting /> */}
                     </Route>
-                    <Route path="/admin" element={ <><AdminUserControl/> <AdminMain /></>} >
+                    <Route path="/admin" element={ <><AdminMain /></>} >
                         {/* <AdminMain /> */}
                     </Route>
                     <Route path="/client" element={<><DesertProblemShared />

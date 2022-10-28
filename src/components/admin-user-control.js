@@ -8,12 +8,13 @@ const { DeepstreamClient } = window.DeepstreamClient;
 const client = new DeepstreamClient('wss://desolate-spire-52971.herokuapp.com');
 client.login();
 
-function AdminUserControl() {
+function AdminUserControl({activeParticipants}) {
     const location = useLocation();
     const [wordCounts, setWordCounts] = useState({});
     const [turnCounts, setTurnCounts] = useState({});
     const [participants, setParticipants] = useState({});
 
+    
     const columns = [
         {
             name: 'Users',
@@ -216,7 +217,8 @@ function AdminUserControl() {
     }
 
     function getParticipants(meetingId){
-        meetingId=12345
+        console.log(activeParticipants)
+        meetingId = 12345
         try{
             const url = restUrl + 'participants?meetingId=' + meetingId;
             fetch(url, {
