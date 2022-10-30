@@ -11,9 +11,9 @@ const ColumnHeader = styled.div`
 
 const DroppableStyles = styled.div`
   padding: 10px;
-  border-radius: 6px;
+  border-radius: ${props => props.prefix ==='sink' ? '0px 6px 6px 0px' : '6px'};
   width:100%;
-  background: ${props => props.prefix ==='sink' ? '#eca1a6' : '#b6cabc'};
+  background: ${props => props.prefix ==='sink' ? '#d4d4d4' : '#b6cabc'};
   grid-area: ${props => props.prefix ==='sink' ? '1 / 2 / 2 / 3' : '2 / 1 / 3 / 3'};
 `;
 
@@ -25,7 +25,7 @@ const ListItemHolder = styled.div`
 
 const DraggableElement = ({ prefix, elements }) => (
   <DroppableStyles prefix={prefix} >
-    <ColumnHeader>{prefix}</ColumnHeader>
+    {/* <ColumnHeader>{prefix}</ColumnHeader> */}
     <Droppable droppableId={`${prefix}`}>
       {(provided) => (
         <ListItemHolder {...provided.droppableProps} ref={provided.innerRef}>

@@ -55,7 +55,7 @@ function DesertProblemShared() {
             <EmotionDetectionPopupStyle>
                 <InstructionsBar>
                     <h2>Group Decision-Making Task</h2>
-                    <p><strong>Discuss with your group members to make a final decision for the item rank </strong> -- Drag and rank items from 1 (the most important) to 10 (the least important).</p>
+                    <p><strong>Discuss with your group members to make a final decision for the item rank </strong> -- Drag and rank items from 1 (the most important) to 5 (the least important).</p>
                 </InstructionsBar>
                 <AreaWidth>
                     <>

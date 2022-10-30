@@ -60,7 +60,7 @@ function DesertProblem() {
             <EmotionDetectionPopupStyle>
                 <InstructionsBar>
                     <h2>Individual Decision-Making Task</h2>
-                    <p><strong>Read the Desert Survival scenario and rank the items according to their importance to your survival in the desert</strong> -- Drag and rank items from 1 (the most important) to 10 (the least important).</p>
+                    <p><strong>Read the Desert Survival scenario and rank the items according to their importance to your survival in the desert</strong> -- Drag and rank items from 1 (the most important) to 5 (the least important).</p>
                 </InstructionsBar>
                 <AreaWidth>
                     <>

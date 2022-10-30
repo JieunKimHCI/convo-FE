@@ -6,7 +6,7 @@ import styled, { css } from "styled-components";
 
 const DragItem = styled.div`
   padding: 10px;
-  width: 100px;
+  width: 100%;
   border-radius: 6px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   background: white;
@@ -19,7 +19,7 @@ const DragItem = styled.div`
 `;
 
 const ItemContent = styled.span`
-    width: 100px;
+    width: 8rem;
     display: flex;
     justify-content: center;
     align-items: center;

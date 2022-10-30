@@ -164,10 +164,10 @@ function ClientMain(){
                     <h3>Now you are joining in a meeting</h3>
                     <h3>Meeting ID: {meetingId}</h3>
                     <textarea style={textareaStyle} rows = "10" value={currentTranscript} readOnly></textarea>
-                    <h3>Your emotion is detected by the agent</h3>
+                    {/* <h3>Your emotion is detected by the agent</h3>
                     <p>
                         Excited: {excited}, Frustrated: {frustrated}, Polite: {polite}, Impolite: {impolite}, Sad: {sad}, Satisfied: {satisfied}, Sympathetic: {sympathetic}
-                    </p>
+                    </p> */}
                     <button style={finishButtonStyle} onClick={endMeeting}>End meeting</button>
                 </center>
             </div>}

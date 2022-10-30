@@ -13,7 +13,7 @@ import { restUrl } from "../../index";
 const DragDropContextContainer = styled.div`
   padding: 1rem;
   height: 42rem;
-  border: 4px solid indianred;
+  border: 2px solid #000;
   border-radius: 6px;
 `;
 
@@ -26,8 +26,8 @@ const ListGrid = styled.div`
     display: grid;
     grid-template-columns: 1fr 2fr;
     grid-template-rows: 1fr 1fr;
-    grid-column-gap: 5px;
-    grid-row-gap: 5px;
+    grid-column-gap: 0px;
+    grid-row-gap: 10px;
     width: 20rem;
 `;
 
@@ -39,9 +39,9 @@ const ColumnHeader = styled.div`
 
 const SerialNumberColumn = styled.div`
   padding: 10px;
-  border-radius: 6px;
+  border-radius: 6px 0px 0px 6px;
   background: #d4d4d4;
-  width: 5rem;
+  width: 5.5rem;
   grid-area: 1 / 1 / 2 / 2;
 `;
 
@@ -177,7 +177,7 @@ function DragList({meetingId, netId}) {
                 })
                 .then(response => {
                     if (response.status === 200) {
-                      alert('Successfully submitted Choices.')
+                      // alert('Successfully submitted Choices.')
                       console.log(response)
                       console.log(response.body)
                       console.log(netId, meetingId)
@@ -217,7 +217,7 @@ function DragList({meetingId, netId}) {
         },
         {
           label: 'No',
-          onClick: () => alert('Clicked No Taking Back')
+          onClick: () => console.log('Clicked No Taking Back')
         }
       ]
     });
@@ -229,7 +229,7 @@ function DragList({meetingId, netId}) {
       <DragDropContext onDragEnd={onDragEnd}>
         <ListGrid>
         <SerialNumberColumn>
-            <ColumnHeader>Sr. No</ColumnHeader>
+            {/* <ColumnHeader>Sr. No</ColumnHeader> */}
                 <SerialNumber>1</SerialNumber>
                 <SerialNumber>2</SerialNumber>
                 <SerialNumber>3</SerialNumber>
