@@ -189,9 +189,9 @@ function AdminUserControl({activeParticipants, meetingId}) {
 
     function getParticipantCounts(){
         try {
-            console.log(meetingId);
+            // console.log(meetingId);
             const url = restUrl + 'participantCounts?meetingId=' + meetingId;
-            console.log(url)
+            // console.log(url)
             fetch(url, {
                 method: 'GET',
                 mode: 'cors', 
@@ -251,9 +251,9 @@ function AdminUserControl({activeParticipants, meetingId}) {
     }
 
     function getParticipants() {
-        getParticipantCounts();
+        // getParticipantCounts();
         console.log(activeParticipants);
-        console.log(meetingId);
+        // console.log(meetingId);
         try{
             console.log("Making request now! getParticipant")
             const url = restUrl + 'participants?meetingId=' + meetingId;
@@ -289,8 +289,11 @@ function AdminUserControl({activeParticipants, meetingId}) {
     useEffect(() => {
     
         const interval = setInterval(() => {
-            console.log("Calling participants count now")
+            // console.log("Calling participants count now")
             getParticipantCounts();    
+            console.log("activepar",activeParticipants)
+            getParticipants();
+            console.log(participants)
         }, 9000);
         return () => clearInterval(interval);
     });
@@ -299,13 +302,16 @@ function AdminUserControl({activeParticipants, meetingId}) {
         <>
             <div style= {gridContainer}  >
                 <label style={labelStyle}>Participants joined:</label>
-                {/* <textarea style={labelStyle}> { data[2]}</textarea> */}
+                {console.log(participants)}
                 {/* <label style={labelStyle}> </label> */}
-                 {/* <label style={labelStyle}> {participants}</label> */}
-                <button style={true ? userButtonStyleNotSubmitted : userButtonStyleSubmitted} >User 1</button>
-                <button style={true ? userButtonStyleNotSubmitted : userButtonStyleSubmitted}>User 2</button>
+                {/* <label style={labelStyle}> {participants}</label> */}
+                {
+                    data.map((i) => <button style={true ? userButtonStyleNotSubmitted : userButtonStyleSubmitted} > {i.users} </button> )
+                }
+                
+                {/* <button style={true ? userButtonStyleNotSubmitted : userButtonStyleSubmitted}>User 2</button>
                 <button style={true ? userButtonStyleNotSubmitted : userButtonStyleSubmitted}>User 3</button>
-                <button style={true ? userButtonStyleNotSubmitted : userButtonStyleSubmitted}>User 4</button>    
+                <button style={true ? userButtonStyleNotSubmitted : userButtonStyleSubmitted}>User 4</button>     */}
                 <div style={timerStyle}>
                     <Timer/>  
                 </div>
