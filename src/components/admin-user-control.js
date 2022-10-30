@@ -10,11 +10,12 @@ client.login();
 
 function AdminUserControl({activeParticipants, meetingId}) {
     const location = useLocation();
-    const [wordCounts, setWordCounts] = useState({});
-    const [turnCounts, setTurnCounts] = useState({});
-    const [participants, setParticipants] = useState({});
+    const [wordCounts, setWordCounts] = useState('');
+    const [turnCounts, setTurnCounts] = useState('');
+    const [datarows, setDataRows] = useState('');
+    const [participants, setParticipants] = useState('');
+    const [data,setData] = useState([]);
 
-    
     const columns = [
         {
             name: 'Users',
@@ -30,7 +31,7 @@ function AdminUserControl({activeParticipants, meetingId}) {
         }
     ];
     
-    const data = [
+    const datasamp = [
         {
             id: 1,
             users: 'User 1',
@@ -200,11 +201,42 @@ function AdminUserControl({activeParticipants, meetingId}) {
                 },
             })
             .then(response => {
+                
                 if(response.status === 200){
                     response.json().then(response => {
-                        console.log("wordCounts Response",response);
+                        // console.log("wordCounts Response",response);
+                        // console.log(response.wordCounts);
+                        // console.log(response.turnCounts);
                         setWordCounts(response.wordCounts);
                         setTurnCounts(response.turnCounts);
+                        // datavar["id"]=
+
+                        // console.log(...wordCounts);
+                        // setData(data, [wordCounts, turnCounts]);
+                        console.log(wordCounts, turnCounts)
+                        // console.log("Data Now:", data);
+                        let fulldata=[]
+                        let i=1
+                        let datavar= {}
+                        for (var prop in wordCounts) {
+                            console.log("" + prop + " = " + wordCounts[prop]);
+                          
+                            datavar["users"] = prop
+                            datavar["wordcount"] = wordCounts[prop]
+                            datavar["turns"] = turnCounts[prop]
+                            i=i+1
+                            fulldata.push(
+                                { "id": i,
+                                    "users": prop, "wordcount": wordCounts[prop], "turns": turnCounts[prop]
+                                }
+
+
+                            )
+                            console.log("here",fulldata)
+                          }
+                          setData(fulldata);
+                        //   console.log("Data Now:", datavar);
+                          console.log("Data Now:", data);
                     });
                 }
                 else{
@@ -255,6 +287,7 @@ function AdminUserControl({activeParticipants, meetingId}) {
     }
 
     useEffect(() => {
+    
         const interval = setInterval(() => {
             console.log("Calling participants count now")
             getParticipantCounts();    
@@ -266,10 +299,10 @@ function AdminUserControl({activeParticipants, meetingId}) {
         <>
             <div style= {gridContainer}  >
                 <label style={labelStyle}>Participants joined:</label>
-                {/* {wordCounts && <label style={labelStyle}> {wordCounts}</label>} */}
-                {/* {turnCounts && <label style={labelStyle}> {turnCounts}</label>} */}
-                {/* {participants && <label style={labelStyle}> {participants}</label>} */}
-                <button style={true ? userButtonStyleNotSubmitted : userButtonStyleSubmitted} >{meetingId}</button>
+                {/* <textarea style={labelStyle}> { data[2]}</textarea> */}
+                {/* <label style={labelStyle}> </label> */}
+                 {/* <label style={labelStyle}> {participants}</label> */}
+                <button style={true ? userButtonStyleNotSubmitted : userButtonStyleSubmitted} >User 1</button>
                 <button style={true ? userButtonStyleNotSubmitted : userButtonStyleSubmitted}>User 2</button>
                 <button style={true ? userButtonStyleNotSubmitted : userButtonStyleSubmitted}>User 3</button>
                 <button style={true ? userButtonStyleNotSubmitted : userButtonStyleSubmitted}>User 4</button>    
@@ -280,11 +313,7 @@ function AdminUserControl({activeParticipants, meetingId}) {
             <div style={TableContainer}>
                 <DataTable columns={columns} data={data} customStyles={customStyles}/>
             </div>
-            <input 
-                            type="button" 
-                            value="Get Participants" 
-                            onClick={getParticipants}
-                        /> 
+            
         </>
     );
 }
