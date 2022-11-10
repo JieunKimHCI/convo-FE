@@ -12,9 +12,10 @@ function AdminUserControl({activeParticipants, meetingId}) {
     const location = useLocation();
     const [wordCounts, setWordCounts] = useState('');
     const [turnCounts, setTurnCounts] = useState('');
-    const [datarows, setDataRows] = useState('');
     const [participants, setParticipants] = useState('');
-    const [data,setData] = useState([]);
+    const [data, setData] = useState([]);
+    const [submittedParticipants, setSubmittedParticipants] = useState([])
+
 
     const columns = [
         {
@@ -30,48 +31,8 @@ function AdminUserControl({activeParticipants, meetingId}) {
             selector: row => row.turns,
         }
     ];
-    
-    const datasamp = [
-        {
-            id: 1,
-            users: 'User 1',
-            wordcount: 57,
-            turns: 8,
-        },
-        {
-            id: 2,
-            users: 'User 2',
-            wordcount: 32,
-            turns: 3,
-        },
-        {
-            id: 3,
-            users: 'User 3',
-            wordcount: 0,
-            turns: 0,
-        },
-        ,
-        {
-            id: 4,
-            users: 'User 4',
-            wordcount: 17,
-            turns: 2,
-        }
-    ]
-    
-    const userButtonStyleSubmitted = {
-        backgroundColor: 'green',
-        color: 'white',
-        border: 'none',
-        cursor: 'pointer',
-        width: '10%',
-        padding: '0.5vh', 
-        margin: '10px',
-        fontSize: '20px',
-        fontWeight: 'bold',
-    }
 
-    const userButtonStyleNotSubmitted = {
+    const userButtonStyle = {
         backgroundColor: 'rgba(255, 255, 255, 0.8)',
         border: '1px solid rgba(0, 0, 0, 0.8)',
         padding: '20px',
@@ -81,24 +42,6 @@ function AdminUserControl({activeParticipants, meetingId}) {
         alignContent: 'center',
         fontSize: '20px',
         fontWeight: 'bold',
-    }
-   
-   const sendButtonStyleEnabled = {
-        backgroundColor: '#282c34',
-        color: 'white',
-        border: 'none',
-        cursor: 'pointer',
-        width: '10%',
-        padding: '0.5vh',
-    }
-
-    const sendButtonStyleDisabled = {
-        backgroundColor: 'grey',
-        color: 'white',
-        border: 'none',
-        cursor: 'pointer',
-        width: '10%',
-        padding: '0.5vh',
     }
 
     const gridContainer = {
@@ -130,30 +73,6 @@ function AdminUserControl({activeParticipants, meetingId}) {
         color: 'black',
         alignSelf: 'center', 
         fontSize: '25px'
-    }
-
-    const startButtonStyle = {
-        color: 'black',
-        alignSelf: 'center',
-        gridRowStart: 2,
-        gridColumnStart: 3,
-        backgroundColor: 'rgba(217, 217, 214, 0.8)',
-        cursor: 'pointer',
-        border: '1px solid rgba(0, 0, 0, 0.8)',
-        padding: '10%',
-        textAlign: 'center',
-        fontWeight: 'bold',
-        margin: '10px',
-        alignContent: 'center',
-        fontSize: '15px'
-    }
-
-    const tableStyle = {
-        gridRowStart: 3,
-        gridColumnStart: 1,
-        gridColumnEnd: 6,
-        width: '100%',
-        align: 'center'
     }
 
     const timerStyle = {
@@ -189,9 +108,7 @@ function AdminUserControl({activeParticipants, meetingId}) {
 
     function getParticipantCounts(){
         try {
-            // console.log(meetingId);
             const url = restUrl + 'participantCounts?meetingId=' + meetingId;
-            // console.log(url)
             fetch(url, {
                 method: 'GET',
                 mode: 'cors', 
@@ -204,23 +121,12 @@ function AdminUserControl({activeParticipants, meetingId}) {
                 
                 if(response.status === 200){
                     response.json().then(response => {
-                        // console.log("wordCounts Response",response);
-                        // console.log(response.wordCounts);
-                        // console.log(response.turnCounts);
                         setWordCounts(response.wordCounts);
                         setTurnCounts(response.turnCounts);
-                        // datavar["id"]=
-
-                        // console.log(...wordCounts);
-                        // setData(data, [wordCounts, turnCounts]);
-                        console.log(wordCounts, turnCounts)
-                        // console.log("Data Now:", data);
                         let fulldata=[]
                         let i=1
                         let datavar= {}
                         for (var prop in wordCounts) {
-                            console.log("" + prop + " = " + wordCounts[prop]);
-                          
                             datavar["users"] = prop
                             datavar["wordcount"] = wordCounts[prop]
                             datavar["turns"] = turnCounts[prop]
@@ -232,11 +138,8 @@ function AdminUserControl({activeParticipants, meetingId}) {
 
 
                             )
-                            console.log("here",fulldata)
                           }
                           setData(fulldata);
-                        //   console.log("Data Now:", datavar);
-                          console.log("Data Now:", data);
                     });
                 }
                 else{
@@ -251,13 +154,8 @@ function AdminUserControl({activeParticipants, meetingId}) {
     }
 
     function getParticipants() {
-        // getParticipantCounts();
-        console.log(activeParticipants);
-        // console.log(meetingId);
         try{
-            console.log("Making request now! getParticipant")
             const url = restUrl + 'participants?meetingId=' + meetingId;
-            console.log(url)
             fetch(url, {
                 method: 'GET',
                 mode: 'cors', 
@@ -269,8 +167,6 @@ function AdminUserControl({activeParticipants, meetingId}) {
             .then(response => {
                 if(response.status === 200){
                     response.json().then(response => {
-                        console.log(`response: ${response}`)
-                        console.log(response.participants);
                         setParticipants(response.participants);
                         
                     });
@@ -286,14 +182,61 @@ function AdminUserControl({activeParticipants, meetingId}) {
         }
     }
 
+    function getSubmittedParticpants(){
+        try {
+            const url = restUrl + 'submittedParticipants?meetingId=' + meetingId;
+            fetch(url, {
+                method: 'GET',
+                mode: 'cors', 
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => {
+                
+                if(response.status === 200){
+                    response.json().then(response => {
+                        let same = true;
+
+                        for(let netId in response){
+                            let name = response[netId];
+                            const inList = submittedParticipants.some(element => {
+                                return (element.netId === netId && element.name === name);
+                            });
+                        
+                            if(!inList) {
+                                same = false;
+                            }
+                        }
+                        if(!same){
+                            let participants = [];
+                            for (let netId in response) {
+                                let name = response[netId];
+                                participants.push({netId, name});
+                            }
+                            setSubmittedParticipants(participants);
+                        }
+                    });
+                }
+                else{
+                    alert('Something went wrong!')
+                    throw new Error();
+                }
+            });
+        }
+        catch(error){
+            console.log(error);
+        }
+    }
+
+
     useEffect(() => {
     
         const interval = setInterval(() => {
-            // console.log("Calling participants count now")
             getParticipantCounts();    
-            console.log("activepar",activeParticipants)
             getParticipants();
-            console.log(participants)
+            getSubmittedParticpants();
         }, 9000);
         return () => clearInterval(interval);
     });
@@ -302,16 +245,9 @@ function AdminUserControl({activeParticipants, meetingId}) {
         <>
             <div style= {gridContainer}  >
                 <label style={labelStyle}>Participants joined:</label>
-                {console.log(participants)}
-                {/* <label style={labelStyle}> </label> */}
-                {/* <label style={labelStyle}> {participants}</label> */}
                 {
-                    data.map((i) => <button style={true ? userButtonStyleNotSubmitted : userButtonStyleSubmitted} > {i.users} </button> )
+                    submittedParticipants.map((i) => <button style={userButtonStyle} > {i.name} </button> )
                 }
-                
-                {/* <button style={true ? userButtonStyleNotSubmitted : userButtonStyleSubmitted}>User 2</button>
-                <button style={true ? userButtonStyleNotSubmitted : userButtonStyleSubmitted}>User 3</button>
-                <button style={true ? userButtonStyleNotSubmitted : userButtonStyleSubmitted}>User 4</button>     */}
                 <div style={timerStyle}>
                     <Timer/>  
                 </div>
