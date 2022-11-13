@@ -21,4 +21,5 @@ code {
   justify-content: center;
   flex-direction: column;
   display: flex;
+  font-family: 'Lato', sans-serif;
 }

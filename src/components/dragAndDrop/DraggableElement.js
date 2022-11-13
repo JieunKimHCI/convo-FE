@@ -11,16 +11,20 @@ const ColumnHeader = styled.div`
 
 const DroppableStyles = styled.div`
   padding: 10px;
-  border-radius: ${props => props.prefix ==='sink' ? '0px 6px 6px 0px' : '6px'};
-  width:100%;
+  ${'' /* border-radius: ${props => props.prefix ==='sink' ? '0px 6px 6px 0px' : '6px'}; */}
+  width:70%;
+  height:250px;
   background: ${props => props.prefix ==='sink' ? '#d4d4d4' : '#b6cabc'};
-  grid-area: ${props => props.prefix ==='sink' ? '1 / 2 / 2 / 3' : '2 / 1 / 3 / 3'};
+  grid-area: ${props => props.prefix === 'sink' ? '1 / 1 / 3 / 3' : '2 / 1 / 3 / 3'};
+
 `;
 
 const ListItemHolder = styled.div`
     display: grid;
     justify-content: center;
     align-items: center;
+    width: 100%;
+    ${'' /* background: #f00; */}
 `;
 
 const DraggableElement = ({ prefix, elements }) => (

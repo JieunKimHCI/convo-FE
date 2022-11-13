@@ -12,9 +12,10 @@ import { restUrl } from "../../index";
 
 const DragDropContextContainer = styled.div`
   padding: 1rem;
-  height: 42rem;
-  border: 2px solid #000;
-  border-radius: 6px;
+  height: 100%;
+  ${'' /* width:100%; */}
+  ${'' /* border: 2px solid #000;
+  border-radius: 6px; */}
 `;
 
 const ListGrid = styled.div`
@@ -24,38 +25,39 @@ const ListGrid = styled.div`
   grid-gap: 3rem; */}
 
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns:1fr;
     grid-template-rows: 1fr 1fr;
     grid-column-gap: 0px;
     grid-row-gap: 10px;
-    width: 20rem;
+    width: 100%;
+    justify-items:center;
 `;
 
-const ColumnHeader = styled.div`
-  text-transform: uppercase;
-  margin-bottom: 20px;
-  text-align: center;
-`;
+// const ColumnHeader = styled.div`
+//   text-transform: uppercase;
+//   margin-bottom: 20px;
+//   text-align: center;
+// `;
 
-const SerialNumberColumn = styled.div`
-  padding: 10px;
-  border-radius: 6px 0px 0px 6px;
-  background: #d4d4d4;
-  width: 5.5rem;
-  grid-area: 1 / 1 / 2 / 2;
-`;
+// const SerialNumberColumn = styled.div`
+//   padding: 10px;
+//   border-radius: 6px 0px 0px 6px;
+//   background: #d4d4d4;
+//   width: 5.5rem;
+//   grid-area: 1 / 1 / 2 / 2;
+// `;
 
-const SerialNumber = styled.span`
-  padding: 10px;
-  border-radius: 6px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  background: white;
-  margin: 0 0 8px 0;
-  display: grid;
-  grid-gap: 20px;
-  flex-direction: column;
-  color:black;
-`;
+// const SerialNumber = styled.span`
+//   padding: 10px;
+//   border-radius: 6px;
+//   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+//   background: white;
+//   margin: 0 0 8px 0;
+//   display: grid;
+//   grid-gap: 20px;
+//   flex-direction: column;
+//   color:black;
+// `;
 
 const SubmitElementsButton = styled.input`
     background-color: ${props => props.elements.sink.length === 5 ? '#66e29a' : '#d4d4d4'};
@@ -65,7 +67,8 @@ const SubmitElementsButton = styled.input`
     width: 80%;
     padding: 1rem;
     margin: 0.5rem;
-    border-radius: 6px;
+    align-self: center;
+    ${'' /* border-radius: 6px; */}
 `;
 
 // inital data generator
@@ -228,14 +231,14 @@ function DragList({meetingId, netId}) {
     <DragDropContextContainer>
       <DragDropContext onDragEnd={onDragEnd}>
         <ListGrid>
-        <SerialNumberColumn>
-            {/* <ColumnHeader>Sr. No</ColumnHeader> */}
+        {/* <SerialNumberColumn>
+            <ColumnHeader>Sr. No</ColumnHeader>
                 <SerialNumber>1</SerialNumber>
                 <SerialNumber>2</SerialNumber>
                 <SerialNumber>3</SerialNumber>
                 <SerialNumber>4</SerialNumber>
                 <SerialNumber>5</SerialNumber>
-        </SerialNumberColumn>
+        </SerialNumberColumn> */}
                   
         {lists.map((listKey) => (
             <DraggableElement
