@@ -14,8 +14,10 @@ const DroppableStyles = styled.div`
   ${'' /* border-radius: ${props => props.prefix ==='sink' ? '0px 6px 6px 0px' : '6px'}; */}
   width:70%;
   height:250px;
-  background: ${props => props.prefix ==='sink' ? '#d4d4d4' : '#b6cabc'};
+  ${'' /* Previous Green Color: #fff */}
+  background: ${props => props.prefix ==='sink' ? 'linear-gradient(180deg, #fff, #fff 21%, black 21%, black 22%, #fff 22%, #fff 40%, black 40%, black 41%, #fff 41%, #fff 60%, black 60%, black 61%, #fff 61%, #fff 79%, black 79%, black 80%, #fff 80%, #fff)' : 'linear-gradient(180deg, #fff, #fff 21%, black 21%, black 22%, #fff 22%, #fff 40%, black 40%, black 41%, #fff 41%, #fff 60%, black 60%, black 61%, #fff 61%, #fff 79%, black 79%, black 80%, #fff 80%, #fff)'};
   grid-area: ${props => props.prefix === 'sink' ? '1 / 1 / 3 / 3' : '2 / 1 / 3 / 3'};
+  border: 2px solid #000;
 
 `;
 
