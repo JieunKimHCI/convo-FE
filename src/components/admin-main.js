@@ -372,7 +372,7 @@ function AdminMain() {
                     </center>
                 </div>
                 <br></br><br></br><br></br><br></br>
-                <button style={finishButtonStyle} onClick={endMeeting}>End meeting</button>
+                <button style={finishButtonStyle} onClick={endMeeting}>End Meeting</button>
             </div>}
             {!MeetingActive && <div>
                 <div style={fullWidth}>

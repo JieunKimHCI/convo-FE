@@ -123,7 +123,7 @@ function UserConsent (){
         <div style = {agreementPopupStyle} id = 'agreement'>
             <form>
                 <p>
-                    <b>Purpose of study</b>
+                    <b>Purpose of Study</b>
                     <textarea style = {textareaStyle} rows = "3" value = {purposeOfStudyMessage} readOnly></textarea>
                     <input type="checkbox" id="purposeOfStudyAgreement" name="purposeOfStudyAgreement" value={purposeOfStudyAgreement} onChange={handleCheckboxInputChange}/>
                     <label style={smallText} htmlFor="purposeOfStudyAgreement">I have read and agree</label>

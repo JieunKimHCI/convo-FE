@@ -161,14 +161,13 @@ function ClientMain(){
         <div onLoadStart = {SpeechRecognition.startListening({continuous: true})} style={instructionsPopupStyle} id = 'clientMain'>
             {sendDataBool && <div>
                 <center>
-                    <h3>Now you are joining in a meeting</h3>
                     <h3>Meeting ID: {meetingId}</h3>
                     <textarea style={textareaStyle} rows = "10" value={currentTranscript} readOnly></textarea>
                     {/* <h3>Your emotion is detected by the agent</h3>
                     <p>
                         Excited: {excited}, Frustrated: {frustrated}, Polite: {polite}, Impolite: {impolite}, Sad: {sad}, Satisfied: {satisfied}, Sympathetic: {sympathetic}
                     </p> */}
-                    <button style={finishButtonStyle} onClick={endMeeting}>End meeting</button>
+                    <button style={finishButtonStyle} onClick={endMeeting}>End Meeting</button>
                 </center>
             </div>}
             {!sendDataBool && <div>
