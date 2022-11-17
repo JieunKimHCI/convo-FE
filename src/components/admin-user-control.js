@@ -13,6 +13,7 @@ function AdminUserControl({activeParticipants, meetingId}) {
     const [wordCounts, setWordCounts] = useState('');
     const [turnCounts, setTurnCounts] = useState('');
     const [participants, setParticipants] = useState('');
+    const [timeSilent, setTimeSilent] = useState('');
     const [data, setData] = useState([]);
     const [submittedParticipants, setSubmittedParticipants] = useState([])
 
@@ -29,6 +30,10 @@ function AdminUserControl({activeParticipants, meetingId}) {
         {
             name: 'Turn Taking',
             selector: row => row.turns,
+        },
+        {
+            name: 'Time Silent',
+            selector: row => row.timesilent
         }
     ];
 
@@ -123,6 +128,7 @@ function AdminUserControl({activeParticipants, meetingId}) {
                     response.json().then(response => {
                         setWordCounts(response.wordCounts);
                         setTurnCounts(response.turnCounts);
+                        setTimeSilent(response.timeSilent);
                         let fulldata=[]
                         let i=1
                         let datavar= {}
@@ -130,10 +136,12 @@ function AdminUserControl({activeParticipants, meetingId}) {
                             datavar["users"] = prop
                             datavar["wordcount"] = wordCounts[prop]
                             datavar["turns"] = turnCounts[prop]
+                            datavar["timesilent"] = timeSilent[prop]
                             i=i+1
                             fulldata.push(
                                 { "id": i,
-                                    "users": prop, "wordcount": wordCounts[prop], "turns": turnCounts[prop]
+                                    "users": prop, "wordcount": wordCounts[prop], "turns": turnCounts[prop], 
+                                    "timesilent": timeSilent[prop]
                                 }
 
 
