@@ -15,8 +15,8 @@ const DragItem = styled.div`
   display: grid;
   grid-gap: 20px;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  ${'' /* justify-content: center; */}
+  ${'' /* align-items: center; */}
 `;
 
 const ItemContent = styled.span`
@@ -27,7 +27,6 @@ const ItemContent = styled.span`
     color: black;
 `;
 
-const lorem = new LoremIpsum();
 
 const ListItem = ({ item, index }) => {
   return (

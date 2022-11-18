@@ -87,8 +87,8 @@ function DesertProblem() {
                     
                 </AreaWidth> 
                 <ItemWidth>
-                    <InstructionsParagraph style={{ margin: "10px 1em" }}>
-                        Drag and rank items from green box to grey box.
+                    <InstructionsParagraph style={{ margin: "10px 5em" }}>
+                        Drag and rank items from 1 to 5.
                     </InstructionsParagraph>
                    <DragAndDropWrapper meetingId={meetingId} netId={netId} />
                 </ItemWidth>

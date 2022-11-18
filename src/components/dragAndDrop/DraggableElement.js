@@ -11,13 +11,16 @@ const ColumnHeader = styled.div`
 
 const DroppableStyles = styled.div`
   padding: 10px;
+  padding: ${props => props.prefix === 'sink' ? '10px 5px' : '10px'};
+  margin-right: ${props => props.prefix === 'sink' ? '25px' : '0px'};
   ${'' /* border-radius: ${props => props.prefix ==='sink' ? '0px 6px 6px 0px' : '6px'}; */}
-  width:70%;
+  width: ${props => props.prefix === 'sink' ? '75%' : '70%'};
   height:250px;
   ${'' /* Previous Green Color: #fff */}
   background: ${props => props.prefix ==='sink' ? 'linear-gradient(180deg, #fff, #fff 21%, black 21%, black 22%, #fff 22%, #fff 40%, black 40%, black 41%, #fff 41%, #fff 60%, black 60%, black 61%, #fff 61%, #fff 79%, black 79%, black 80%, #fff 80%, #fff)' : 'linear-gradient(180deg, #fff, #fff 21%, black 21%, black 22%, #fff 22%, #fff 40%, black 40%, black 41%, #fff 41%, #fff 60%, black 60%, black 61%, #fff 61%, #fff 79%, black 79%, black 80%, #fff 80%, #fff)'};
-  grid-area: ${props => props.prefix === 'sink' ? '1 / 1 / 3 / 3' : '2 / 1 / 3 / 3'};
+  grid-area: ${props => props.prefix === 'sink' ? '1 / 2 / 2 / 3' : '2 / 1 / 3 / 3'};
   border: 2px solid #000;
+  align-self: ${props => props.prefix === 'sink' ? 'start' : 'end'};;
 
 `;
 

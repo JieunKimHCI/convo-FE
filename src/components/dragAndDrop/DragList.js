@@ -25,7 +25,7 @@ const ListGrid = styled.div`
   grid-gap: 3rem; */}
 
     display: grid;
-    grid-template-columns:1fr;
+    grid-template-columns:1fr 2fr;
     grid-template-rows: 1fr 1fr;
     grid-column-gap: 0px;
     grid-row-gap: 10px;
@@ -33,31 +33,38 @@ const ListGrid = styled.div`
     justify-items:center;
 `;
 
-// const ColumnHeader = styled.div`
-//   text-transform: uppercase;
-//   margin-bottom: 20px;
-//   text-align: center;
-// `;
+const ColumnHeader = styled.div`
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  text-align: center;
+`;
 
-// const SerialNumberColumn = styled.div`
-//   padding: 10px;
-//   border-radius: 6px 0px 0px 6px;
-//   background: #d4d4d4;
-//   width: 5.5rem;
-//   grid-area: 1 / 1 / 2 / 2;
-// `;
+const SerialNumberColumn = styled.div`
+  padding: 10px;
+  grid-area: 1 / 1 / 2 / 2;
+  width:70%;
+  height:250px;
+  margin-left:55px;
+  border-top: 2px solid #000;
+  border-left: 2px solid #000;
+  border-bottom: 2px solid #000;
+  background: linear-gradient(180deg, #fff, #fff 21%, black 21%, black 22%, #fff 22%, #fff 40%, black 40%, black 41%, #fff 41%, #fff 60%, black 60%, black 61%, #fff 61%, #fff 79%, black 79%, black 80%, #fff 80%, #fff);
+`;
 
-// const SerialNumber = styled.span`
-//   padding: 10px;
-//   border-radius: 6px;
-//   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-//   background: white;
-//   margin: 0 0 8px 0;
-//   display: grid;
-//   grid-gap: 20px;
-//   flex-direction: column;
-//   color:black;
-// `;
+const SerialNumber = styled.span`
+  padding: 10px 0px;
+  width: 70%;
+  ${'' /* border-radius: 6px; */}
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  background: white;
+  border: 1px solid #000;
+  margin: 0 0 11px 6px;
+  display: grid;
+  grid-gap: 20px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
 const SubmitElementsButton = styled.input`
     background-color: ${props => props.elements.sink.length === 5 ? '#66e29a' : '#d4d4d4'};
@@ -231,14 +238,16 @@ function DragList({meetingId, netId}) {
     <DragDropContextContainer>
       <DragDropContext onDragEnd={onDragEnd}>
         <ListGrid>
-        {/* <SerialNumberColumn>
-            <ColumnHeader>Sr. No</ColumnHeader>
+          <SerialNumberColumn>
+          
+            {/* <ColumnHeader>Sr. No</ColumnHeader> */}
                 <SerialNumber>1</SerialNumber>
                 <SerialNumber>2</SerialNumber>
                 <SerialNumber>3</SerialNumber>
                 <SerialNumber>4</SerialNumber>
-                <SerialNumber>5</SerialNumber>
-        </SerialNumberColumn> */}
+            <SerialNumber>5</SerialNumber>
+          
+        </SerialNumberColumn>
                   
         {lists.map((listKey) => (
             <DraggableElement
