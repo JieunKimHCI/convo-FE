@@ -75,10 +75,10 @@ function Instructions(){
             <center>
                 <div style={innerBoxStyle}>
                     <h3>Please follow the instructions carefully and check the box next to each instruction</h3>
-                    <p align = "left"><input type="checkbox" id="check1" name="check1" value={check1} onChange={handleCheckboxInputChange}/>Enable Microphone access on your browser when prompted</p>
-                    <p align = "left"><input type="checkbox" id="check2" name="check2" value={check2} onChange={handleCheckboxInputChange}/>Fill out the consent form to start using the software and participate in the study</p>
-                    <p align = "left"><input type="checkbox" id="check3" name="check3" value={check3} onChange={handleCheckboxInputChange}/>Enter the meeting ID given by the researcher</p>
-                    <p align = "left"><input type="checkbox" id="check4" name="check4" value={check4} onChange={handleCheckboxInputChange}/><b>PLEASE AVOID GOING ON MUTE</b></p>
+                    <p align = "left"><input type="checkbox" id="check1" name="check1" value={check1} onChange={handleCheckboxInputChange}/>Enable microphone access on your browser when prompted.</p>
+                    <p align = "left"><input type="checkbox" id="check2" name="check2" value={check2} onChange={handleCheckboxInputChange}/>Fill out the consent form to start using the software and participate in the study.</p>
+                    <p align = "left"><input type="checkbox" id="check3" name="check3" value={check3} onChange={handleCheckboxInputChange}/>Enter the meeting ID given by the researcher.</p>
+                    <p align = "left"><input type="checkbox" id="check4" name="check4" value={check4} onChange={handleCheckboxInputChange}/><b>Please avoid going on mute.</b></p>
                     <input 
                         style = {(!check1 || !check2 || !check3 || !check4) ? nextButtonDisabledStyle : nextButtonEnabledStyle } 
                         type="button" 

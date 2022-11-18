@@ -218,8 +218,8 @@ function DragList({meetingId, netId}) {
 
     const confirmSubmit = () => {
     confirmAlert({
-      title: 'Confirm to submit',
-      message: 'Are you sure to do this.',
+      title: 'Confirmation',
+      message: 'Are you sure you want to submit?',
       buttons: [
         {
           label: 'Yes',

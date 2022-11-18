@@ -72,15 +72,27 @@ function DesertProblem() {
             <EmotionDetectionPopupStyle>
                 <InstructionsBar>
                     <h2>Group Decision-Making Task</h2>
-                    <p><strong>Read the Desert Survival scenario and rank the items according to their importance to your survival in the desert</strong></p>
+                    <h3><strong>Read the Desert Survival scenario and rank the items according to their importance to your survival in the desert.</strong></h3>
                 </InstructionsBar>
                 <AreaWidth>
                     <>
-                        <H3>DESERT PROBLEM</H3>
+                        <H3>Desert Survival</H3>
                         {/* <TextArea rows={5} defaultValue='' /> */}
                         <InstructionsArea>
+                        <InstructionsParagraph>
+                            It  is  approximately  10am  in  mid-July  and  you have just  crash  landed  in  the  Sonora  Desert, near  the  Mexico-USA  border.  The  plane  has completely  burnt out,  only  the  frame  remains. Miraculously,  the  10  passengers  are  uninjured but the pilot has been killed.
+                            </InstructionsParagraph>
                             <InstructionsParagraph>
-                                It  is  approximately  10am  in  mid-July  and  you have just  crash  landed  in  the  Sonora  Desert, near  the  Mexico-USA  border.  The  plane  has completely  burnt out,  only  the  frame  remains. Miraculously,  the  10  passengers  are  uninjured but the pilot has been killed. The  pilot  was  unable  to  tell  anyone  of  your position  before  the  crash. However,  ground sightings taken shortly before the crash suggest that you are about 65 miles off the course filed in your  flight  plan. A  few  moments  before  the crash,  the  pilot  indicated  you  were  about  70 miles south east of a mining camp. The camp is the nearest known settlement. The immediate area is quite flat and, except for the  occasional  thorn  bush  and  cacti,  is  rather barren.     Before the plane caught fire, your group was able to save the 10 items on the desk.Your task is to rank them according to their importance to your survival in the desert. In pairs, rank the items starting with 1 for the most important, down to 10 for the least important. Be prepared to justify your decisions!
+                            The  pilot  was  unable  to  tell  anyone  of  your position  before  the  crash. However,  ground sightings taken shortly before the crash suggest that you are about 65 miles off the course filed in your  flight  plan. A  few  moments  before  the crash,  the  pilot  indicated  you  were  about  70 miles south east of a mining camp. The camp is the nearest known settlement.
+                            </InstructionsParagraph>
+                            <InstructionsParagraph>
+                            The immediate area is quite flat and, except for the  occasional  thorn  bush  and  cacti,  is  rather barren.
+                            </InstructionsParagraph>
+                            <InstructionsParagraph>
+                            <u>Before the plane caught fire, your group was able to save the 5 items on the desk.</u>
+                            </InstructionsParagraph>
+                            <InstructionsParagraph>
+                            Your task is to rank them according to their importance to your survival in the desert.
                             </InstructionsParagraph>
                         </InstructionsArea>
                     </>
@@ -88,7 +100,7 @@ function DesertProblem() {
                 </AreaWidth> 
                 <ItemWidth>
                     <InstructionsParagraph style={{ margin: "10px 1em" }}>
-                        Drag and rank items from green box to grey box.
+                        Drag and rank items from green box to grey box
                     </InstructionsParagraph>
                    <DragAndDropWrapper meetingId={meetingId} netId={netId} />
                 </ItemWidth>

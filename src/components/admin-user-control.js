@@ -32,7 +32,7 @@ function AdminUserControl({activeParticipants, meetingId}) {
             selector: row => row.turns,
         },
         {
-            name: 'Time Silent',
+            name: 'Time Silent (min)',
             selector: row => row.timesilent
         }
     ];
