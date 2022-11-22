@@ -252,7 +252,7 @@ function AdminUserControl({activeParticipants, meetingId}) {
     return (
         <>
             <div style= {gridContainer}  >
-                <label style={labelStyle}>Participants joined:</label>
+                <label style={labelStyle}>Participants Submitted</label>
                 {
                     submittedParticipants.map((i) => <button style={userButtonStyle} > {i.name} </button> )
                 }
