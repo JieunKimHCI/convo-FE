@@ -190,11 +190,9 @@ function DragList({meetingId, netId}) {
                       // alert('Successfully submitted Choices.')
                       console.log(response)
                       console.log(response.body)
-                      console.log(netId, meetingId)
-                      // navigate('/waiting');  
-                      
+                      console.log(netId, meetingId)                      
                       navigate(
-                        '/client',
+                        '/waiting',
                         { 
                             state: {
                               netId: netId,

@@ -20,7 +20,7 @@ function Survey() {
     return(
         <div style={container}>
             <div style = {emotionDetectionPopupStyle}>
-                <h2><p>Thank you for your participation!</p><p>Please click on the link below to complete the survey</p></h2>
+                <h2><p>Thank you for your participation!</p><p>Please click on this <a href="https://cornell.ca1.qualtrics.com/jfe/form/SV_0qF7G4bB9DFlyom">link</a> to complete the survey.</p></h2>
             </div>
         </div>
     )

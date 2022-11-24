@@ -167,12 +167,12 @@ function ClientMain(){
                     <p>
                         Excited: {excited}, Frustrated: {frustrated}, Polite: {polite}, Impolite: {impolite}, Sad: {sad}, Satisfied: {satisfied}, Sympathetic: {sympathetic}
                     </p> */}
-                    <button style={finishButtonStyle} onClick={endMeeting}>End Meeting</button>
+                    <button style={finishButtonStyle} onClick={endMeeting}>Leave Meeting</button>
                 </center>
             </div>}
             {!sendDataBool && <div>
                 <center>
-                    <h3>The meeting has ended.</h3>
+                    <h3>You have left the meeting.</h3>
                 </center>
             </div>}
         </div>
