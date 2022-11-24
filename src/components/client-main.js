@@ -161,9 +161,6 @@ function ClientMain(){
             if(sendDataBool){
                 sendData(location.state.netId, location.state.meetingId, transcript);
             }
-            else {
-                // request for mic permissions
-            }
         }, 7000);
         return () => clearInterval(interval);
     }, [location, transcript]);
