@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition/lib/SpeechRecognition";
 import { restUrl, deepStreamUrl } from "..";
 
@@ -15,6 +15,7 @@ client.login();
 function ClientMain(){
 
     const location = useLocation();
+    const navigate = useNavigate();
     const [excited, setExcited] = useState('0.00');
     const [frustrated, setFrustrated] = useState('0.00');
     const [impolite, setImpolite] = useState('0.00');
@@ -144,7 +145,18 @@ function ClientMain(){
                     if(value == 'true'){
                         endMeeting();
                     }
-                })
+                });
+                record.subscribe('submitForGroup', function(value) {
+                    if(value == 'true'){
+                        navigate('/survey',
+                        { 
+                            state: {
+                              netId: NetId,
+                              meetingId: MeetingId
+                            },
+                        });
+                    }
+                });
             }
             if(sendDataBool){
                 sendData(location.state.netId, location.state.meetingId, transcript);

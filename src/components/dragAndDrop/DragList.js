@@ -3,11 +3,15 @@ import styled from "styled-components";
 import { DragDropContext } from "react-beautiful-dnd";
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import DraggableElement from "./DraggableElement";
 import { restUrl } from "../../index";  
 
 
+let record = null;
+const { DeepstreamClient } = window.DeepstreamClient;
+const client = new DeepstreamClient('wss://desolate-spire-52971.herokuapp.com');
+client.login();
 
 
 const DragDropContextContainer = styled.div`
@@ -137,6 +141,7 @@ function DragList({meetingId, netId}) {
     const [elements, setElements] = React.useState(generateLists());
     
   const navigate = useNavigate();
+  const location = useLocation();
   useEffect(() => {
     setElements(generateLists());
   }, []);
@@ -187,10 +192,15 @@ function DragList({meetingId, netId}) {
                 })
                 .then(response => {
                     if (response.status === 200) {
-                      // alert('Successfully submitted Choices.')
-                      console.log(response)
-                      console.log(response.body)
-                      console.log(netId, meetingId)                      
+                      if(record == null){
+                        record = client.record.getRecord(location.state.meetingId);
+                      }
+                      let isGroupProblem = record.get('groupProblem');
+                      console.log('Submitted for group?', isGroupProblem);
+                      if (isGroupProblem == 'true') {
+                        record.set('submitForGroup', 'true');
+                      }
+                      else {
                       navigate(
                         '/waiting',
                         { 
@@ -199,6 +209,7 @@ function DragList({meetingId, netId}) {
                               meetingId: meetingId
                             },
                         });
+                      }
                     }
                     else if (response.status === 300) {
                         alert('Failed to post to db.')
