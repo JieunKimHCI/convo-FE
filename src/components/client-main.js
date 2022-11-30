@@ -171,7 +171,7 @@ function ClientMain(){
 
     return(
         <div style={container}>
-        <div onLoadStart = {() => SpeechRecognition.startListening({continuous: false})} style={instructionsPopupStyle} id = 'clientMain'>
+        <div onLoadStart = {() => SpeechRecognition.startListening({continuous: true})} style={instructionsPopupStyle} id = 'clientMain'>
             {sendDataBool && <div>
                 <center>
                     <h3>Meeting ID: {meetingId}</h3>
