@@ -165,7 +165,6 @@ function DragList({meetingId, netId}) {
       removedElement
     );
 
-      console.log(elements,listCopy);
     setElements(listCopy);
     };
     

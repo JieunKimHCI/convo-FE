@@ -118,7 +118,11 @@ function ClientMain(){
                             setSympathetic(Math.round(response.emotions.sympathetic * 100) / 100);
                         });
                     }
-                    else{
+                    // 204 when either (1) no speech data or (2) not enough speech data was sent for emotion classification
+                    else if (response.status === 204) {
+                        console.log("Not enough text was collected to classify emotion!")
+                    }
+                    else {
                         throw new Error();
                     }
                 });
@@ -167,7 +171,7 @@ function ClientMain(){
 
     return(
         <div style={container}>
-        <div onLoadStart = {SpeechRecognition.startListening({continuous: true})} style={instructionsPopupStyle} id = 'clientMain'>
+        <div onLoadStart = {() => SpeechRecognition.startListening({continuous: false})} style={instructionsPopupStyle} id = 'clientMain'>
             {sendDataBool && <div>
                 <center>
                     <h3>Meeting ID: {meetingId}</h3>
