@@ -31,7 +31,7 @@ function AdminUserControl({activeParticipants, meetingId}) {
             selector: row => row.turns,
         },
         {
-            name: 'Time Silent (min)',
+            name: 'Time Silent',
             selector: row => row.timesilent
         }
     ];
@@ -137,11 +137,9 @@ function AdminUserControl({activeParticipants, meetingId}) {
                                     "users": netId, "wordcount": wordCounts[netId], "turns": turnCounts[netId], 
                                     "timesilent": timeSilent[netId]
                                 }
-
-
                             )
                           }
-                          setData(fulldata);
+                          setData(tableData);
                     });
                 }
                 else{
