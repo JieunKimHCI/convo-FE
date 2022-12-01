@@ -8,6 +8,7 @@ let MeetingId = '';
 let NetId = '';
 let sendDataBool = true;
 let record = null;
+let timeSilent = 0;
 const { DeepstreamClient } = window.DeepstreamClient;
 const client = new DeepstreamClient('wss://desolate-spire-52971.herokuapp.com');
 client.login();
@@ -87,7 +88,7 @@ function ClientMain(){
             // if(transcript != ""){
                 const url = restUrl + 'pollconversation';
                 const text = transcript;
-                if(text != ""){
+                if (text != ""){
                     setCurrentTranscipt(currentTranscript + (currentTranscript=="" ? "" : ". ") + text);
                 }
                 resetTranscript();
@@ -129,6 +130,33 @@ function ClientMain(){
         
     }
 
+    function setTimeSilent(netId, meetingId, newTimeSilent){
+        try{
+            const url = restUrl + 'setTimeSilent';
+            fetch(url, {
+                method: 'POST',
+                mode: 'cors', 
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    'newTimeSilent': newTimeSilent,
+                    'netId': netId,
+                    'meetingId': meetingId,
+                }),
+            })
+            .then(response => {
+                if(response.status !== 200){
+                    throw new Error();
+                }
+            });
+        }
+        catch(error){
+            console.log(error);
+        }
+    }
+
     useEffect(() => {
         const interval = setInterval(() => {
             console.log(location)
@@ -148,7 +176,13 @@ function ClientMain(){
             }
             if(sendDataBool){
                 sendData(location.state.netId, location.state.meetingId, transcript);
+
+                if (transcript === '') { 
+                    timeSilent = timeSilent + 7;
+                    setTimeSilent(location.state.netId, location.state.meetingId, timeSilent);
+                }
             }
+
             else {
                 // request for mic permissions
             }
@@ -167,12 +201,12 @@ function ClientMain(){
                     <p>
                         Excited: {excited}, Frustrated: {frustrated}, Polite: {polite}, Impolite: {impolite}, Sad: {sad}, Satisfied: {satisfied}, Sympathetic: {sympathetic}
                     </p> */}
-                    <button style={finishButtonStyle} onClick={endMeeting}>Leave Meeting</button>
+                    <button style={finishButtonStyle} onClick={endMeeting}>End Meeting</button>
                 </center>
             </div>}
             {!sendDataBool && <div>
                 <center>
-                    <h3>You have left the meeting.</h3>
+                    <h3>The meeting has ended.</h3>
                 </center>
             </div>}
         </div>

@@ -12,7 +12,6 @@ function AdminUserControl({activeParticipants, meetingId}) {
     const location = useLocation();
     const [wordCounts, setWordCounts] = useState('');
     const [turnCounts, setTurnCounts] = useState('');
-    const [participants, setParticipants] = useState('');
     const [timeSilent, setTimeSilent] = useState('');
     const [data, setData] = useState([]);
     const [submittedParticipants, setSubmittedParticipants] = useState([])
@@ -129,54 +128,20 @@ function AdminUserControl({activeParticipants, meetingId}) {
                         setWordCounts(response.wordCounts);
                         setTurnCounts(response.turnCounts);
                         setTimeSilent(response.timeSilent);
-                        let fulldata=[]
+                        let tableData=[]
                         let i=1
-                        let datavar= {}
-                        for (var prop in wordCounts) {
-                            datavar["users"] = prop
-                            datavar["wordcount"] = wordCounts[prop]
-                            datavar["turns"] = turnCounts[prop]
-                            datavar["timesilent"] = timeSilent[prop]
+                        for (var netId in wordCounts) {
                             i=i+1
-                            fulldata.push(
+                            tableData.push(
                                 { "id": i,
-                                    "users": prop, "wordcount": wordCounts[prop], "turns": turnCounts[prop], 
-                                    "timesilent": timeSilent[prop]
+                                    "users": netId, "wordcount": wordCounts[netId], "turns": turnCounts[netId], 
+                                    "timesilent": timeSilent[netId]
                                 }
 
 
                             )
                           }
                           setData(fulldata);
-                    });
-                }
-                else{
-                    alert('Something went wrong!')
-                    throw new Error();
-                }
-            });
-        }
-        catch(error){
-            console.log(error);
-        }
-    }
-
-    function getParticipants() {
-        try{
-            const url = restUrl + 'participants?meetingId=' + meetingId;
-            fetch(url, {
-                method: 'GET',
-                mode: 'cors', 
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-            })
-            .then(response => {
-                if(response.status === 200){
-                    response.json().then(response => {
-                        setParticipants(response.participants);
-                        
                     });
                 }
                 else{
@@ -243,7 +208,6 @@ function AdminUserControl({activeParticipants, meetingId}) {
     
         const interval = setInterval(() => {
             getParticipantCounts();    
-            getParticipants();
             getSubmittedParticpants();
         }, 9000);
         return () => clearInterval(interval);
