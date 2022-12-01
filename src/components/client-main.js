@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition/lib/SpeechRecognition";
 import { restUrl, deepStreamUrl } from "..";
 
@@ -16,6 +16,7 @@ client.login();
 function ClientMain(){
 
     const location = useLocation();
+    const navigate = useNavigate();
     const [excited, setExcited] = useState('0.00');
     const [frustrated, setFrustrated] = useState('0.00');
     const [impolite, setImpolite] = useState('0.00');
@@ -118,7 +119,11 @@ function ClientMain(){
                             setSympathetic(Math.round(response.emotions.sympathetic * 100) / 100);
                         });
                     }
-                    else{
+                    // 204 when either (1) no speech data or (2) not enough speech data was sent for emotion classification
+                    else if (response.status === 204) {
+                        console.log("Not enough text was collected to classify emotion!")
+                    }
+                    else {
                         throw new Error();
                     }
                 });
@@ -172,7 +177,18 @@ function ClientMain(){
                     if(value == 'true'){
                         endMeeting();
                     }
-                })
+                });
+                record.subscribe('submitForGroup', function(value) {
+                    if(value == 'true'){
+                        navigate('/survey',
+                        { 
+                            state: {
+                              netId: NetId,
+                              meetingId: MeetingId
+                            },
+                        });
+                    }
+                });
             }
             if(sendDataBool){
                 sendData(location.state.netId, location.state.meetingId, transcript);
@@ -182,17 +198,13 @@ function ClientMain(){
                     setTimeSilent(location.state.netId, location.state.meetingId, timeSilent);
                 }
             }
-
-            else {
-                // request for mic permissions
-            }
         }, 7000);
         return () => clearInterval(interval);
     }, [location, transcript]);
 
     return(
         <div style={container}>
-        <div onLoadStart = {SpeechRecognition.startListening({continuous: true})} style={instructionsPopupStyle} id = 'clientMain'>
+        <div onLoadStart = {() => SpeechRecognition.startListening({continuous: true})} style={instructionsPopupStyle} id = 'clientMain'>
             {sendDataBool && <div>
                 <center>
                     <h3>Meeting ID: {meetingId}</h3>

@@ -63,8 +63,6 @@ const InstructionsBar = styled.div`
 
 function DesertProblem() {
     const {state} = useLocation();
-
-    console.log(state)
     const { meetingId, netId } = state;
 
     return (
