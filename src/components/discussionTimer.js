@@ -6,8 +6,8 @@ const { DeepstreamClient } = window.DeepstreamClient;
 const client = new DeepstreamClient('wss://desolate-spire-52971.herokuapp.com');
 client.login();
 let record = null;
-
-function MyStopwatch() {
+let isPaused = null;
+function MyStopwatch({ MeetingEnd }) {
   const location = useLocation();
   const {
     seconds,
@@ -40,26 +40,41 @@ function MyStopwatch() {
     start();
     record.set('startGroupProblem', 'true');
   }
+
+  
   
   if(record == null){
     record = client.record.getRecord(location.state.meetingId);
+    console.log("Welcome to edhbdkjd")
+    console.log("from outside",hours, minutes, seconds)
+
+    record.subscribe('endMeetingTimer', function(value) {
+      if (value === 'true') {
+        console.log("Pausing now");
+        console.log(hours, minutes, seconds)
+        pause();
+        isPaused = true;
+      }
+    });
   }
   
     return (
     <div style={{textAlign: 'center'}}>
-        {isRunning ? 
-        <div style={{fontSize: '50px'}}>
-            <span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
-        </div> : 
-        <button onClick={startGroupDiscussion} style={startButtonStyle}>Start Group Discussion</button>}
+      
+        {hours === 0 && minutes === 0 && seconds === 0 ? <span></span>:
+          <div style={{ fontSize: '50px' }}>
+            <span> {hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
+          </div>
+        }
+        {!isRunning && <button onClick={startGroupDiscussion} style={startButtonStyle}>Start Group Discussion</button>}
     </div>
   );
 }
 
-export default function discussionTimer() {
+export default function discussionTimer({MeetingEnd}) {
     return (
       <div>
-        <MyStopwatch />
+        <MyStopwatch MeetingEnd={MeetingEnd}/>
       </div>
     );
   }

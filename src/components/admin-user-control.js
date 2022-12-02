@@ -8,7 +8,7 @@ const { DeepstreamClient } = window.DeepstreamClient;
 const client = new DeepstreamClient('wss://desolate-spire-52971.herokuapp.com');
 client.login();
 
-function AdminUserControl({activeParticipants, meetingId}) {
+function AdminUserControl({MeetingEnd,activeParticipants, meetingId}) {
     const location = useLocation();
     const [wordCounts, setWordCounts] = useState('');
     const [turnCounts, setTurnCounts] = useState('');
@@ -219,7 +219,7 @@ function AdminUserControl({activeParticipants, meetingId}) {
                     submittedParticipants.map((i) => <button style={userButtonStyle} > {i.name} </button> )
                 }
                 <div style={timerStyle}>
-                    <Timer/>  
+                    <Timer MeetingEnd={MeetingEnd} />  
                 </div>
             </div>
             <div style={TableContainer}>
