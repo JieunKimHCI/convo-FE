@@ -162,6 +162,7 @@ function ClientMain(){
         }
     }
 
+    SpeechRecognition.startListening({continuous: true})
     useEffect(() => {
         const interval = setInterval(() => {
             console.log(location)
@@ -207,7 +208,7 @@ function ClientMain(){
 
     return(
         <div style={container}>
-        <div onLoadStart = {() => SpeechRecognition.startListening({continuous: true})} style={instructionsPopupStyle} id = 'clientMain'>
+        <div style={instructionsPopupStyle} id = 'clientMain'>
             {sendDataBool && <div>
                 <center>
                     <h3>Meeting ID: {meetingId}</h3>
