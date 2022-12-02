@@ -165,7 +165,6 @@ function ClientMain(){
     SpeechRecognition.startListening({continuous: true})
     useEffect(() => {
         const interval = setInterval(() => {
-            console.log(location)
             NetId = location.state.netId;
             MeetingId = location.state.meetingId;
             setMeetingId(MeetingId);
@@ -174,9 +173,12 @@ function ClientMain(){
                 record.subscribe(location.state.netId, function(value) {
                     alert('Intervention: ' + value);
                 }); 
+                // redirect all users to survey page if (1) admin ends meeting or (2) user submits on behalf of group on group page
                 record.subscribe('endMeeting', function(value) {
                     if(value === 'true'){
+                        record.set('startGroupProblem', 'false'); 
                         endMeeting();
+                        navigate('/survey');
                     }
                 });
                 record.subscribe('submitForGroup', function (value) {

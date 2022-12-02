@@ -45,13 +45,8 @@ function MyStopwatch({ MeetingEnd }) {
   
   if(record == null){
     record = client.record.getRecord(location.state.meetingId);
-    console.log("Welcome to edhbdkjd")
-    console.log("from outside",hours, minutes, seconds)
-
     record.subscribe('endMeetingTimer', function(value) {
       if (value === 'true') {
-        console.log("Pausing now");
-        console.log(hours, minutes, seconds)
         pause();
         isPaused = true;
       }
@@ -66,7 +61,7 @@ function MyStopwatch({ MeetingEnd }) {
             <span> {hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
           </div>
         }
-        {!isRunning && <button onClick={startGroupDiscussion} style={startButtonStyle}>Start Group Discussion</button>}
+        {!isRunning && !MeetingEnd && <button onClick={startGroupDiscussion} style={startButtonStyle}>Start Group Discussion</button>}
     </div>
   );
 }
