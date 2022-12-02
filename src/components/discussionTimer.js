@@ -38,7 +38,7 @@ function MyStopwatch() {
 
   function startGroupDiscussion(event) {
     start();
-    record.set('groupProblem', 'true');
+    record.set('startGroupProblem', 'true');
   }
   
   if(record == null){

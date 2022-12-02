@@ -12,7 +12,7 @@ import DesertProblemShared from './components/desert-problem-shared';
 import ClientMain from './components/client-main';
 import CreateMeeting from './components/create-meeting';
 import Summary from './components/summary';
-import Timer from './components/timer';
+
 import Waiting from './components/waiting-screen';
 import Survey from './components/survey';
 
@@ -49,9 +49,7 @@ function App() {
                     <Route path="/waiting" element={<Waiting />} >
                         {/* <WaitingRoom /> */}
                     </Route>
-                     <Route path="/timer" element={<Timer fontSize='5em' />} >
-                        {/* <Timer fontSize='5em' /> */}
-                    </Route> 
+                     
                     <Route path="/" element={<Instructions />} >
                         {/* <Instructions /> */}
                     </Route> 

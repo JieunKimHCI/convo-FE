@@ -1,4 +1,4 @@
-import Timer from './timer'; 
+
 import { useState, useCallback } from "react"; 
 import { useLocation } from "react-router-dom";
 import DragAndDropWrapper from '../components/dragAndDrop/dragAndDropWrapper';
@@ -100,7 +100,7 @@ function DesertProblem() {
                     <InstructionsParagraph style={{ margin: "10px 5em" }}>
                         Drag and rank items from 1 to 5.
                     </InstructionsParagraph>
-                   <DragAndDropWrapper meetingId={meetingId} netId={netId} />
+                    <DragAndDropWrapper isGroup={true} meetingId={meetingId} netId={netId} />
                 </ItemWidth>
             </EmotionDetectionPopupStyle>
         </Container>

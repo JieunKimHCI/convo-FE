@@ -137,7 +137,7 @@ const generateLists = () =>
     {}
   );
 
-function DragList({meetingId, netId}) {
+function DragList({meetingId, netId, isGroup}) {
     const [elements, setElements] = React.useState(generateLists());
     
   const navigate = useNavigate();
@@ -189,32 +189,34 @@ function DragList({meetingId, netId}) {
                       'timestamp': new Date().toISOString(),
                     }),
                 })
-                .then(response => {
-                    if (response.status === 200) {
+                  .then(response => {
+                    if (isGroup) {
+                      console.log("isGroup", isGroup)
                       if(record == null){
-                        record = client.record.getRecord(location.state.meetingId);
+                          record = client.record.getRecord(location.state.meetingId);
                       }
-                      let isGroupProblem = record.get('groupProblem');
-                      console.log('Submitted for group?', isGroupProblem);
-                      if (isGroupProblem == 'true') {
-                        record.set('submitForGroup', 'true');
+                      record.set('submitForGroup', 'true');  
+                      navigate('/survey');
+                    } else {
+          
+                      if (response.status === 200) {
+                        
+                        navigate(
+                          '/waiting',
+                          { 
+                              state: {
+                                netId: netId,
+                                meetingId: meetingId
+                              },
+                          });
+                        
+                      }
+                      else if (response.status === 300) {
+                          alert('Failed to post to db.')
                       }
                       else {
-                      navigate(
-                        '/waiting',
-                        { 
-                            state: {
-                              netId: netId,
-                              meetingId: meetingId
-                            },
-                        });
-                      }
-                    }
-                    else if (response.status === 300) {
-                        alert('Failed to post to db.')
-                    }
-                    else {
-                        throw new Error();
+                          throw new Error();
+                        }
                     }
                 })
             }
@@ -272,7 +274,7 @@ function DragList({meetingId, netId}) {
             type="button" 
             value="Submit" 
             onClick={confirmSubmit}
-            elements={elements}    
+            elements={elements}
             />      
      </form>
     </DragDropContextContainer>

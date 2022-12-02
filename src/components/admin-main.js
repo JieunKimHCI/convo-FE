@@ -1,7 +1,7 @@
 import { useState, useEffect, KeyboardEvent} from "react";
 import { useLocation } from "react-router-dom";
 import { restUrl, deepStreamUrl } from "..";
-import Timer from './timer'; 
+
 import DataTable from 'react-data-table-component';
 import AdminUserControl from '../components/admin-user-control';
 

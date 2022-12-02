@@ -10,7 +10,7 @@ let sendDataBool = true;
 let record = null;
 let timeSilent = 0;
 const { DeepstreamClient } = window.DeepstreamClient;
-const client = new DeepstreamClient('wss://desolate-spire-52971.herokuapp.com');
+let client = new DeepstreamClient('wss://desolate-spire-52971.herokuapp.com');
 client.login();
 
 function ClientMain(){
@@ -174,21 +174,24 @@ function ClientMain(){
                     alert('Intervention: ' + value);
                 }); 
                 record.subscribe('endMeeting', function(value) {
-                    if(value == 'true'){
+                    if(value === 'true'){
                         endMeeting();
                     }
                 });
-                record.subscribe('submitForGroup', function(value) {
-                    if(value == 'true'){
-                        navigate('/survey',
-                        { 
-                            state: {
-                              netId: NetId,
-                              meetingId: MeetingId
-                            },
-                        });
+                record.subscribe('submitForGroup', function (value) {
+                    if (value === 'true') {
+                        record.set('startGroupProblem', 'false'); 
+                        // console.log("encountered here")
+                        // endMeeting();
+                        // console.log("record", record);
+                        // client = null;
+                        navigate('/survey');
+                        // client = null;
+                        // console.log('client', client);
+                        
                     }
-                });
+                }
+                );
             }
             if(sendDataBool){
                 sendData(location.state.netId, location.state.meetingId, transcript);
@@ -200,7 +203,7 @@ function ClientMain(){
             }
         }, 7000);
         return () => clearInterval(interval);
-    }, [location, transcript]);
+    }, [location, transcript, navigate]);
 
     return(
         <div style={container}>
