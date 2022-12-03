@@ -10,7 +10,7 @@ var MeetingActive = true;
 let MeetingEnd = false;
 let record = null;
 const { DeepstreamClient } = window.DeepstreamClient;
-const client = new DeepstreamClient('wss://desolate-spire-52971.herokuapp.com');
+const client = new DeepstreamClient('wss://conversation-agent-deepstream.herokuapp.com');
 client.login();
 
 function AdminMain() {

@@ -3,7 +3,7 @@ import { useStopwatch } from 'react-timer-hook';
 import { useLocation } from "react-router-dom";
 
 const { DeepstreamClient } = window.DeepstreamClient;
-const client = new DeepstreamClient('wss://desolate-spire-52971.herokuapp.com');
+const client = new DeepstreamClient('wss://conversation-agent-deepstream.herokuapp.com');
 client.login();
 let record = null;
 let isPaused = null;

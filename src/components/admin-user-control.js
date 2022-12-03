@@ -5,7 +5,7 @@ import Timer from './discussionTimer';
 import DataTable from 'react-data-table-component';
 
 const { DeepstreamClient } = window.DeepstreamClient;
-const client = new DeepstreamClient('wss://desolate-spire-52971.herokuapp.com');
+const client = new DeepstreamClient('wss://conversation-agent-deepstream.herokuapp.com');
 client.login();
 
 function AdminUserControl({MeetingEnd,activeParticipants, meetingId}) {

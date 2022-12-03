@@ -10,7 +10,7 @@ let sendDataBool = true;
 let record = null;
 let timeSilent = 0;
 const { DeepstreamClient } = window.DeepstreamClient;
-let client = new DeepstreamClient('wss://desolate-spire-52971.herokuapp.com');
+let client = new DeepstreamClient('wss://conversation-agent-deepstream.herokuapp.com');
 client.login();
 
 function ClientMain(){
