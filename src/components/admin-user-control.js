@@ -13,6 +13,7 @@ function AdminUserControl({MeetingEnd,activeParticipants, meetingId}) {
     const [wordCounts, setWordCounts] = useState('');
     const [turnCounts, setTurnCounts] = useState('');
     const [timeSilent, setTimeSilent] = useState('');
+    const [nameCount, setNameCount] = useState('');
     const [data, setData] = useState([]);
     const [submittedParticipants, setSubmittedParticipants] = useState([])
 
@@ -21,6 +22,10 @@ function AdminUserControl({MeetingEnd,activeParticipants, meetingId}) {
         {
             name: 'Users',
             selector: row => row.users,
+        },
+        {
+            name: 'Name',
+            selector: row => row.names
         },
         {
             name: 'Word Count',
@@ -33,7 +38,9 @@ function AdminUserControl({MeetingEnd,activeParticipants, meetingId}) {
         {
             name: 'Time Silent',
             selector: row => row.timesilent
-        }
+        },
+        
+
     ];
 
     const userButtonStyle = {
@@ -128,18 +135,21 @@ function AdminUserControl({MeetingEnd,activeParticipants, meetingId}) {
                         setWordCounts(response.wordCounts);
                         setTurnCounts(response.turnCounts);
                         setTimeSilent(response.timeSilent);
+                        setNameCount(response.names);
                         let tableData=[]
                         let i=1
                         for (var netId in wordCounts) {
+                            
                             i=i+1
                             tableData.push(
                                 { "id": i,
                                     "users": netId, "wordcount": wordCounts[netId], "turns": turnCounts[netId], 
-                                    "timesilent": timeSilent[netId]
+                                    "timesilent": timeSilent[netId], "names": nameCount[netId]
                                 }
                             )
                           }
                           setData(tableData);
+                          console.log(data);
                     });
                 }
                 else{
