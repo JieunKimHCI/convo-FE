@@ -171,7 +171,9 @@ function ClientMain(){
             if(record == null){
                 record = client.record.getRecord(location.state.meetingId);
                 record.subscribe(location.state.netId, function(value) {
-                    alert('Intervention: ' + value);
+                    if (value !== "") {
+                        alert('Intervention: ' + value);
+                    }
                 }); 
                 // redirect all users to survey page if (1) admin ends meeting or (2) user submits on behalf of group on group page
                 record.subscribe('endMeeting', function(value) {
