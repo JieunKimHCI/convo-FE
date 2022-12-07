@@ -359,7 +359,7 @@ function AdminMain() {
             {MeetingActive && <div>
                 <div style={fullWidth}>
                     <center>
-                        <h2>Meeting ID: {meetingId}</h2>
+                            <h2>Meeting ID: {meetingId} {activeParticipants}</h2>
                         <textarea rows = "10" style={textBoxStyle} value = {accumulatedTranscript} readOnly/>
                     </center>
                 </div>

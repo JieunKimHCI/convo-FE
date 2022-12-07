@@ -81,6 +81,8 @@ function ClientMain(){
         .then(response => {
             console.log('response', response);
             SpeechRecognition.stopListening();
+            record.set('endMeeting', 'true');
+            record.set('endMeetingTimer', 'true');
         });
     }
 
@@ -180,6 +182,8 @@ function ClientMain(){
                     if(value === 'true'){
                         record.set('startGroupProblem', 'false'); 
                         endMeeting();
+                        record.set('endMeeting', 'true');
+                        record.set('endMeetingTimer', 'true');
                         navigate('/survey');
                     }
                 });
@@ -190,6 +194,7 @@ function ClientMain(){
                         // endMeeting();
                         // console.log("record", record);
                         // client = null;
+                        record.set('endMeetingTimer', 'true');
                         navigate('/survey');
                         // client = null;
                         // console.log('client', client);

@@ -49,6 +49,7 @@ function MyStopwatch({ MeetingEnd }) {
       if (value === 'true') {
         pause();
         isPaused = true;
+        MeetingEnd = true;
       }
     });
   }
