@@ -143,11 +143,11 @@ function UserConsent (){
                     <input type="text" name="name" id="name" onChange={handleTextInputChange} />
                 </div>
                 <div>
-                    <label style = {padding_right}><b>Net Id</b></label>
+                    <label style = {padding_right}><b>Net ID</b></label>
                     <input type="text" name="netId" id="netId" onChange={handleTextInputChange} />
                 </div>
                 <div>
-                    <label style = {padding_right}><b>Meeting Id</b></label>
+                    <label style = {padding_right}><b>Meeting ID</b></label>
                     <input type="text" name="meetingId" id="meetingId" onChange={handleTextInputChange} />
                 </div>
                 <div style={padding_top}>

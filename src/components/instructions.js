@@ -74,12 +74,12 @@ function Instructions(){
         <div style={instructionsPopupStyle} id = 'instructions'>
             <center>
                 <div style={innerBoxStyle}>
-                    <h3>Please follow the instructions carefully and check the box next to each instruction</h3>
-                    <p align = "left"><input type="checkbox" id="check1" name="check1" value={check1} onChange={handleCheckboxInputChange}/>Enable microphone access on your browser when prompted.</p>
-                    <p align = "left"><input type="checkbox" id="check2" name="check2" value={check2} onChange={handleCheckboxInputChange}/>Fill out the consent form to start using the software and participate in the study.</p>
-                    <p align = "left"><input type="checkbox" id="check3" name="check3" value={check3} onChange={handleCheckboxInputChange}/>Enter the meeting ID given by the researcher.</p>
-                    <p align = "left"><input type="checkbox" id="check4" name="check4" value={check4} onChange={handleCheckboxInputChange}/><b>Please avoid going on mute.</b></p>
-                    <input 
+                    <h3>Please check the box to confirm the system setup</h3>
+                    <p align = "left"><input type="checkbox" id="check1" name="check1" value={check1} onChange={handleCheckboxInputChange}/>I confirm that I am using Chrome browser</p>
+                    <p align = "left"><input type="checkbox" id="check2" name="check2" value={check2} onChange={handleCheckboxInputChange}/>I enabled the microphone access when prompted</p>
+                    <p align = "left"><input type="checkbox" id="check3" name="check3" value={check3} onChange={handleCheckboxInputChange}/>I recieved the meeting ID</p>
+                    <p align = "left"><input type="checkbox" id="check4" name="check4" value={check4} onChange={handleCheckboxInputChange}/><b>I am in a quiet place without background noises</b></p>
+                   <input 
                         style = {(!check1 || !check2 || !check3 || !check4) ? nextButtonDisabledStyle : nextButtonEnabledStyle } 
                         type="button" 
                         value="Begin" 
