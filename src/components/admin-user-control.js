@@ -8,7 +8,7 @@ const { DeepstreamClient } = window.DeepstreamClient;
 const client = new DeepstreamClient('wss://conversation-agent-deepstream.herokuapp.com');
 client.login();
 
-function AdminUserControl({MeetingEnd, meetingId}) {
+function AdminUserControl({MeetingEnd, meetingId, activeParticipants}) {
     const location = useLocation();
     const [wordCounts, setWordCounts] = useState('');
     const [turnCounts, setTurnCounts] = useState('');

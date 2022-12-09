@@ -4,6 +4,7 @@ import { restUrl, deepStreamUrl } from "..";
 
 import AdminUserControl from '../components/admin-user-control';
 
+var activeParticipants = []
 var MeetingActive = true;
 let MeetingEnd = false;
 let record = null;
@@ -21,7 +22,7 @@ function AdminMain() {
     const [meetingActive, setMeetingActive] = useState(true);
     const [summary, setSummary] = useState("");
     const [keywords, setKeywords] = useState("");
-    const [activeParticipants, setActiveParticipants] = useState([])
+    const [displayActiveParticipants, setDisplayActiveParticipants] = useState([])
 
     const emotionDetectionPopupStyle = {
         backgroundColor: 'white',
@@ -178,7 +179,8 @@ function AdminMain() {
                                 let name = response[netId];
                                 participants.push({netId, name});
                             }
-                            setActiveParticipants(participants);
+                            activeParticipants = participants;
+                            setDisplayActiveParticipants(participants);
 
                             let dropdownOptions = "<option value=''/>";
                             for (let netId in response){
@@ -362,13 +364,13 @@ function AdminMain() {
     }, [location]);
 
     return (
-        <><AdminUserControl MeetingEnd={MeetingEnd} meetingId={meetingId}/>
+        <><AdminUserControl MeetingEnd={MeetingEnd} meetingId={meetingId} activeParticipants={activeParticipants}/>
         <div style = {emotionDetectionPopupStyle}>
       
             {MeetingActive && <div>
                 <div style= {gridContainer}>
                     <label style={labelStyle}>Participants Joined</label>
-                    {activeParticipants.map((i) => <button style={userButtonStyle} > {i.name} </button> )}
+                    {displayActiveParticipants.map((i) => <button style={userButtonStyle} > {i.name} </button> )}
                 </div>
                 <div style={fullWidth}>
                     <center>

@@ -244,7 +244,9 @@ function ClientMain(){
     // update ping counts of each user every 7 seconds
     useEffect(() => {
         const interval = setInterval(() => {
-            incrementPingCount(location.state.netId, location.state.meetingId);
+            if (sendDataBool) {
+                incrementPingCount(location.state.netId, location.state.meetingId);
+            }
         }, 7000);
         return () => clearInterval(interval);
     }, []);
