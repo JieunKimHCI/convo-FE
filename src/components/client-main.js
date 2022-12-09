@@ -164,6 +164,32 @@ function ClientMain(){
         }
     }
 
+    function incrementPingCount(netId, meetingId){
+        try{
+            const url = restUrl + 'incrementPingCount';
+            fetch(url, {
+                method: 'POST',
+                mode: 'cors', 
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    'netId': netId,
+                    'meetingId': meetingId,
+                }),
+            })
+            .then(response => {
+                if(response.status !== 200){
+                    throw new Error();
+                }
+            });
+        }
+        catch(error){
+            console.log(error);
+        }
+    }
+
     SpeechRecognition.startListening({continuous: true})
     useEffect(() => {
         const interval = setInterval(() => {
@@ -214,6 +240,14 @@ function ClientMain(){
         }, 7000);
         return () => clearInterval(interval);
     }, [location, transcript, navigate]);
+
+    // update ping counts of each user every 7 seconds
+    useEffect(() => {
+        const interval = setInterval(() => {
+            incrementPingCount(location.state.netId, location.state.meetingId);
+        }, 7000);
+        return () => clearInterval(interval);
+    }, []);
 
     return(
         <div style={container}>

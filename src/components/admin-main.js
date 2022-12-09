@@ -2,10 +2,8 @@ import { useState, useEffect, KeyboardEvent} from "react";
 import { useLocation } from "react-router-dom";
 import { restUrl, deepStreamUrl } from "..";
 
-import DataTable from 'react-data-table-component';
 import AdminUserControl from '../components/admin-user-control';
 
-var activeParticipants = [];
 var MeetingActive = true;
 let MeetingEnd = false;
 let record = null;
@@ -23,6 +21,7 @@ function AdminMain() {
     const [meetingActive, setMeetingActive] = useState(true);
     const [summary, setSummary] = useState("");
     const [keywords, setKeywords] = useState("");
+    const [activeParticipants, setActiveParticipants] = useState([])
 
     const emotionDetectionPopupStyle = {
         backgroundColor: 'white',
@@ -72,25 +71,39 @@ function AdminMain() {
         padding: '0.5vh',
     }
 
-    const userButtonStyleSubmitted = {
-        backgroundColor: 'green',
-        color: 'white',
-        border: 'none',
-        cursor: 'pointer',
-        width: '10%',
-        padding: '0.5vh', 
+    const userButtonStyle = {
+        backgroundColor: 'rgba(255, 255, 255, 0.8)',
+        border: '1px solid rgba(0, 0, 0, 0.8)',
+        padding: '20px',
+        fontSize: '30px',
+        textAlign: 'center',
         margin: '10px',
-        
+        alignContent: 'center',
+        fontSize: '20px',
+        fontWeight: 'bold',
     }
 
-    const userButtonStyleNotSubmitted = {
-        backgroundColor: 'blue',
-        color: 'white',
-        border: 'none',
-        cursor: 'pointer',
-        width: '10%',
-        padding: '0.5vh',
+    const labelStyle = {
+        color: 'black',
+        alignSelf: 'center', 
+        fontSize: '25px'
     }
+
+    const gridContainer = {
+        display: 'grid',
+        gridTemplateColumns: 'repeat(5, 1fr)',
+        gridTemplateRows: 'repeat(1, 1fr)',
+        gridColumnGap: '10px',
+        gridRowGap: '10px',
+        justifyContent: 'center',
+        width: '125vh',
+        gridAutoRows: 'minmax(100px, auto)',
+        backgroundColor: 'white',
+        color: 'black',
+        padding : '2vh',
+        marginTop: '20px'
+    };
+
     const padding_top = {
         paddingTop : '5vh',
     }
@@ -126,28 +139,9 @@ function AdminMain() {
         width: '15%',
     }
 
-    const tableStyle = {
-        rows: {
-            style: {
-               // override the row height
-                alignment: 'center',
-                color: 'black',
-            },
-        },
-        headCells: {
-            style: {
-             
-            },
-        },
-        cells: {
-            style: {
-               
-            },
-        },
-    };
-    function handleEmotion(meetingId){
+    function getActiveParticipants(meetingId){
         try{
-            const url = restUrl + 'participants?meetingId=' + meetingId;
+            const url = restUrl + 'activeParticipants?meetingId=' + meetingId;
             fetch(url, {
                 method: 'GET',
                 mode: 'cors', 
@@ -160,20 +154,35 @@ function AdminMain() {
                 if(response.status === 200){
                     response.json().then( response => {
                         let same = true;
-                        if(activeParticipants.length == response.participants.length){
-                            for(let activeParticipant in activeParticipants){
-                                if(activeParticipants[activeParticipant] != response.participants[activeParticipant]){
-                                    same = false;
-                                    break;
-                                }
+                        
+                        // check that each response entry is in current list
+                        for(let netId in response){
+                            let name = response[netId];
+                            const inList = activeParticipants.some(element => {
+                                return (element.netId === netId && element.name === name);
+                            });
+                        
+                            if(!inList) {
+                                same = false;
                             }
                         }
-                        else same = false;
+
+                        // check that lists are the same length
+                        if (activeParticipants.length != Object.keys(response).length) {
+                            same = false
+                        }
+
                         if(!same){
-                            activeParticipants = response.participants;
+                            let participants = [];
+                            for (let netId in response) {
+                                let name = response[netId];
+                                participants.push({netId, name});
+                            }
+                            setActiveParticipants(participants);
+
                             let dropdownOptions = "<option value=''/>";
-                            for (let activeParticipant in response.participants){
-                                dropdownOptions += "<option value=" + response.participants[activeParticipant] + ">" + response.participants[activeParticipant] + "</option>"
+                            for (let netId in response){
+                                dropdownOptions += "<option value=" + netId + ">" + netId + "</option>"
                             }
                             document.getElementById('dropdown').innerHTML = dropdownOptions;
                         }
@@ -342,7 +351,7 @@ function AdminMain() {
         const interval = setInterval(() => {
             if (MeetingActive) {
                 setMeetingId(location.state.meetingId);
-                handleEmotion(location.state.meetingId);
+                getActiveParticipants(location.state.meetingId);
                 getAccumulatedTranscript(location.state.meetingId);
             }
             if(record == null){
@@ -353,13 +362,17 @@ function AdminMain() {
     }, [location]);
 
     return (
-        <><AdminUserControl MeetingEnd={MeetingEnd} meetingId={meetingId} activeParticipants={activeParticipants} />
+        <><AdminUserControl MeetingEnd={MeetingEnd} meetingId={meetingId}/>
         <div style = {emotionDetectionPopupStyle}>
       
             {MeetingActive && <div>
+                <div style= {gridContainer}>
+                    <label style={labelStyle}>Participants Joined</label>
+                    {activeParticipants.map((i) => <button style={userButtonStyle} > {i.name} </button> )}
+                </div>
                 <div style={fullWidth}>
                     <center>
-                            <h2>Meeting ID: {meetingId} {activeParticipants}</h2>
+                        <h2>Meeting ID: {meetingId}</h2>
                         <textarea rows = "10" style={textBoxStyle} value = {accumulatedTranscript} readOnly/>
                     </center>
                 </div>
