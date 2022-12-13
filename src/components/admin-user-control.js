@@ -150,7 +150,6 @@ function AdminUserControl({MeetingEnd, meetingId, activeParticipants}) {
                             )
                           }
                           setData(tableData);
-                          console.log(data);
                     });
                 }
                 else{

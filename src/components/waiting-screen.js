@@ -32,7 +32,6 @@ function WaitingScreen() {
                
         record.subscribe('startGroupProblem', function(value) {
             if (value == 'true') {
-                console.log("Redirecting to the group problem now");
                 navigate(
                     '/client',
                     { 

@@ -88,6 +88,7 @@ function UserConsent (){
     const textareaStyle = {
         maxWidth: '99%',
         width: '99%',
+        fontSize: '16px'
     }
 
     const nextButtonEnabledStyle = {
@@ -125,9 +126,7 @@ function UserConsent (){
                 <p>
                     <b>Statement of Consent</b><br></br>
                     <input type="checkbox" id="screenRecordingAgreement" name="screenRecordingAgreement" value={screenRecordingAgreement} onChange={handleCheckboxInputChange}/>
-                    <label htmlFor="screenRecordingAgreement">I understand and agree that my screen recording is necessary to participate in this study.</label>
-                </p>
-                <p>
+                    <label htmlFor="screenRecordingAgreement">I understand and agree that my screen recording is necessary to participate in this study.</label> <br></br>
                     <input type="checkbox" id="finalConsentAgreement" name="finalConsentAgreement" value={finalConsentAgreement} onChange={handleCheckboxInputChange}/>
                     <label htmlFor="finalConsentAgreement">I have read the above information. I consent to take part in the study.</label>
                 </p>

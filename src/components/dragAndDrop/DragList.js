@@ -172,9 +172,8 @@ function DragList({meetingId, netId, isGroup}) {
       try {
             const url = restUrl + 'submitChoices';
             if (elements.sink.length === 0) {
-                alert("Submission with empty spaces is not allowed!!!!")
+                alert("Submissions with empty spaces are not allowed!")
             } else {
-                console.log(`Submitting now to backend: ${JSON.stringify(elements)}`)
                 fetch(url, {
                     method: 'POST',
                     mode: 'cors',

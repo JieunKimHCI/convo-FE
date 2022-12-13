@@ -74,11 +74,11 @@ function Instructions(){
         <div style={instructionsPopupStyle} id = 'instructions'>
             <center>
                 <div style={innerBoxStyle}>
-                    <h3>Please check the box to confirm the system setup</h3>
-                    <p align = "left"><input type="checkbox" id="check1" name="check1" value={check1} onChange={handleCheckboxInputChange}/>I confirm that I am using Chrome browser</p>
-                    <p align = "left"><input type="checkbox" id="check2" name="check2" value={check2} onChange={handleCheckboxInputChange}/>I enabled the microphone access when prompted</p>
-                    <p align = "left"><input type="checkbox" id="check3" name="check3" value={check3} onChange={handleCheckboxInputChange}/>I received the meeting ID</p>
-                    <p align = "left"><input type="checkbox" id="check4" name="check4" value={check4} onChange={handleCheckboxInputChange}/><b>I am in a quiet place without background noises</b></p>
+                    <h3>Please check each box to confirm the system setup</h3>
+                    <p align = "left"><input type="checkbox" id="check1" name="check1" value={check1} onChange={handleCheckboxInputChange}/>I confirm that I am using Chrome browser.</p>
+                    <p align = "left"><input type="checkbox" id="check2" name="check2" value={check2} onChange={handleCheckboxInputChange}/>I have enabled microphone access when prompted.</p>
+                    <p align = "left"><input type="checkbox" id="check3" name="check3" value={check3} onChange={handleCheckboxInputChange}/>I received the meeting ID.</p>
+                    <p align = "left"><input type="checkbox" id="check4" name="check4" value={check4} onChange={handleCheckboxInputChange}/><b>I am in a quiet place without background noises.</b></p>
                    <input 
                         style = {(!check1 || !check2 || !check3 || !check4) ? nextButtonDisabledStyle : nextButtonEnabledStyle } 
                         type="button" 
