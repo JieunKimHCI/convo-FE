@@ -88,7 +88,7 @@ function UserConsent (){
     const textareaStyle = {
         maxWidth: '99%',
         width: '99%',
-        fontSize: '16px'
+        fontSize: '14px'
     }
 
     const nextButtonEnabledStyle = {
@@ -117,11 +117,11 @@ function UserConsent (){
             <form>
                 <p>
                     <b>Purpose of Study</b>
-                    <textarea style = {textareaStyle} rows = "2" value = {purposeOfStudyMessage} readOnly></textarea>
+                    <textarea style = {textareaStyle} rows = "3" value = {purposeOfStudyMessage} readOnly></textarea>
                 </p>
                 <p>
                     <b>Experiment Procedure</b>
-                    <textarea style = {textareaStyle} rows = "2" value = {procedureMessage} readOnly></textarea>
+                    <textarea style = {textareaStyle} rows = "3" value = {procedureMessage} readOnly></textarea>
                 </p>
                 <p>
                     <b>Statement of Consent</b><br></br>
