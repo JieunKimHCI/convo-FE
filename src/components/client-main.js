@@ -1,8 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition/lib/SpeechRecognition";
-import { restUrl, deepStreamUrl } from "..";
+import { restUrl} from "..";
 
 let MeetingId = '';
 let NetId = '';
@@ -102,6 +104,7 @@ function ClientMain(){
         })
         .then(response => {
             SpeechRecognition.stopListening();
+            navigate('/survey');
         });
     }
 
@@ -110,8 +113,8 @@ function ClientMain(){
             // if(transcript != ""){
                 const url = restUrl + 'pollconversation';
                 const text = transcript;
-                if (text != ""){
-                    setCurrentTranscipt(currentTranscript + (currentTranscript=="" ? "" : ". ") + text);
+                if (text !== ""){
+                    setCurrentTranscipt(currentTranscript + (currentTranscript==="" ? "" : ". ") + text);
                 }
                 resetTranscript();
                 fetch(url, {

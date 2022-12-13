@@ -37,12 +37,6 @@ const ListGrid = styled.div`
     justify-items:center;
 `;
 
-const ColumnHeader = styled.div`
-  text-transform: uppercase;
-  margin-bottom: 20px;
-  text-align: center;
-`;
-
 const SerialNumberColumn = styled.div`
   padding: 10px;
   grid-area: 1 / 1 / 2 / 2;

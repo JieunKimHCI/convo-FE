@@ -1,6 +1,5 @@
-import { useState, useEffect, KeyboardEvent} from "react";
-import { useLocation } from "react-router-dom";
-import { restUrl, deepStreamUrl } from "..";
+import { useState, useEffect} from "react";
+import { restUrl} from "..";
 import Timer from './discussionTimer'; 
 import DataTable from 'react-data-table-component';
 
@@ -9,7 +8,6 @@ const client = new DeepstreamClient('wss://conversation-agent-deepstream.herokua
 client.login();
 
 function AdminUserControl({MeetingEnd, meetingId, activeParticipants}) {
-    const location = useLocation();
     const [wordCounts, setWordCounts] = useState('');
     const [turnCounts, setTurnCounts] = useState('');
     const [timeSilent, setTimeSilent] = useState('');
@@ -51,7 +49,6 @@ function AdminUserControl({MeetingEnd, meetingId, activeParticipants}) {
         textAlign: 'center',
         margin: '10px',
         alignContent: 'center',
-        fontSize: '20px',
         fontWeight: 'bold',
     }
 

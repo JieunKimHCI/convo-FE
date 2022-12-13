@@ -1,6 +1,6 @@
-import { useState, useEffect, KeyboardEvent} from "react";
+import { useState, useEffect} from "react";
 import { useLocation } from "react-router-dom";
-import { restUrl, deepStreamUrl } from "..";
+import { restUrl} from "..";
 
 import AdminUserControl from '../components/admin-user-control';
 
@@ -19,6 +19,7 @@ function AdminMain() {
     const [accumulatedTranscript, setAccumulatedTranscript] = useState(""); 
     const [message, setMessage] = useState();
     const [dropdownOptionChose, setDropdownOptionChose] = useState("");
+    // eslint-disable-next-line no-unused-vars
     const [meetingActive, setMeetingActive] = useState(true);
     const [summary, setSummary] = useState("");
     const [keywords, setKeywords] = useState("");
@@ -80,7 +81,6 @@ function AdminMain() {
         textAlign: 'center',
         margin: '10px',
         alignContent: 'center',
-        fontSize: '20px',
         fontWeight: 'bold',
     }
 
@@ -169,7 +169,7 @@ function AdminMain() {
                         }
 
                         // check that lists are the same length
-                        if (activeParticipants.length != Object.keys(response).length) {
+                        if (activeParticipants.length !== Object.keys(response).length) {
                             same = false
                         }
 
@@ -386,7 +386,7 @@ function AdminMain() {
                         <label>  Send To: </label>
                         <select style={dropDownStyle} id='dropdown' value={dropdownOptionChose} onChange={handleDropdownOptionChange}/>
                         &nbsp;&nbsp;
-                        <button style={(message == "" || dropdownOptionChose == "") ? sendButtonStyleDisabled : sendButtonStyleEnabled} onClick={sendMessage} disabled={message == "" || dropdownOptionChose == ""}>Send</button>
+                        <button style={(message === "" || dropdownOptionChose === "") ? sendButtonStyleDisabled : sendButtonStyleEnabled} onClick={sendMessage} disabled={message === "" || dropdownOptionChose === ""}>Send</button>
                     </center>
                 </div>
                 <br></br><br></br><br></br><br></br>

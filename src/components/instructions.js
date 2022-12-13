@@ -21,19 +21,6 @@ function Instructions(){
         overflowY: 'auto',
     };
 
-    const padding_right = {
-        paddingRight : '2vh',
-    }
-
-    const padding_top = {
-        paddingTop : '3vh',
-    }
-
-    const bulletStyle = {
-        padding : '2vh',
-        textAlign: 'left',
-    }
-
     const innerBoxStyle = {
         paddingTop: '15vh',
         width : '80%',
