@@ -31,7 +31,7 @@ function WaitingScreen() {
         record = client.record.getRecord(location.state.meetingId);
                
         record.subscribe('startGroupProblem', function(value) {
-            if (value == 'true') {
+            if (value === 'true') {
                 navigate(
                     '/client',
                     { 

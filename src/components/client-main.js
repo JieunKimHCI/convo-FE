@@ -85,6 +85,26 @@ function ClientMain(){
         });
     }
 
+    function leaveMeeting(){
+        sendDataBool = false;
+        const url = restUrl + 'finish';
+        fetch(url, {
+            method: 'POST',
+            mode: 'cors', 
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                'meetingId': MeetingId,
+                'netId': NetId,
+            }),
+        })
+        .then(response => {
+            SpeechRecognition.stopListening();
+        });
+    }
+
     function sendData(netId, meetingId, transcript){
         try{
             // if(transcript != ""){
@@ -255,7 +275,7 @@ function ClientMain(){
                     <p>
                         Excited: {excited}, Frustrated: {frustrated}, Polite: {polite}, Impolite: {impolite}, Sad: {sad}, Satisfied: {satisfied}, Sympathetic: {sympathetic}
                     </p> */}
-                    <button style={finishButtonStyle} onClick={endMeeting}>Leave Meeting</button>
+                    <button style={finishButtonStyle} onClick={leaveMeeting}>Leave Meeting</button>
                 </center>
             </div>}
             {!sendDataBool && <div>

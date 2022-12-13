@@ -369,7 +369,7 @@ function AdminMain() {
       
             {MeetingActive && <div>
                 <div style= {gridContainer}>
-                    <label style={labelStyle}>Participants Joined</label>
+                    <label style={labelStyle}>Active Participants</label>
                     {displayActiveParticipants.map((i) => <button style={userButtonStyle} > {i.name} </button> )}
                 </div>
                 <div style={fullWidth}>

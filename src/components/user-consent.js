@@ -23,7 +23,7 @@ function UserConsent (){
         const name = event.target.id
         const value = event.target.value
         if(name === 'name') setName(value)
-        else if (name == 'netId') setNetId(value)
+        else if (name === 'netId') setNetId(value)
         else setMeetingId(value)
     }
 
