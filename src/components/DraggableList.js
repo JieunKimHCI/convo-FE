@@ -1,12 +1,10 @@
-import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import React, { Component } from "react";
+import React from "react";
 import { Draggable } from "react-drag-reorder";
 import { restUrl } from "..";  
 
 export const DraggableList = ({setIsSubmiitedSetter}) => {
-
-  const navigate = useNavigate();
+  // eslint-disable-next-line
   const [choices, setChoices] = useState(["torch 🔦","knife 🔪","raincoat ☂️","bandage 🩹","pistol 🔫","parachute 🪂","water 🥛","sunglasses 🕶️","coat 🧥","mirror 🪞"])
   const [childIsSubmitted, childSetIsSubmitted] = useState(false);
   
@@ -59,14 +57,6 @@ export const DraggableList = ({setIsSubmiitedSetter}) => {
                 if(response.status === 200){
                     alert('Successfully submitted Choices.')
                     childSetIsSubmitted(true)
-                  // navigate(
-                        // '/draggable-list',
-                          // {
-                    //     
-                    //     state: {
-                    //         choices: choices,
-                    //     },
-                    // });
                 }
                 else if(response.status === 300){
                     alert('Failed to post to db.')

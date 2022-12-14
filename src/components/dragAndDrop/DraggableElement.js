@@ -3,12 +3,6 @@ import ListItem from "./ListItem";
 import React from "react";
 import styled from "styled-components";
 
-const ColumnHeader = styled.div`
-  text-transform: uppercase;
-  margin-bottom: 20px;
-  text-align: center;
-`;
-
 const DroppableStyles = styled.div`
   padding: 10px;
   padding: ${props => props.prefix === 'sink' ? '10px 5px' : '10px'};

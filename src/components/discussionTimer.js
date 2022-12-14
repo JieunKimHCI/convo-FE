@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import { useStopwatch } from 'react-timer-hook';
 import { useLocation } from "react-router-dom";

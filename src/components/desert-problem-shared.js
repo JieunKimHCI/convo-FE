@@ -1,5 +1,3 @@
-
-import { useState, useCallback } from "react"; 
 import { useLocation } from "react-router-dom";
 import DragAndDropWrapper from '../components/dragAndDrop/dragAndDropWrapper';
 import styled from "styled-components";

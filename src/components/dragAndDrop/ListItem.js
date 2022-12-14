@@ -1,8 +1,6 @@
 import { Draggable } from "react-beautiful-dnd";
-import { LoremIpsum } from "lorem-ipsum";
-import { generateFromString } from "generate-avatar";
-import React, { useMemo } from "react";
-import styled, { css } from "styled-components";
+import React from "react";
+import styled from "styled-components";
 
 const DragItem = styled.div`
   padding: 10px 0px;
