@@ -222,7 +222,7 @@ function AdminUserControl({MeetingEnd, meetingId, activeParticipants}) {
         <>
             <div style= {gridContainer}>
                 <label style={labelStyle}>Participants Submitted</label>
-                {submittedParticipants.map((i) => <button style={userButtonStyle} > {i.name} </button> )}
+                {submittedParticipants.map((i) => <button style={userButtonStyle} key={i.name}> {i.name} </button> )}
                 <div style={timerStyle}>
                     <Timer MeetingEnd={MeetingEnd} />  
                 </div>

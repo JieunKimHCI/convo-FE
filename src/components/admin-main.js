@@ -370,7 +370,7 @@ function AdminMain() {
             {MeetingActive && <div>
                 <div style= {gridContainer}>
                     <label style={labelStyle}>Active Participants</label>
-                    {displayActiveParticipants.map((i) => <button style={userButtonStyle} > {i.name} </button> )}
+                    {displayActiveParticipants.map((i) => <button style={userButtonStyle} key={i.name}> {i.name} </button> )}
                 </div>
                 <div style={fullWidth}>
                     <center>
