@@ -6,7 +6,6 @@ import AdminUserControl from '../components/admin-user-control';
 
 var activeParticipants = []
 var MeetingActive = true;
-let MeetingEnd = false;
 let record = null;
 const { DeepstreamClient } = window.DeepstreamClient;
 const client = new DeepstreamClient('wss://conversation-agent-deepstream.herokuapp.com');
@@ -265,12 +264,10 @@ function AdminMain() {
             })
             .then(response => {
                 if(response.status === 200){
-                   // do nothing
                     MeetingActive = false;
-                    MeetingEnd = true;
-                   setMeetingActive(false);
-                   record.set('endMeeting', 'true');
-                   record.set('endMeetingTimer', 'true');
+                    setMeetingActive(false);
+                    record.set('endMeeting', 'true');
+                    record.set('endMeetingTimer', 'true');
                 }
                 else{
                     alert('Something went wrong! Please try to end the meeting again.');
@@ -364,7 +361,7 @@ function AdminMain() {
     }, [location]);
 
     return (
-        <><AdminUserControl MeetingEnd={MeetingEnd} meetingId={meetingId} activeParticipants={activeParticipants}/>
+        <><AdminUserControl meetingId={meetingId}/>
         <div style = {emotionDetectionPopupStyle}>
       
             {MeetingActive && <div>

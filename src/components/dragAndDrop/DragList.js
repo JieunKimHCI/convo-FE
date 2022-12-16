@@ -184,7 +184,6 @@ function DragList({meetingId, netId, isGroup}) {
                 })
                   .then(response => {
                     if (isGroup) {
-                      console.log("isGroup", isGroup)
                       if(record == null){
                           record = client.record.getRecord(location.state.meetingId);
                       }

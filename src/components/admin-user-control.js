@@ -7,7 +7,7 @@ const { DeepstreamClient } = window.DeepstreamClient;
 const client = new DeepstreamClient('wss://conversation-agent-deepstream.herokuapp.com');
 client.login();
 
-function AdminUserControl({MeetingEnd, meetingId, activeParticipants}) {
+function AdminUserControl({meetingId}) {
     const [wordCounts, setWordCounts] = useState('');
     const [turnCounts, setTurnCounts] = useState('');
     const [timeSilent, setTimeSilent] = useState('');
@@ -224,7 +224,7 @@ function AdminUserControl({MeetingEnd, meetingId, activeParticipants}) {
                 <label style={labelStyle}>Participants Submitted</label>
                 {submittedParticipants.map((i) => <button style={userButtonStyle} key={i.name}> {i.name} </button> )}
                 <div style={timerStyle}>
-                    <Timer MeetingEnd={MeetingEnd} />  
+                    <Timer/>  
                 </div>
             </div>
             <div style={TableContainer}>
