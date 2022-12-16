@@ -1,6 +1,6 @@
 import { useState, useEffect} from "react";
 import { restUrl} from "..";
-import Timer from './discussionTimer'; 
+import Timer from './discussion-timer'; 
 import DataTable from 'react-data-table-component';
 
 const { DeepstreamClient } = window.DeepstreamClient;

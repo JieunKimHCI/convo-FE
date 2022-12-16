@@ -6,7 +6,6 @@ import DragAndDropWrapper from './components/dragAndDrop/dragAndDropWrapper';
 import AdminMain from './components/admin-main';
 
 import Instructions from './components/instructions';
-import DraggableList from './components/DraggableList';
 import DesertProblem from './components/desert-problem';
 import DesertProblemShared from './components/desert-problem-shared';
 import ClientMain from './components/client-main';
@@ -39,9 +38,6 @@ function App() {
                     </Route>
                     <Route path="/user-consent" element={<UserConsent />} >
                         {/* <UserConsent /> */}
-                    </Route>
-                    <Route path="/draggable-list" element={<DraggableList />} >
-                        {/* <DraggableList /> */}
                     </Route>
                     <Route path="/desert-problem" element={<><DesertProblem /></>} >
                         {/* <DesertProblem /> */}
