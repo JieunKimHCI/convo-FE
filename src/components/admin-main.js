@@ -75,12 +75,13 @@ function AdminMain() {
     const userButtonStyle = {
         backgroundColor: 'rgba(255, 255, 255, 0.8)',
         border: '1px solid rgba(0, 0, 0, 0.8)',
-        padding: '20px',
-        fontSize: '30px',
+        padding: '10px 0px',
+        fontSize: '20px',
         textAlign: 'center',
-        margin: '10px',
+        margin: '5px',
         alignContent: 'center',
         fontWeight: 'bold',
+        width: '6.5em'
     }
 
     const labelStyle = {
