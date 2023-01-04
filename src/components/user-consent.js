@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
-import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import { useNavigate } from "react-router-dom";
 import { restUrl } from "..";
 
 function UserConsent (){
@@ -8,23 +7,23 @@ function UserConsent (){
     const [name, setName] = useState('');
     const [netId, setNetId] = useState('');
     const [meetingId, setMeetingId] = useState('');
-    const [purposeOfStudyAgreement, setPurposeOfStudyAgreement] = useState(false);
-    const [procedureAgreement, setProcedureAgreement] = useState(false);
+    const [screenRecordingAgreement, setScreenRecordingAgreement] = useState(false);
+    const [finalConsentAgreement, setFinalConsentAgreement] = useState(false);
     
-    const history = useHistory();
+    const navigate = useNavigate();
 
     function handleCheckboxInputChange(event) {
         const name = event.target.id
         const value = event.target.checked
-        if(name === 'purposeOfStudyAgreement') setPurposeOfStudyAgreement(value)
-        else setProcedureAgreement(value)
+        if(name === 'screenRecordingAgreement') setScreenRecordingAgreement(value)
+        else setFinalConsentAgreement(value)
     }
 
     function handleTextInputChange(event) {
         const name = event.target.id
         const value = event.target.value
         if(name === 'name') setName(value)
-        else if (name == 'netId') setNetId(value)
+        else if (name === 'netId') setNetId(value)
         else setMeetingId(value)
     }
 
@@ -41,16 +40,13 @@ function UserConsent (){
                 body: JSON.stringify({
                     'name': name,
                     'netId': netId,
-                    'meetingId': meetingId,
-                    'purposeOfStudyAgreement': purposeOfStudyAgreement,
-                    'procedureAgreement': procedureAgreement,
+                    'meetingId': meetingId
                 }),
             })
             .then(response => {
                 response.json();
                 if(response.status === 200){
-                    history.push({
-                        pathname: '/client',
+                    navigate('/desert-problem',{
                         state: {
                             netId: netId,
                             meetingId: meetingId,
@@ -92,6 +88,7 @@ function UserConsent (){
     const textareaStyle = {
         maxWidth: '99%',
         width: '99%',
+        fontSize: '14px'
     }
 
     const nextButtonEnabledStyle = {
@@ -111,53 +108,47 @@ function UserConsent (){
         width: '99%',
         padding: '2vh',
     }
-
-    const smallText = {
-        fontSize: '0.75em',
-    }
     
-    const purposeOfStudyMessage = "A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message.";
-    const procedureMessage = "A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message. A very long message.";
-    const statementOfConsentMessage = "I give the researchers permission to use my recorded screen data, including still images, in publications and at conferences or presentations."
+    const purposeOfStudyMessage = "The goal of this study is to understand the group dynamics where multiple users verbally interact with each other and make a group decision through an online video conferencing platform. Participants will discuss with other participants to make a consensus on the item ranking and successfully submit the group decision.";
+    const procedureMessage = "In this experiment, you will first be asked to make an individual decision on ranking the items for desert survival. Once submitting the result, you will join a group meeting and discuss with other participants to make a consensus on the item ranking. Once the group decision is made and submitted, a survey link will be provided.";
     
     return(
         <div style = {agreementPopupStyle} id = 'agreement'>
             <form>
                 <p>
-                    <b>Purpose of study</b>
+                    <b>Purpose of Study</b>
                     <textarea style = {textareaStyle} rows = "3" value = {purposeOfStudyMessage} readOnly></textarea>
-                    <input type="checkbox" id="purposeOfStudyAgreement" name="purposeOfStudyAgreement" value={purposeOfStudyAgreement} onChange={handleCheckboxInputChange}/>
-                    <label style={smallText} htmlFor="purposeOfStudyAgreement">I have read and agree</label>
                 </p>
                 <p>
-                    <b>Procedure</b>
+                    <b>Experiment Procedure</b>
                     <textarea style = {textareaStyle} rows = "3" value = {procedureMessage} readOnly></textarea>
-                    <input type="checkbox" id="procedureAgreement" name="procedureAgreement" value={procedureAgreement} onChange={handleCheckboxInputChange}/>
-                    <label style={smallText} htmlFor="procedureAgreement">I have read and agree</label>
                 </p>
                 <p>
                     <b>Statement of Consent</b><br></br>
-                    {statementOfConsentMessage}
+                    <input type="checkbox" id="screenRecordingAgreement" name="screenRecordingAgreement" value={screenRecordingAgreement} onChange={handleCheckboxInputChange}/>
+                    <label htmlFor="screenRecordingAgreement">I understand and agree that my screen recording is necessary to participate in this study.</label> <br></br>
+                    <input type="checkbox" id="finalConsentAgreement" name="finalConsentAgreement" value={finalConsentAgreement} onChange={handleCheckboxInputChange}/>
+                    <label htmlFor="finalConsentAgreement">I have read the above information. I consent to take part in the study.</label>
                 </p>
                 <div>
                     <label style = {padding_right}><b>Name</b></label>
                     <input type="text" name="name" id="name" onChange={handleTextInputChange} />
                 </div>
                 <div>
-                    <label style = {padding_right}><b>Net Id</b></label>
+                    <label style = {padding_right}><b>Net ID</b></label>
                     <input type="text" name="netId" id="netId" onChange={handleTextInputChange} />
                 </div>
                 <div>
-                    <label style = {padding_right}><b>Meeting Id</b></label>
+                    <label style = {padding_right}><b>Meeting ID</b></label>
                     <input type="text" name="meetingId" id="meetingId" onChange={handleTextInputChange} />
                 </div>
                 <div style={padding_top}>
                     <input 
-                        style = {(!purposeOfStudyAgreement || !procedureAgreement || name === "" || netId === "" || meetingId === "") ? nextButtonDisabledStyle : nextButtonEnabledStyle } 
+                        style = {(!screenRecordingAgreement || !finalConsentAgreement || name === "" || netId === "" || meetingId === "") ? nextButtonDisabledStyle : nextButtonEnabledStyle } 
                         type="button" 
                         value="Next" 
                         onClick={submitForm}
-                        disabled = {(!purposeOfStudyAgreement || !procedureAgreement || name === "" || netId === "" || meetingId === "")} 
+                        disabled = {(!screenRecordingAgreement || !finalConsentAgreement || name === "" || netId === "" || meetingId === "")} 
                     />   
                 </div>
             </form>
