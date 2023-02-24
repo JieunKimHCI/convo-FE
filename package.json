@@ -16,6 +16,7 @@
     "lorem-ipsum": "^2.0.8",
     "react": "^18.2.0",
     "react-beautiful-dnd": "^13.1.1",
+    "react-bootstrap": "^2.7.2",
     "react-confirm-alert": "^3.0.6",
     "react-data-table-component": "^7.5.3",
     "react-dom": "^18.2.0",
@@ -23,8 +24,10 @@
     "react-native-paper": "^4.12.5",
     "react-router-dom": "^6.4.2",
     "react-scripts": "^5.0.1",
+    "react-speech-kit": "^3.0.1",
     "react-speech-recognition": "^3.10.0",
     "react-timer-hook": "^3.0.5",
+    "react-toastify": "^9.1.1",
     "styled-components": "^5.3.6",
     "web-vitals": "^3.0.4"
   },
