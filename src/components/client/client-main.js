@@ -6,7 +6,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition/lib/SpeechRecognition";
 import { restUrl } from "../..";
 import DesertProblemShared from '../desert-problem-shared';
-import { useAlert } from "react-alert-with-buttons";
 import TextToSpeech from "./text-to-speech";
 import "./client-main.css";
 
@@ -33,7 +32,6 @@ function ClientMain() {
     const [currentTranscript, setCurrentTranscipt] = useState("");
     const [meetingId, setMeetingId] = useState("");
 
-    const alert = useAlert();
     const [intervention, setIntervention] = useState('');
     const [showIntervention, setShowIntervention] = useState(false);
     // index of the voice to use for the speech intervention
