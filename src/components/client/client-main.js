@@ -6,7 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition/lib/SpeechRecognition";
 import { restUrl } from "../..";
 import DesertProblemShared from '../desert-problem-shared';
-import TextToSpeech from "./text-to-speech";
+import { useSpeechSynthesis } from "react-speech-kit";
 import "./client-main.css";
 
 let MeetingId = '';
@@ -32,13 +32,19 @@ function ClientMain() {
     const [currentTranscript, setCurrentTranscipt] = useState("");
     const [meetingId, setMeetingId] = useState("");
 
+    // intervention text
     const [intervention, setIntervention] = useState('');
-    const [showIntervention, setShowIntervention] = useState(false);
-    // index of the voice to use for the speech intervention
-    // const onEnd = () => {
-    //     setIntervention('');
-    //     setShowIntervention(false);
-    // };
+    // voice pitch
+    const [pitch, setPitch] = useState(1);
+    // speaking rate
+    const [rate, setRate] = useState(1);
+    // index used to control which voice to use for text-to-speech
+    const [voiceIndex, setVoiceIndex] = useState(0);
+
+    const { speak, cancel, speaking, supported, voices } = useSpeechSynthesis();
+
+    // the specific voice object used to convert text to speech
+    const voice = voices[voiceIndex] || null;
 
     const container = {
         padding: '10vh',
@@ -56,12 +62,12 @@ function ClientMain() {
     };
 
     const finishButtonStyle = {
-        backgroundColor: '#282c34',
+        backgroundColor: 'red',
         color: 'white',
         border: 'none',
         cursor: 'pointer',
         width: '99%',
-        padding: '2vh',
+        padding: '2vh'
     };
 
     const textareaStyle = {
@@ -224,6 +230,13 @@ function ClientMain() {
     }
 
     SpeechRecognition.startListening({ continuous: true })
+
+    useEffect(() => {
+        if (intervention && voice) {
+            speak({ text: intervention, voice, rate, pitch });
+        }
+    }, [intervention, voice]);
+
     useEffect(() => {
         const interval = setInterval(() => {
             NetId = location.state.netId;
@@ -232,10 +245,11 @@ function ClientMain() {
             if (record == null) {
                 record = client.record.getRecord(location.state.meetingId);
                 record.subscribe(location.state.netId, function (value) {
-                    if (value !== "") {
-                        console.log(`value received ${value}`);
-                        setIntervention(value);
-                        setShowIntervention(true);
+                    if (value.message !== "") {
+                        setPitch(value.pitch);
+                        setRate(value.rate);
+                        setVoiceIndex(value.voiceIndex);
+                        setIntervention(value.message);
                     }
                 });
                 // redirect all users to survey page if (1) admin ends meeting or (2) user submits on behalf of group on group page
@@ -280,24 +294,32 @@ function ClientMain() {
         return () => clearInterval(interval);
     }, []);
 
-    // <div style={instructionsPopupStyle}></div>
+    const closeModal = () => {
+        setIntervention("");
+    }
+
     return (
         <div style={container}>
             <div id='clientMain'>
                 {sendDataBool &&
                     <div>
-                        <div className={`Modal ${showIntervention ? 'Show' : ''}`}>
-                            <TextToSpeech text={intervention} setIntervention={setIntervention} setShowIntervention={setShowIntervention} />
+                        <div className={`Modal ${intervention ? 'Show' : ''}`}>
+                            <div style={{ padding: '10px', color: 'black' }}>Intervention received!</div>
+                            <button onClick={() => speak({ text: intervention, voice, rate, pitch })}>Replay</button>
+                            <button
+                                type="button"
+                                className="close"
+                                data-dismiss="modal"
+                                onClick={closeModal}
+                            >
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
                         <DesertProblemShared />
                         <center>
                             <h3>Meeting ID: {meetingId}</h3>
                             <textarea style={textareaStyle} rows="10" value={currentTranscript} readOnly></textarea>
-
                             <button style={finishButtonStyle} onClick={leaveMeeting}>Leave Meeting</button>
-                            {/* {showIntervention && <div>
-                                <TextToSpeech text={intervention} setIntervention={setIntervention} setShowIntervention={setShowIntervention} />
-                            </div>} */}
                         </center>
                     </div>}
                 {!sendDataBool && <div>

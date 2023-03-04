@@ -3,13 +3,13 @@ import UserConsent from './components/user-consent';
 import { Route, Routes } from "react-router-dom";
 
 import DragAndDropWrapper from './components/dragAndDrop/dragAndDropWrapper';
-import AdminMain from './components/admin-main';
+import AdminMain from './components/admin/admin-main';
 
 import Instructions from './components/instructions';
 import DesertProblem from './components/desert-problem';
 
 import ClientMain from './components/client/client-main';
-import CreateMeeting from './components/create-meeting';
+import CreateMeeting from './components/admin/create-meeting';
 import Summary from './components/summary';
 
 import Waiting from './components/waiting-screen';

@@ -2,37 +2,37 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { restUrl } from "..";
 
-function UserConsent (){
+function UserConsent() {
 
     const [name, setName] = useState('');
     const [netId, setNetId] = useState('');
     const [meetingId, setMeetingId] = useState('');
     const [screenRecordingAgreement, setScreenRecordingAgreement] = useState(false);
     const [finalConsentAgreement, setFinalConsentAgreement] = useState(false);
-    
+
     const navigate = useNavigate();
 
     function handleCheckboxInputChange(event) {
         const name = event.target.id
         const value = event.target.checked
-        if(name === 'screenRecordingAgreement') setScreenRecordingAgreement(value)
+        if (name === 'screenRecordingAgreement') setScreenRecordingAgreement(value)
         else setFinalConsentAgreement(value)
     }
 
     function handleTextInputChange(event) {
         const name = event.target.id
         const value = event.target.value
-        if(name === 'name') setName(value)
+        if (name === 'name') setName(value)
         else if (name === 'netId') setNetId(value)
         else setMeetingId(value)
     }
 
     async function submitForm() {
-        try{
+        try {
             const url = restUrl + 'userconsent'
             fetch(url, {
                 method: 'POST',
-                mode: 'cors', 
+                mode: 'cors',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
@@ -43,25 +43,25 @@ function UserConsent (){
                     'meetingId': meetingId
                 }),
             })
-            .then(response => {
-                response.json();
-                if(response.status === 200){
-                    navigate('/desert-problem',{
-                        state: {
-                            netId: netId,
-                            meetingId: meetingId,
-                        },
-                    });
-                }
-                else if(response.status === 300){
-                    alert("Please check the meeting id. If the issue persists, please contact the admin.")
-                }
-                else{
-                    throw new Error();
-                }
-            });
+                .then(response => {
+                    response.json();
+                    if (response.status === 200) {
+                        navigate('/desert-problem', {
+                            state: {
+                                netId: netId,
+                                meetingId: meetingId,
+                            },
+                        });
+                    }
+                    else if (response.status === 300) {
+                        alert("Please check the meeting id. If the issue persists, please contact the admin.")
+                    }
+                    else {
+                        throw new Error();
+                    }
+                });
         }
-        catch{
+        catch {
             alert("Please check the meeting id. If the issue persists, please contact the admin.")
         }
     }
@@ -69,20 +69,20 @@ function UserConsent (){
     const agreementPopupStyle = {
         backgroundColor: 'white',
         color: 'black',
-        zIndex : '9',
-        width : '125vh',
-        height : '75vh',
-        textAlign : 'left',
-        padding : '2vh',
+        zIndex: '9',
+        width: '125vh',
+        height: '75vh',
+        textAlign: 'left',
+        padding: '2vh',
         overflowY: 'auto',
     };
 
     const padding_right = {
-        paddingRight : '2vh',
+        paddingRight: '2vh',
     }
 
     const padding_top = {
-        paddingTop : '2vh',
+        paddingTop: '2vh',
     }
 
     const textareaStyle = {
@@ -108,48 +108,48 @@ function UserConsent (){
         width: '99%',
         padding: '2vh',
     }
-    
+
     const purposeOfStudyMessage = "The goal of this study is to understand the group dynamics where multiple users verbally interact with each other and make a group decision through an online video conferencing platform. Participants will discuss with other participants to make a consensus on the item ranking and successfully submit the group decision.";
     const procedureMessage = "In this experiment, you will first be asked to make an individual decision on ranking the items for desert survival. Once submitting the result, you will join a group meeting and discuss with other participants to make a consensus on the item ranking. Once the group decision is made and submitted, a survey link will be provided.";
-    
-    return(
-        <div style = {agreementPopupStyle} id = 'agreement'>
+
+    return (
+        <div style={agreementPopupStyle} id='agreement'>
             <form>
                 <p>
                     <b>Purpose of Study</b>
-                    <textarea style = {textareaStyle} rows = "3" value = {purposeOfStudyMessage} readOnly></textarea>
+                    <textarea style={textareaStyle} rows="3" value={purposeOfStudyMessage} readOnly></textarea>
                 </p>
                 <p>
                     <b>Experiment Procedure</b>
-                    <textarea style = {textareaStyle} rows = "3" value = {procedureMessage} readOnly></textarea>
+                    <textarea style={textareaStyle} rows="3" value={procedureMessage} readOnly></textarea>
                 </p>
                 <p>
                     <b>Statement of Consent</b><br></br>
-                    <input type="checkbox" id="screenRecordingAgreement" name="screenRecordingAgreement" value={screenRecordingAgreement} onChange={handleCheckboxInputChange}/>
+                    <input type="checkbox" id="screenRecordingAgreement" name="screenRecordingAgreement" value={screenRecordingAgreement} onChange={handleCheckboxInputChange} />
                     <label htmlFor="screenRecordingAgreement">I understand and agree that my screen recording is necessary to participate in this study.</label> <br></br>
-                    <input type="checkbox" id="finalConsentAgreement" name="finalConsentAgreement" value={finalConsentAgreement} onChange={handleCheckboxInputChange}/>
+                    <input type="checkbox" id="finalConsentAgreement" name="finalConsentAgreement" value={finalConsentAgreement} onChange={handleCheckboxInputChange} />
                     <label htmlFor="finalConsentAgreement">I have read the above information. I consent to take part in the study.</label>
                 </p>
                 <div>
-                    <label style = {padding_right}><b>Name</b></label>
+                    <label style={padding_right}><b>Name</b></label>
                     <input type="text" name="name" id="name" onChange={handleTextInputChange} />
                 </div>
                 <div>
-                    <label style = {padding_right}><b>Net ID</b></label>
+                    <label style={padding_right}><b>Net ID</b></label>
                     <input type="text" name="netId" id="netId" onChange={handleTextInputChange} />
                 </div>
                 <div>
-                    <label style = {padding_right}><b>Meeting ID</b></label>
+                    <label style={padding_right}><b>Meeting ID</b></label>
                     <input type="text" name="meetingId" id="meetingId" onChange={handleTextInputChange} />
                 </div>
                 <div style={padding_top}>
-                    <input 
-                        style = {(!screenRecordingAgreement || !finalConsentAgreement || name === "" || netId === "" || meetingId === "") ? nextButtonDisabledStyle : nextButtonEnabledStyle } 
-                        type="button" 
-                        value="Next" 
+                    <input
+                        style={(!screenRecordingAgreement || !finalConsentAgreement || name === "" || netId === "" || meetingId === "") ? nextButtonDisabledStyle : nextButtonEnabledStyle}
+                        type="button"
+                        value="Next"
                         onClick={submitForm}
-                        disabled = {(!screenRecordingAgreement || !finalConsentAgreement || name === "" || netId === "" || meetingId === "")} 
-                    />   
+                        disabled={(!screenRecordingAgreement || !finalConsentAgreement || name === "" || netId === "" || meetingId === "")}
+                    />
                 </div>
             </form>
         </div>

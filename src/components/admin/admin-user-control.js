@@ -1,13 +1,13 @@
-import { useState, useEffect} from "react";
-import { restUrl} from "..";
-import Timer from './discussion-timer'; 
+import { useState, useEffect } from "react";
+import { restUrl } from "../..";
+import Timer from '../discussion-timer';
 import DataTable from 'react-data-table-component';
 
 const { DeepstreamClient } = window.DeepstreamClient;
 const client = new DeepstreamClient('wss://conversation-agent-deepstream.herokuapp.com');
 client.login();
 
-function AdminUserControl({meetingId}) {
+function AdminUserControl({ meetingId }) {
     const [wordCounts, setWordCounts] = useState('');
     const [turnCounts, setTurnCounts] = useState('');
     const [timeSilent, setTimeSilent] = useState('');
@@ -37,7 +37,7 @@ function AdminUserControl({meetingId}) {
             name: 'Time Silent',
             selector: row => row.timesilent
         },
-        
+
 
     ];
 
@@ -64,10 +64,10 @@ function AdminUserControl({meetingId}) {
         gridAutoRows: 'minmax(100px, auto)',
         backgroundColor: 'white',
         color: 'black',
-        padding : '2vh',
+        padding: '2vh',
         marginTop: '20px'
     };
-    
+
     const TableContainer = {
         display: 'grid',
         gridTemplateColumns: 'repeat(1, 1fr)',
@@ -76,12 +76,12 @@ function AdminUserControl({meetingId}) {
         width: '125vh',
         backgroundColor: 'white',
         color: 'black',
-        padding : '2vh',
+        padding: '2vh',
     };
 
     const labelStyle = {
         color: 'black',
-        alignSelf: 'center', 
+        alignSelf: 'center',
         fontSize: '25px'
     }
 
@@ -109,129 +109,130 @@ function AdminUserControl({meetingId}) {
         },
         cells: {
             style: {
-               alignContent: 'center',
-               justifyContent: 'center',
-               fontSize: '15px'
+                alignContent: 'center',
+                justifyContent: 'center',
+                fontSize: '15px'
             },
         },
     };
 
-    function getParticipantCounts(){
+    function getParticipantCounts() {
         try {
             const url = restUrl + 'participantCounts?meetingId=' + meetingId;
             fetch(url, {
                 method: 'GET',
-                mode: 'cors', 
+                mode: 'cors',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                 },
             })
-            .then(response => {
-                
-                if(response.status === 200){
-                    response.json().then(response => {
-                        setWordCounts(response.wordCounts);
-                        setTurnCounts(response.turnCounts);
-                        setTimeSilent(response.timeSilent);
-                        setNameCount(response.names);
-                        let tableData=[]
-                        let i=1
-                        for (var netId in wordCounts) {
-                            
-                            i=i+1
-                            tableData.push(
-                                { "id": i,
-                                    "users": netId, "wordcount": wordCounts[netId], "turns": turnCounts[netId], 
-                                    "timesilent": timeSilent[netId], "names": nameCount[netId]
-                                }
-                            )
-                          }
-                          setData(tableData);
-                    });
-                }
-                else{
-                    alert('Something went wrong!')
-                    throw new Error();
-                }
-            });
+                .then(response => {
+
+                    if (response.status === 200) {
+                        response.json().then(response => {
+                            setWordCounts(response.wordCounts);
+                            setTurnCounts(response.turnCounts);
+                            setTimeSilent(response.timeSilent);
+                            setNameCount(response.names);
+                            let tableData = []
+                            let i = 1
+                            for (var netId in wordCounts) {
+
+                                i = i + 1
+                                tableData.push(
+                                    {
+                                        "id": i,
+                                        "users": netId, "wordcount": wordCounts[netId], "turns": turnCounts[netId],
+                                        "timesilent": timeSilent[netId], "names": nameCount[netId]
+                                    }
+                                )
+                            }
+                            setData(tableData);
+                        });
+                    }
+                    else {
+                        alert('Something went wrong!')
+                        throw new Error();
+                    }
+                });
         }
-        catch(error){
+        catch (error) {
             console.log(error);
         }
     }
 
-    function getSubmittedParticpants(){
+    function getSubmittedParticpants() {
         try {
             const url = restUrl + 'submittedParticipants?meetingId=' + meetingId;
             fetch(url, {
                 method: 'GET',
-                mode: 'cors', 
+                mode: 'cors',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                 },
             })
-            .then(response => {
-                
-                if(response.status === 200){
-                    response.json().then(response => {
-                        let same = true;
+                .then(response => {
 
-                        for(let netId in response){
-                            let name = response[netId];
-                            const inList = submittedParticipants.some(element => {
-                                return (element.netId === netId && element.name === name);
-                            });
-                        
-                            if(!inList) {
-                                same = false;
-                            }
-                        }
-                        if(!same){
-                            let participants = [];
+                    if (response.status === 200) {
+                        response.json().then(response => {
+                            let same = true;
+
                             for (let netId in response) {
                                 let name = response[netId];
-                                participants.push({netId, name});
+                                const inList = submittedParticipants.some(element => {
+                                    return (element.netId === netId && element.name === name);
+                                });
+
+                                if (!inList) {
+                                    same = false;
+                                }
                             }
-                            setSubmittedParticipants(participants);
-                        }
-                    });
-                }
-                else{
-                    alert('Something went wrong!')
-                    throw new Error();
-                }
-            });
+                            if (!same) {
+                                let participants = [];
+                                for (let netId in response) {
+                                    let name = response[netId];
+                                    participants.push({ netId, name });
+                                }
+                                setSubmittedParticipants(participants);
+                            }
+                        });
+                    }
+                    else {
+                        alert('Something went wrong!')
+                        throw new Error();
+                    }
+                });
         }
-        catch(error){
+        catch (error) {
             console.log(error);
         }
     }
 
 
     useEffect(() => {
-    
+
         const interval = setInterval(() => {
-            getParticipantCounts();    
+            getParticipantCounts();
             getSubmittedParticpants();
         }, 9000);
         return () => clearInterval(interval);
     });
-  
+
     return (
         <>
-            <div style= {gridContainer}>
+            <div style={gridContainer}>
                 <label style={labelStyle}>Participants Submitted</label>
-                {submittedParticipants.map((i) => <button style={userButtonStyle} key={i.name}> {i.name} </button> )}
+                {submittedParticipants.map((i) => <button style={userButtonStyle} key={i.name}> {i.name} </button>)}
                 <div style={timerStyle}>
-                    <Timer/>  
+                    <Timer />
                 </div>
             </div>
             <div style={TableContainer}>
-                <DataTable columns={columns} data={data} customStyles={customStyles}/>
+                <DataTable columns={columns} data={data} customStyles={customStyles} />
             </div>
-            
+
         </>
     );
 }
