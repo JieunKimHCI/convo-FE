@@ -4,7 +4,10 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition/lib/SpeechRecognition";
-import { restUrl} from "..";
+import { restUrl } from "../..";
+import DesertProblemShared from '../desert-problem-shared';
+import { useSpeechSynthesis } from "react-speech-kit";
+import "./client-main.css";
 
 let MeetingId = '';
 let NetId = '';
@@ -15,7 +18,7 @@ const { DeepstreamClient } = window.DeepstreamClient;
 let client = new DeepstreamClient('wss://conversation-agent-deepstream.herokuapp.com');
 client.login();
 
-function ClientMain(){
+function ClientMain() {
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -29,28 +32,42 @@ function ClientMain(){
     const [currentTranscript, setCurrentTranscipt] = useState("");
     const [meetingId, setMeetingId] = useState("");
 
-     const container = {
+    // intervention text
+    const [intervention, setIntervention] = useState('');
+    // voice pitch
+    const [pitch, setPitch] = useState(1);
+    // speaking rate
+    const [rate, setRate] = useState(1);
+    // index used to control which voice to use for text-to-speech
+    const [voiceIndex, setVoiceIndex] = useState(0);
+
+    const { speak, cancel, speaking, supported, voices } = useSpeechSynthesis();
+
+    // the specific voice object used to convert text to speech
+    const voice = voices[voiceIndex] || null;
+
+    const container = {
         padding: '10vh',
     }
-    
+
     const instructionsPopupStyle = {
         backgroundColor: 'white',
         color: 'black',
-        zIndex : '9',
-        width : '125vh',
-        height : '70vh',
-        textAlign : 'left',
-        padding : '2vh',
+        zIndex: '9',
+        width: '125vh',
+        height: '70vh',
+        textAlign: 'left',
+        padding: '2vh',
         overflowY: 'auto',
     };
 
     const finishButtonStyle = {
-        backgroundColor: '#282c34',
+        backgroundColor: 'red',
         color: 'white',
         border: 'none',
         cursor: 'pointer',
         width: '99%',
-        padding: '2vh',
+        padding: '2vh'
     };
 
     const textareaStyle = {
@@ -63,14 +80,14 @@ function ClientMain(){
         resetTranscript,
     } = useSpeechRecognition();
 
-    navigator.mediaDevices.getUserMedia({audio:true})
+    navigator.mediaDevices.getUserMedia({ audio: true })
 
-    function endMeeting(){
+    function endMeeting() {
         sendDataBool = false;
         const url = restUrl + 'finish';
         fetch(url, {
             method: 'POST',
-            mode: 'cors', 
+            mode: 'cors',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
@@ -80,19 +97,19 @@ function ClientMain(){
                 'netId': NetId,
             }),
         })
-        .then(response => {
-            SpeechRecognition.stopListening();
-            record.set('endMeeting', 'true');
-            record.set('endMeetingTimer', 'true');
-        });
+            .then(response => {
+                SpeechRecognition.stopListening();
+                record.set('endMeeting', 'true');
+                record.set('endMeetingTimer', 'true');
+            });
     }
 
-    function leaveMeeting(){
+    function leaveMeeting() {
         sendDataBool = false;
         const url = restUrl + 'finish';
         fetch(url, {
             method: 'POST',
-            mode: 'cors', 
+            mode: 'cors',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
@@ -102,38 +119,38 @@ function ClientMain(){
                 'netId': NetId,
             }),
         })
-        .then(response => {
-            SpeechRecognition.stopListening();
-            navigate('/survey');
-        });
+            .then(response => {
+                SpeechRecognition.stopListening();
+                navigate('/survey');
+            });
     }
 
-    function sendData(netId, meetingId, transcript){
-        try{
+    function sendData(netId, meetingId, transcript) {
+        try {
             // if(transcript != ""){
-                const url = restUrl + 'pollconversation';
-                const text = transcript;
-                if (text !== ""){
-                    setCurrentTranscipt(currentTranscript + (currentTranscript==="" ? "" : ". ") + text);
-                }
-                resetTranscript();
-                fetch(url, {
-                    method: 'POST',
-                    mode: 'cors', 
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        'text': text,
-                        'netId': netId,
-                        'meetingId': meetingId,
-                        'timestamp': new Date().toISOString(),
-                    }),
-                })
+            const url = restUrl + 'pollconversation';
+            const text = transcript;
+            if (text !== "") {
+                setCurrentTranscipt(currentTranscript + (currentTranscript === "" ? "" : ". ") + text);
+            }
+            resetTranscript();
+            fetch(url, {
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    'text': text,
+                    'netId': netId,
+                    'meetingId': meetingId,
+                    'timestamp': new Date().toISOString(),
+                }),
+            })
                 .then(response => {
-                    if(response.status === 200){
-                        response.json().then( response => {
+                    if (response.status === 200) {
+                        response.json().then(response => {
                             setExcited(Math.round(response.emotions.excited * 100) / 100);
                             setFrustrated(Math.round(response.emotions.frustrated * 100) / 100);
                             setPolite(Math.round(response.emotions.polite * 100) / 100);
@@ -153,18 +170,18 @@ function ClientMain(){
                 });
             // }
         }
-        catch(error){
+        catch (error) {
             console.log(error);
         }
-        
+
     }
 
-    function setTimeSilent(netId, meetingId, newTimeSilent){
-        try{
+    function setTimeSilent(netId, meetingId, newTimeSilent) {
+        try {
             const url = restUrl + 'setTimeSilent';
             fetch(url, {
                 method: 'POST',
-                mode: 'cors', 
+                mode: 'cors',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
@@ -175,23 +192,23 @@ function ClientMain(){
                     'meetingId': meetingId,
                 }),
             })
-            .then(response => {
-                if(response.status !== 200){
-                    throw new Error();
-                }
-            });
+                .then(response => {
+                    if (response.status !== 200) {
+                        throw new Error();
+                    }
+                });
         }
-        catch(error){
+        catch (error) {
             console.log(error);
         }
     }
 
-    function incrementPingCount(netId, meetingId){
-        try{
+    function incrementPingCount(netId, meetingId) {
+        try {
             const url = restUrl + 'incrementPingCount';
             fetch(url, {
                 method: 'POST',
-                mode: 'cors', 
+                mode: 'cors',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
@@ -201,34 +218,44 @@ function ClientMain(){
                     'meetingId': meetingId,
                 }),
             })
-            .then(response => {
-                if(response.status !== 200){
-                    throw new Error();
-                }
-            });
+                .then(response => {
+                    if (response.status !== 200) {
+                        throw new Error();
+                    }
+                });
         }
-        catch(error){
+        catch (error) {
             console.log(error);
         }
     }
 
-    SpeechRecognition.startListening({continuous: true})
+    SpeechRecognition.startListening({ continuous: true })
+
+    useEffect(() => {
+        if (intervention && voice) {
+            speak({ text: intervention, voice, rate, pitch });
+        }
+    }, [intervention, voice]);
+
     useEffect(() => {
         const interval = setInterval(() => {
             NetId = location.state.netId;
             MeetingId = location.state.meetingId;
             setMeetingId(MeetingId);
-            if(record == null){
+            if (record == null) {
                 record = client.record.getRecord(location.state.meetingId);
-                record.subscribe(location.state.netId, function(value) {
-                    if (value !== "") {
-                        alert('Intervention: ' + value);
+                record.subscribe(location.state.netId, function (value) {
+                    if (value.message !== "") {
+                        setPitch(value.pitch);
+                        setRate(value.rate);
+                        setVoiceIndex(value.voiceIndex);
+                        setIntervention(value.message);
                     }
-                }); 
+                });
                 // redirect all users to survey page if (1) admin ends meeting or (2) user submits on behalf of group on group page
-                record.subscribe('endMeeting', function(value) {
-                    if(value === 'true'){
-                        record.set('startGroupProblem', 'false'); 
+                record.subscribe('endMeeting', function (value) {
+                    if (value === 'true') {
+                        record.set('startGroupProblem', 'false');
                         endMeeting();
                         record.set('endMeeting', 'true');
                         record.set('endMeetingTimer', 'true');
@@ -237,18 +264,18 @@ function ClientMain(){
                 });
                 record.subscribe('submitForGroup', function (value) {
                     if (value === 'true') {
-                        record.set('startGroupProblem', 'false'); 
+                        record.set('startGroupProblem', 'false');
                         record.set('endMeetingTimer', 'true');
                         navigate('/survey');
-                        
+
                     }
                 }
                 );
             }
-            if(sendDataBool){
+            if (sendDataBool) {
                 sendData(location.state.netId, location.state.meetingId, transcript);
 
-                if (transcript === '') { 
+                if (transcript === '') {
                     timeSilent = timeSilent + 7;
                     setTimeSilent(location.state.netId, location.state.meetingId, timeSilent);
                 }
@@ -267,28 +294,41 @@ function ClientMain(){
         return () => clearInterval(interval);
     }, []);
 
-    return(
-        <div style={container}>
-        <div style={instructionsPopupStyle} id = 'clientMain'>
-            {sendDataBool && <div>
-                <center>
-                    <h3>Meeting ID: {meetingId}</h3>
-                    <textarea style={textareaStyle} rows = "10" value={currentTranscript} readOnly></textarea>
-                    {/* <h3>Your emotion is detected by the agent</h3>
-                    <p>
-                        Excited: {excited}, Frustrated: {frustrated}, Polite: {polite}, Impolite: {impolite}, Sad: {sad}, Satisfied: {satisfied}, Sympathetic: {sympathetic}
-                    </p> */}
-                    <button style={finishButtonStyle} onClick={leaveMeeting}>Leave Meeting</button>
-                </center>
-            </div>}
-            {!sendDataBool && <div>
-                <center>
-                    <h3>You have left the meeting.</h3>
-                </center>
-            </div>}
-        </div>
-        </div>
-        );
+    const closeModal = () => {
+        setIntervention("");
     }
+
+    return (
+        <div style={container}>
+            <div id='clientMain'>
+                {sendDataBool &&
+                    <div>
+                        <div className={`Modal ${intervention ? 'Show' : ''}`}>
+                            <div style={{ padding: '10px', color: 'black' }}>Intervention received!</div>
+                            <button onClick={() => speak({ text: intervention, voice, rate, pitch })}>Replay</button>
+                            <button
+                                type="button"
+                                className="close"
+                                data-dismiss="modal"
+                                onClick={closeModal}
+                            >
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <DesertProblemShared />
+                        <center>
+                            <h3>Meeting ID: {meetingId}</h3>
+                            <textarea style={textareaStyle} rows="10" value={currentTranscript} readOnly></textarea>
+                            <button style={finishButtonStyle} onClick={leaveMeeting}>Leave Meeting</button>
+                        </center>
+                    </div>}
+                {!sendDataBool && <div>
+                    <center>
+                        <h3>You have left the meeting.</h3>
+                    </center>
+                </div>}
+            </div>
+        </div>
+    );
+}
 export default ClientMain;
-        
