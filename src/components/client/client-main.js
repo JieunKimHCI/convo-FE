@@ -242,10 +242,13 @@ function ClientMain() {
             NetId = location.state.netId;
             MeetingId = location.state.meetingId;
             setMeetingId(MeetingId);
+            // to make sure that the intervention only pops up once and not periodically every few seconds
+            let prevValue = '';
             if (record == null) {
                 record = client.record.getRecord(location.state.meetingId);
                 record.subscribe(location.state.netId, function (value) {
-                    if (value.message !== "") {
+                    if (value.message !== "" && !(JSON.stringify(value) === JSON.stringify(prevValue))) {
+                        prevValue = value;
                         setPitch(value.pitch);
                         setRate(value.rate);
                         setVoiceIndex(value.voiceIndex);
