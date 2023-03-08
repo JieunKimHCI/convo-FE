@@ -6,6 +6,7 @@ function CreateMeeting() {
 
     const navigate = useNavigate();
     const [meetingId, setMeetingId] = useState("");
+    const [taskId, setTaskId] = useState("");
 
     const loginPopupStyle = {
         backgroundColor: 'white',
@@ -37,16 +38,51 @@ function CreateMeeting() {
         border: 'none',
         cursor: 'pointer',
         width: '40%',
+        padding: '2vh'
+    }
+
+    const taskButtonEnabledStyle = {
+        backgroundColor: '#282c34',
+        color: 'white',
+        border: 'none',
+        cursor: 'pointer',
+        width: '20%',
+        padding: '2vh',
+    }
+
+    const taskButtonDisabledStyle = {
+        backgroundColor: 'grey',
+        color: 'white',
+        border: 'none',
+        cursor: 'pointer',
+        width: '20%',
         padding: '2vh',
     }
 
     const innerBoxStyle = {
-        padding: '20vh',
+        paddingTop: '150px'
+    }
+
+    const taskButtonStyle = {
+        display:'inline',
+        width:'100%',
+        float:'left',
+        paddingTop:'25px',
+        justifyContent: 'space-between'
     }
 
     function handleTextInputChange(event) {
         const value = event.target.value
         setMeetingId(value)
+        setTaskId("");
+    }
+
+    function handleTaskDesertChange() {
+        setTaskId(1);
+    }
+
+    function handleTaskHiddenChange() {
+        setTaskId(2);
     }
 
     function createMeeting() {
@@ -92,13 +128,33 @@ function CreateMeeting() {
                         <b>Meeting ID</b>&nbsp;&nbsp;
                         <input id='meetingId' name='meetingId' onChange={handleTextInputChange} />
                     </div>
-                    <div style={padding_top}>
+                    <div style={taskButtonStyle}>
                         <input
-                            style={meetingId === "" ? loginButtonDisabledStyle : loginButtonEnabledStyle}
+                            id='desertTask'
+                            style={meetingId === "" || taskId === 2 ? taskButtonDisabledStyle : taskButtonEnabledStyle}
+                            type="button"
+                            value="Select Desert Task"
+                            onClick={handleTaskDesertChange}
+                            disabled={meetingId === ""}
+                        />
+                    </div>
+                    <div style={taskButtonStyle}>
+                        <input
+                            id='hiddenTask'
+                            style={meetingId === "" || taskId === 1 ? taskButtonDisabledStyle : taskButtonEnabledStyle}
+                            type="button"
+                            value="Select Hidden Task"
+                            onClick={handleTaskHiddenChange}
+                            disabled={meetingId === ""}
+                        />
+                    </div>
+                    <div style={{ paddingTop: '21vh' }}>
+                        <input
+                            style={taskId === "" || meetingId === "" ? loginButtonDisabledStyle : loginButtonEnabledStyle}
                             type="button"
                             value="Create Meeting"
                             onClick={createMeeting}
-                            disabled={meetingId === ""}
+                            disabled={meetingId === "" || taskId === "" }         
                         />
                     </div>
                 </form>

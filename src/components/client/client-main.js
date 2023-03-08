@@ -5,7 +5,8 @@ import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition/lib/SpeechRecognition";
 import { restUrl } from "../..";
-import DesertProblemShared from '../desert-problem-shared';
+//import DesertProblemShared from '../desert-problem-shared';
+import HiddenProblemShared from '../hidden-problem-shared';
 import { useSpeechSynthesis } from "react-speech-kit";
 import "./client-main.css";
 
@@ -318,7 +319,7 @@ function ClientMain() {
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <DesertProblemShared />
+                        <HiddenProblemShared />
                         <center>
                             <h3>Meeting ID: {meetingId}</h3>
                             <textarea style={textareaStyle} rows="10" value={currentTranscript} readOnly></textarea>
