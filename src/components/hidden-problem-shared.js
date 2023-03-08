@@ -1,6 +1,7 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import "./hidden-problem-shared.css";
 import React, { useState } from "react";
 import { restUrl } from "../index";  
@@ -81,7 +82,7 @@ const SubmitElementsButton = styled.input`
 `;
 
 function HiddenProblem() {
-    const {state} = useLocation();
+    const { state } = useLocation();
     const { meetingId, netId } = state;
     const navigate = useNavigate();
     const location = useLocation();
@@ -91,11 +92,7 @@ function HiddenProblem() {
         setChoice([event.target.value]);
     };
 
-    const handleConfirmSubmit = () => {
-        confirmSubmit(meetingId, netId, choice);
-    };
-
-    const submitChoice = (meetingId, netId, choice) => {
+    const submitChoice = () => {
         try {
             const url = restUrl + 'submitChoices';
             if (choice.length === 0) {
@@ -129,14 +126,14 @@ function HiddenProblem() {
         }
     }
     
-    const confirmSubmit = (meetingId, netId, choice) => {
+    const confirmSubmit = () => {
         confirmAlert({
             title: 'Confirmation',
             message: 'Are you sure you want to submit?',
             buttons: [
             {
                 label: 'Yes',
-                onClick: submitChoice(meetingId, netId, choice)
+                onClick: submitChoice
             },
             {
                 label: 'No',
@@ -189,7 +186,7 @@ function HiddenProblem() {
                     <SubmitElementsButton 
                         type="button" 
                         value="Submit" 
-                        onClick={handleConfirmSubmit}
+                        onClick={confirmSubmit}
                         disabled={choice.length === 0}
                         choice={choice}
                     /> 
