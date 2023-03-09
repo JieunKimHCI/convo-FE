@@ -132,7 +132,7 @@ function CreateMeeting() {
                     <div style={taskButtonStyle}>
                         <input
                             id='desertTask'
-                            style={meetingId === "" || taskId === 2 ? taskButtonDisabledStyle : taskButtonEnabledStyle}
+                            style={meetingId === "" || taskId === 1 ? taskButtonDisabledStyle : taskButtonEnabledStyle}
                             type="button"
                             value="Select Desert Task"
                             onClick={handleTaskDesertChange}
@@ -142,7 +142,7 @@ function CreateMeeting() {
                     <div style={taskButtonStyle}>
                         <input
                             id='hiddenTask'
-                            style={meetingId === "" || taskId === 1 ? taskButtonDisabledStyle : taskButtonEnabledStyle}
+                            style={meetingId === "" || taskId === 0 ? taskButtonDisabledStyle : taskButtonEnabledStyle}
                             type="button"
                             value="Select Hidden Task"
                             onClick={handleTaskHiddenChange}
