@@ -318,7 +318,7 @@ function ClientMain() {
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <DesertProblemShared />
+                        <HiddenProblemShared />
                         <center>
                             <h3>Meeting ID: {meetingId}</h3>
                             <textarea style={textareaStyle} rows="10" value={currentTranscript} readOnly></textarea>
