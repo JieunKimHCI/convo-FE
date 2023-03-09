@@ -44,14 +44,27 @@ function UserConsent() {
                 }),
             })
                 .then(response => {
-                    response.json();
                     if (response.status === 200) {
-                        navigate('/desert-problem', {
-                            state: {
-                                netId: netId,
-                                meetingId: meetingId,
-                            },
-                        });
+                        response.json().then(response => {
+                            console.log(response)
+                            if (response.taskId === 0) {
+                                navigate('/desert-problem', {
+                                    state: {
+                                        netId: netId,
+                                        meetingId: meetingId,
+                                    },
+                                });
+                            }
+                            else if (response.taskId === 1) {
+                                navigate('/hidden-problem', {
+                                    state: {
+                                        netId: netId,
+                                        meetingId: meetingId,
+                                        participantId: response.participantId
+                                    },
+                                });
+                            }
+                        })
                     }
                     else if (response.status === 300) {
                         alert("Please check the meeting id. If the issue persists, please contact the admin.")

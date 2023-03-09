@@ -14,7 +14,7 @@ import Summary from './components/summary';
 
 import Waiting from './components/waiting-screen';
 import Survey from './components/survey';
-import HiddenInfo from './components/tasks/hiddenInfoTask/HiddenInfo';
+import HiddenProblem from './components/tasks/hiddenInfoTask/hidden-problem';
 
 function App() {
     return (
@@ -42,7 +42,7 @@ function App() {
                 <Route path="/desert-problem" element={<><DesertProblem /></>} >
                     {/* <DesertProblem /> */}
                 </Route>
-                <Route path="/hidden-problem" element={<><HiddenInfo /></>} >
+                <Route path="/hidden-problem" element={<><HiddenProblem /></>} >
                 </Route>
                 <Route path="/waiting" element={<Waiting />} >
                     {/* <WaitingRoom /> */}

@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 import DragAndDropWrapper from '../../dragAndDrop/dragAndDropWrapper';
-import { Container, EmotionDetectionPopupStyle, H3, AreaWidth, ItemWidth, InstructionsArea, InstructionsParagraph, InstructionsBar } from '../taskStyles';
+import { Container, EmotionDetectionPopupStyle, H3, AreaWidth, ItemWidth, InstructionsArea, InstructionsParagraph, InstructionsBar } from '../task-styles';
 
 function DesertProblem() {
     const { state } = useLocation();

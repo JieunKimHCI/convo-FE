@@ -30,14 +30,14 @@ export const CenteredInstruction = styled.div`
         padding: 2rem 2rem;
     `;
 
-export const SubmitElementsButton = styled.input`
-    background-color: #5f9ea0;
+export const SubmitButton = styled.input`
+    background-color: #66e29a;
     color: white;
     border: none;
     cursor: pointer;
-    width: 75rem;
+    width: 79rem;
     padding: 1rem;
-    margin: 1rem;
+    margin: 1rem 0rem;
 `;
 
 export const AreaWidth = styled.div`
@@ -63,8 +63,6 @@ export const InstructionsParagraph = styled.p`
         text-align: justify;
         font-weight: 400;
         line-height: 1.7em;
-        
-
     `;
 
 export const H3 = styled.h3`
