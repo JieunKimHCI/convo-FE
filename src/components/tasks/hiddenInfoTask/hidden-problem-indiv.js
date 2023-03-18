@@ -118,8 +118,8 @@ function HiddenProblem() {
         <Container>
             <EmotionDetectionPopupStyle>
                 <InstructionsBar>
-                    <h2>Group Decision-Making Task</h2>
-                    <h3><strong>Discuss with your teammates which candidate is best for the pilot position.</strong></h3>
+                    <h2>Individual Decision-Making Task</h2>
+                    <h3><strong>Choose who you think is the best candidate for the pilot position.</strong></h3>
                 </InstructionsBar>
                 <AreaWidth>
                     <>
