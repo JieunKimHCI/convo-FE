@@ -4,8 +4,8 @@ import { restUrl } from "../index";
 
 function UserConsent() {
 
-    const [firstname, setFirstName] = useState('');
-    const [lastname, setLastName] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
     const [netId, setNetId] = useState('');
     const [meetingId, setMeetingId] = useState('');
     const [screenRecordingAgreement, setScreenRecordingAgreement] = useState(false);
@@ -23,8 +23,8 @@ function UserConsent() {
     function handleTextInputChange(event) {
         const name = event.target.id
         const value = event.target.value
-        if (name === 'firstname') setFirstName(value)
-        else if (name === 'lastname') setLastName(value)
+        if (name === 'firstName') setFirstName(value)
+        else if (name === 'lastName') setLastName(value)
         else if (name === 'netId') setNetId(value)
         else setMeetingId(value)
     }
@@ -40,10 +40,10 @@ function UserConsent() {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    'firstname': firstname,
-                    'lastname': lastname,
+                    'firstName': firstName,
+                    'lastName': lastName,
                     'netId': netId,
-                    'meetingId': meetingId
+                    'meetingId': meetingId,
                 }),
             })
                 .then(response => {
@@ -80,6 +80,8 @@ function UserConsent() {
         catch {
             alert("Please check the meeting id. If the issue persists, please contact the admin.")
         }
+
+        console.log(firstName,lastName)
     }
 
     const agreementPopupStyle = {
@@ -100,7 +102,7 @@ function UserConsent() {
         paddingRight: '6.5vh',
     }
     const padding_right_netid = {
-        paddingRight: '10.8vh',
+        paddingRight: '10.5vh',
     }
     const padding_right_meetingid = {
         paddingRight: '5.9vh',
@@ -156,11 +158,11 @@ function UserConsent() {
                 </p>
                 <div>
                     <label style={padding_right_fname}><b>First Name</b></label>
-                    <input type="text" name="firstname" id="firstname" onChange={handleTextInputChange} />
+                    <input type="text" name="firstName" id="firstName" onChange={handleTextInputChange} />
                 </div>
                 <div>
                     <label style={padding_right_lname}><b>Last Name</b></label>
-                    <input type="text" name="lastname" id="lastname" onChange={handleTextInputChange} />
+                    <input type="text" name="lastName" id="lastName" onChange={handleTextInputChange} />
                 </div>
                 <div>
                     <label style={padding_right_netid}><b>Net ID</b></label>
@@ -172,11 +174,11 @@ function UserConsent() {
                 </div>
                 <div style={padding_top}>
                     <input
-                        style={(!screenRecordingAgreement || !finalConsentAgreement || firstname === "" || lastname=="" || netId === "" || meetingId === "") ? nextButtonDisabledStyle : nextButtonEnabledStyle}
+                        style={(!screenRecordingAgreement || !finalConsentAgreement || firstName === "" || lastName==="" || netId === "" || meetingId === "") ? nextButtonDisabledStyle : nextButtonEnabledStyle}
                         type="button"
                         value="Next"
                         onClick={submitForm}
-                        disabled={(!screenRecordingAgreement || !finalConsentAgreement || firstname === "" || lastname=="" || netId === "" || meetingId === "")}
+                        disabled={(!screenRecordingAgreement || !finalConsentAgreement || firstName === "" || lastName==="" || netId === "" || meetingId === "")}
                     />
                 </div>
             </form>

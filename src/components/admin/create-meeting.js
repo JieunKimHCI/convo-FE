@@ -6,6 +6,7 @@ function CreateMeeting() {
 
     const navigate = useNavigate();
     const [meetingId, setMeetingId] = useState("");
+    const [meetingName, setMeetingName] = useState("");
     const [taskId, setTaskId] = useState("");
 
     const loginPopupStyle = {
@@ -19,8 +20,13 @@ function CreateMeeting() {
         overflowY: 'auto',
     };
 
-    const padding_top = {
+    const padding_id = {
         paddingTop: '5vh',
+        paddingRight: '6vh',
+    }
+    const padding_name = {
+        paddingTop: '5vh',
+        paddingRight: '10vh',
     }
 
     const loginButtonEnabledStyle = {
@@ -74,6 +80,7 @@ function CreateMeeting() {
     function handleTextInputChange(event) {
         const value = event.target.value
         setMeetingId(value)
+        setMeetingName(value)
         setTaskId("");
     }
 
@@ -97,6 +104,7 @@ function CreateMeeting() {
                 },
                 body: JSON.stringify({
                     'meetingId': meetingId,
+                    'meetingName' : meetingName,
                     'taskId': taskId
                 }),
             })
@@ -125,9 +133,13 @@ function CreateMeeting() {
         <div style={loginPopupStyle} id='login'>
             <center>
                 <form style={innerBoxStyle}>
-                    <div style={padding_top}>
+                    <div style={padding_id}>
                         <b>Meeting ID</b>&nbsp;&nbsp;
                         <input id='meetingId' name='meetingId' onChange={handleTextInputChange} />
+                    </div>
+                    <div style={padding_name}>
+                        <b>Meeting Name</b>&nbsp;&nbsp;
+                        <input id='meetingName' name='meetingName' onChange={handleTextInputChange} />
                     </div>
                     <div style={taskButtonStyle}>
                         <input
