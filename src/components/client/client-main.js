@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition/lib/SpeechRecognition";
 import { restUrl } from "../..";
-//import DesertProblemShared from '../desert-problem-shared';
+import DesertProblemShared from '../tasks/desertTask/desert-problem-shared';
 import HiddenProblemShared from '../tasks/hiddenInfoTask/hidden-problem-shared';
 import { useSpeechSynthesis } from "react-speech-kit";
 import "./client-main.css";
@@ -98,7 +98,8 @@ function ClientMain() {
         })
             .then(response => {
                 SpeechRecognition.stopListening();
-                record.set('endMeeting', 'true');
+                console.log('endmeeting true');
+                record.set('endMeeting', 'false');
                 record.set('endMeetingTimer', 'true');
             });
     }
@@ -120,6 +121,7 @@ function ClientMain() {
         })
             .then(response => {
                 SpeechRecognition.stopListening();
+                console.log('leaving in leave meeting')
                 navigate('/survey');
             });
     }
@@ -257,10 +259,12 @@ function ClientMain() {
                 // redirect all users to survey page if (1) admin ends meeting or (2) user submits on behalf of group on group page
                 record.subscribe('endMeeting', function (value) {
                     if (value === 'true') {
+                        console.log('endmeeting true');
                         record.set('startGroupProblem', 'false');
                         endMeeting();
-                        record.set('endMeeting', 'true');
+                        record.set('endMeeting', 'false');
                         record.set('endMeetingTimer', 'true');
+                        console.log('leaving end meeting')
                         navigate('/survey');
                     }
                 });
@@ -268,6 +272,7 @@ function ClientMain() {
                     if (value === 'true') {
                         record.set('startGroupProblem', 'false');
                         record.set('endMeetingTimer', 'true');
+                        console.log('leaving submitforgroup')
                         navigate('/survey');
 
                     }
@@ -317,7 +322,12 @@ function ClientMain() {
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <HiddenProblemShared />
+                        <div>
+                            {location.state.taskId === 0 ?
+                                <DesertProblemShared /> :
+                                <HiddenProblemShared />
+                            }
+                        </div>
                         <center>
                             <h3>Meeting ID: {meetingId}</h3>
                             <textarea style={textareaStyle} rows="10" value={currentTranscript} readOnly></textarea>
