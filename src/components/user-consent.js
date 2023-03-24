@@ -46,7 +46,6 @@ function UserConsent() {
                 .then(response => {
                     if (response.status === 200) {
                         response.json().then(response => {
-                            console.log(response)
                             if (response.taskId === 0) {
                                 navigate('/desert-problem', {
                                     state: {

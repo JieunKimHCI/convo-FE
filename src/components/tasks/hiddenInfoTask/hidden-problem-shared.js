@@ -7,7 +7,6 @@ import React, { useState } from "react";
 import { restUrl } from "../../../index";
 import { Container, EmotionDetectionPopupStyle, H3, AreaWidth, ItemWidth, InstructionsArea, InstructionsParagraph, InstructionsBar } from '../task-styles';
 
-let record = null;
 const { DeepstreamClient } = window.DeepstreamClient;
 const client = new DeepstreamClient('wss://conversation-agent-deepstream.herokuapp.com');
 client.login();
@@ -50,19 +49,24 @@ function HiddenProblem() {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        'choice': choice,
+                        'choices': choice,
                         'meetingId': meetingId,
                         'netId': netId,
                         'timestamp': new Date().toISOString(),
                     }),
                 })
                     .then(response => {
-                        if (record == null) {
-                            record = client.record.getRecord(location.state.meetingId);
-                        }
-                        record.set('submitForGroup', 'true');
-                        navigate('/survey');
-                    })
+                        navigate(
+                            '/waiting',
+                            {
+                                state: {
+                                    netId: netId,
+                                    meetingId: meetingId,
+                                    taskId: 1,
+                                    final: true
+                                },
+                            });
+                    });
             }
         }
         catch (error) {
@@ -107,24 +111,24 @@ function HiddenProblem() {
 
                 </AreaWidth>
                 <ItemWidth>
-                    <InstructionsParagraph style={{ 'text-align': "center" }}>
+                    <InstructionsParagraph style={{ 'textAlign': "center" }}>
                         <h2>Choose one of the below</h2>
                     </InstructionsParagraph>
-                    <div class="radio-group">
-                        <label class="radio">
+                    <div className="radio-group">
+                        <label className="radio">
                             <input type="radio" name="killer" value="john-doe" onChange={handleChoiceChange} />
-                            <span class="radio-custom"></span>
-                            <span class="radio-label">John Doe</span>
+                            <span className="radio-custom"></span>
+                            <span className="radio-label">John Doe</span>
                         </label>
-                        <label class="radio">
+                        <label className="radio">
                             <input type="radio" name="killer" value="jane-doe" onChange={handleChoiceChange} />
-                            <span class="radio-custom"></span>
-                            <span class="radio-label">Jane Doe</span>
+                            <span className="radio-custom"></span>
+                            <span className="radio-label">Jane Doe</span>
                         </label>
-                        <label class="radio">
+                        <label className="radio">
                             <input type="radio" name="killer" value="john-smith" onChange={handleChoiceChange} />
-                            <span class="radio-custom"></span>
-                            <span class="radio-label">John Smith</span>
+                            <span className="radio-custom"></span>
+                            <span className="radio-label">John Smith</span>
                         </label>
                     </div>
                     <SubmitElementsButton

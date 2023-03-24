@@ -280,6 +280,7 @@ function AdminMain() {
                     if (response.status === 200) {
                         MeetingActive = false;
                         setMeetingActive(false);
+                        console.log('wtf');
                         record.set('endMeeting', 'true');
                         record.set('endMeetingTimer', 'true');
                     }

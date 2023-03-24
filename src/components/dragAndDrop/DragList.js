@@ -5,7 +5,7 @@ import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import { useNavigate, useLocation } from "react-router-dom";
 import DraggableElement from "./DraggableElement";
-import { restUrl } from "../../index";  
+import { restUrl } from "../../index";
 
 
 let record = null;
@@ -78,39 +78,39 @@ const SubmitElementsButton = styled.input`
 
 // inital data generator
 const getItems = (prefix) => {
-    if (prefix === 'sink') {
-        return []
-    } else {
-        return [
-    {
-      "id": "1",
+  if (prefix === 'sink') {
+    return []
+  } else {
+    return [
+      {
+        "id": "1",
         prefix,
-      "content": "Knife 🗡️"
-    },
-    {
-      "id": "2",
+        "content": "Knife 🗡️"
+      },
+      {
+        "id": "2",
         prefix,
-      "content": "Torch 🔦"
-    },
-    {
-      "id": "3",
-      prefix,
-      "content": "Pistol 🔫"
-    },
-    {
-      "id": "4",
-      prefix,
-      "content": "Water 💧"
-    },
-    {
-      "id": "5",
-      prefix,
-      "content": "Coat 🧥"
-    },
-  ]
-    }
- };
-    
+        "content": "Torch 🔦"
+      },
+      {
+        "id": "3",
+        prefix,
+        "content": "Pistol 🔫"
+      },
+      {
+        "id": "4",
+        prefix,
+        "content": "Water 💧"
+      },
+      {
+        "id": "5",
+        prefix,
+        "content": "Coat 🧥"
+      },
+    ]
+  }
+};
+
 const removeFromList = (list, index) => {
   const result = Array.from(list);
   const [removed] = result.splice(index, 1);
@@ -131,9 +131,9 @@ const generateLists = () =>
     {}
   );
 
-function DragList({meetingId, netId, isGroup}) {
-    const [elements, setElements] = React.useState(generateLists());
-    
+function DragList({ meetingId, netId, isGroup }) {
+  const [elements, setElements] = React.useState(generateLists());
+
   const navigate = useNavigate();
   const location = useLocation();
   useEffect(() => {
@@ -160,65 +160,67 @@ function DragList({meetingId, netId, isGroup}) {
     );
 
     setElements(listCopy);
-    };
-    
-    const submitElements = () => {
-      try {
-            const url = restUrl + 'submitChoices';
-            if (elements.sink.length === 0) {
-                alert("Submissions with empty spaces are not allowed!")
-            } else {
-                fetch(url, {
-                    method: 'POST',
-                    mode: 'cors',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                      'choices': elements,
-                      'meetingId': meetingId,
-                      'netId': netId,
-                      'timestamp': new Date().toISOString(),
-                    }),
-                })
-                  .then(response => {
-                    if (isGroup) {
-                      if(record == null){
-                          record = client.record.getRecord(location.state.meetingId);
-                      }
-                      record.set('submitForGroup', 'true');  
-                      navigate('/survey');
-                    } else {
-          
-                      if (response.status === 200) {
-                        
-                        navigate(
-                          '/waiting',
-                          { 
-                              state: {
-                                netId: netId,
-                                meetingId: meetingId
-                              },
-                          });
-                        
-                      }
-                      else if (response.status === 300) {
-                          alert('Failed to post to db.')
-                      }
-                      else {
-                          throw new Error();
-                        }
-                    }
-                })
-            }
-        }
-        catch(error){
-            console.log('error', error);
-        }
-    }
+  };
 
-    const confirmSubmit = () => {
+  const submitElements = () => {
+    try {
+      const url = restUrl + 'submitChoices';
+      if (elements.sink.length === 0) {
+        alert("Submissions with empty spaces are not allowed!")
+      } else {
+        fetch(url, {
+          method: 'POST',
+          mode: 'cors',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            'choices': elements,
+            'meetingId': meetingId,
+            'netId': netId,
+            'timestamp': new Date().toISOString(),
+          }),
+        })
+          .then(response => {
+            if (isGroup) {
+              if (record == null) {
+                record = client.record.getRecord(location.state.meetingId);
+              }
+              record.set('submitForGroup', 'true');
+              navigate('/survey');
+            } else {
+
+              if (response.status === 200) {
+
+                navigate(
+                  '/waiting',
+                  {
+                    state: {
+                      netId: netId,
+                      meetingId: meetingId,
+                      taskId: 0,
+                      final: false
+                    },
+                  });
+
+              }
+              else if (response.status === 300) {
+                alert('Failed to post to db.')
+              }
+              else {
+                throw new Error();
+              }
+            }
+          })
+      }
+    }
+    catch (error) {
+      console.log('error', error);
+    }
+  }
+
+  const confirmSubmit = () => {
     confirmAlert({
       title: 'Confirmation',
       message: 'Are you sure you want to submit?',
@@ -233,25 +235,25 @@ function DragList({meetingId, netId, isGroup}) {
         }
       ]
     });
-    };
-    
+  };
+
 
   return (
     <DragDropContextContainer>
       <DragDropContext onDragEnd={onDragEnd}>
         <ListGrid>
           <SerialNumberColumn>
-          
+
             {/* <ColumnHeader>Sr. No</ColumnHeader> */}
-                <SerialNumber>1</SerialNumber>
-                <SerialNumber>2</SerialNumber>
-                <SerialNumber>3</SerialNumber>
-                <SerialNumber>4</SerialNumber>
+            <SerialNumber>1</SerialNumber>
+            <SerialNumber>2</SerialNumber>
+            <SerialNumber>3</SerialNumber>
+            <SerialNumber>4</SerialNumber>
             <SerialNumber>5</SerialNumber>
-          
-        </SerialNumberColumn>
-                  
-        {lists.map((listKey) => (
+
+          </SerialNumberColumn>
+
+          {lists.map((listKey) => (
             <DraggableElement
               elements={elements[listKey]}
               key={listKey}
@@ -259,16 +261,16 @@ function DragList({meetingId, netId, isGroup}) {
             />
           ))}
         </ListGrid>
-          </DragDropContext>
+      </DragDropContext>
 
-     <form>
-        <SubmitElementsButton 
-            type="button" 
-            value="Submit" 
-            onClick={confirmSubmit}
-            elements={elements}
-            />      
-     </form>
+      <form>
+        <SubmitElementsButton
+          type="button"
+          value="Submit"
+          onClick={confirmSubmit}
+          elements={elements}
+        />
+      </form>
     </DragDropContextContainer>
   );
 }
