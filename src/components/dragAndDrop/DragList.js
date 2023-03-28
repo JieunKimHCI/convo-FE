@@ -221,7 +221,7 @@ function DragList({meetingId, netId, isGroup}) {
     const confirmSubmit = () => {
     confirmAlert({
       title: 'Confirmation',
-      message: 'Are you sure this is the group\'s final answer?',
+      message: isGroup ? 'Are you sure this is the group\'s final answer?' : 'Are you sure you want to submit?',
       buttons: [
         {
           label: 'Yes',
