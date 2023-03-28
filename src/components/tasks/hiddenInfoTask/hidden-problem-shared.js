@@ -100,7 +100,7 @@ function HiddenProblem() {
     const confirmSubmit = () => {
         confirmAlert({
             title: 'Confirmation',
-            message: 'Are you sure you want to submit?',
+            message: 'Are you sure this is the group\'s final answer?',
             buttons: [
                 {
                     label: 'Yes',
