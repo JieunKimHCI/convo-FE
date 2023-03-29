@@ -56,16 +56,11 @@ function HiddenProblem() {
                     }),
                 })
                     .then(response => {
-                        navigate(
-                            '/waiting',
-                            {
-                                state: {
-                                    netId: netId,
-                                    meetingId: meetingId,
-                                    taskId: 1,
-                                    final: true
-                                },
-                            });
+                        if (record == null) {
+                            record = client.record.getRecord(location.state.meetingId);
+                        }
+                        record.set('submitForGroup', 'true');
+                        navigate('/survey');
                     });
             }
         }
