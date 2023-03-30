@@ -2,10 +2,10 @@ import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
-import "./hidden-problem-shared.css";
+import "./hidden-problem.css";
 import React, { useState } from "react";
 import { restUrl } from "../../../index";
-import { Container, EmotionDetectionPopupStyle, H3, AreaWidth, ItemWidth, InstructionsArea, InstructionsParagraph, InstructionsBar } from '../task-styles';
+import { Container, EmotionDetectionPopupStyle, H3, H4, AreaWidth, ItemWidth, InstructionsArea, InstructionsParagraph, InstructionsBar } from '../task-styles';
 
 let record = null;
 const { DeepstreamClient } = window.DeepstreamClient;
@@ -27,10 +27,37 @@ const SubmitElementsButton = styled.input`
 
 function HiddenProblem() {
     const { state } = useLocation();
-    const { meetingId, netId } = state;
+    const { meetingId, netId, participantId } = state;
     const navigate = useNavigate();
     const location = useLocation();
     const [choice, setChoice] = useState([]);
+
+    const infoPieces = {
+        0: {
+          "A": "Candidate A can anticipant dangerous situations. They are able to see complex connections.",
+          "B": "Candidate B keeps calm in a crisis. They can be grumpy. They can be uncooperative.",
+          "C": "Candidate C can make correct decisions quickly. They handle stress very well. They have difficulty communicating their ideas.",
+          "D": "Candidate D responds to unexpected events adequately. They can concentrate very well."
+        },
+        1: {
+          "A": "Candidate A has excellent spatial vision. They have very good leadership qualities. They are sometimes not good at taking criticism.",
+          "B": "Candidate B has relatively weak memory for numbers. They make nasty remarks about their colleagues.",
+          "C": "Candidate C creates a positive atmosphere with their crew. They are very conscientious.",
+          "D": "Candidate D is regarded as arrogant. They have relatively weak leadership skills. They are regarded as a 'know-it-all'."
+        },
+        2: {
+          "A": "Candidate A can be unorganized. They are regarded as a show-off.",
+          "B": "Candidate B is good at assessing weather conditions. They have excellent computer skills. They are known to be 100% reliable.",
+          "C": "Candidate C understands complicated technology. They put concern for others above everything.",
+          "D": "Candidate D has a hot temper. They are considered moody. They are regarded as a loner."
+        },
+        3: {
+          "A": "Candidate A is regarded as being not open to new ideas. They are unfriendly and eats unhealthily.",
+          "B": "Candidate B is regarded as pretentious. They sometimes adopt the wrong tone when communicating.",
+          "C": "Candidate C has excellent attention skills. They are regarded as egocentric. They are not very willing to futher their education.",
+          "D": "Candidate D solves problems extremely well. They take responsibility seriously."
+        },
+      };
 
     const handleChoiceChange = (event) => {
         setChoice([event.target.value]);
@@ -92,16 +119,27 @@ function HiddenProblem() {
             <EmotionDetectionPopupStyle>
                 <InstructionsBar>
                     <h2>Group Decision-Making Task</h2>
-                    <h3><strong>Read the scenario and choose who the potential killer could be</strong></h3>
+                    <h3><strong>Discuss with your teammates which candidate is best for the pilot position.</strong></h3>
                 </InstructionsBar>
                 <AreaWidth>
                     <>
-                        <H3>Murder Mystery Challenge: Work Together to Solve the Crime!</H3>
+                        <H3>Hiring Pilot Task</H3>
+                        <H4>For your convenience, providing your unique information again.</H4>
                         {/* <TextArea rows={5} defaultValue='' /> */}
+                        {/* <H3>Hidden Info</H3> */}
                         <InstructionsArea>
-                            <InstructionsParagraph>
-                                You are all tasked with identifying the criminal. Each of you has been given a unique piece of information that nobody else knows. Collaborate with each other, share your information, and work together to come to a decision on who the killer is. Once you've made your decision, select the person who you think is the culprit on the right.
-                            </InstructionsParagraph>
+                        <InstructionsParagraph>
+                            {infoPieces[participantId.toString()]["A"]}
+                        </InstructionsParagraph>
+                        <InstructionsParagraph>
+                            {infoPieces[participantId.toString()]["B"]}
+                        </InstructionsParagraph>
+                        <InstructionsParagraph>
+                            {infoPieces[participantId.toString()]["C"]}
+                        </InstructionsParagraph>
+                        <InstructionsParagraph>
+                            {infoPieces[participantId.toString()]["D"]}
+                        </InstructionsParagraph>
                         </InstructionsArea>
                     </>
 
@@ -112,19 +150,24 @@ function HiddenProblem() {
                     </InstructionsParagraph>
                     <div class="radio-group">
                         <label class="radio">
-                            <input type="radio" name="killer" value="john-doe" onChange={handleChoiceChange} />
+                            <input type="radio" name="CandidateA" value="CandidateA" onChange={handleChoiceChange} />
                             <span class="radio-custom"></span>
-                            <span class="radio-label">John Doe</span>
+                            <span class="radio-label">CandidateA</span>
                         </label>
                         <label class="radio">
-                            <input type="radio" name="killer" value="jane-doe" onChange={handleChoiceChange} />
+                            <input type="radio" name="CandidateB" value="CandidateB" onChange={handleChoiceChange} />
                             <span class="radio-custom"></span>
-                            <span class="radio-label">Jane Doe</span>
+                            <span class="radio-label">CandidateB</span>
                         </label>
                         <label class="radio">
-                            <input type="radio" name="killer" value="john-smith" onChange={handleChoiceChange} />
+                            <input type="radio" name="CandidateC" value="CandidateC" onChange={handleChoiceChange} />
                             <span class="radio-custom"></span>
-                            <span class="radio-label">John Smith</span>
+                            <span class="radio-label">CandidateC</span>
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="CandidateD" value="CandidateD" onChange={handleChoiceChange} />
+                            <span class="radio-custom"></span>
+                            <span class="radio-label">CandidateD</span>
                         </label>
                     </div>
                     <SubmitElementsButton

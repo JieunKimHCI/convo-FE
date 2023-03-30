@@ -58,7 +58,8 @@ function HiddenProblem() {
             {
               state: {
                 netId: netId,
-                meetingId: meetingId
+                meetingId: meetingId,
+                participantId: participantId
               },
             });
         });

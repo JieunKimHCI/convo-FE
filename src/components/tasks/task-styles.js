@@ -70,6 +70,11 @@ export const H3 = styled.h3`
         text-decoration: underline;
     `;
 
+export const H4 = styled.h3`
+        font-size: 20px;
+        text-decoration: underline;
+    `;
+
 export const InstructionsBar = styled.div`
     grid-area: 1 / 1 / 2 / 4;
     height: 5rem;
