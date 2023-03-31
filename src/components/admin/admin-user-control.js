@@ -133,7 +133,7 @@ function AdminUserControl() {
                 },
             })
                 .then(response => {
-
+                    console.log("admin user control - participantcounts response"+response.status);
                     if (response.status === 200) {
                         response.json().then(response => {
                             setWordCounts(response.wordCounts);
@@ -157,6 +157,7 @@ function AdminUserControl() {
                         });
                     }
                     else {
+                        console.log("admin-user-control error thrown here")
                         alert('Something went wrong!')
                         throw new Error();
                     }
