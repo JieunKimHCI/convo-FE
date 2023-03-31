@@ -10,7 +10,7 @@ client.login();
 
 function AdminUserControl() {
     const location = useLocation();
-    const { meetingId } = location.state;
+    const meetingId = location.state.meetingId;
     console.log("am inside admin-user-control" + meetingId);
     const [wordCounts, setWordCounts] = useState('');
     const [turnCounts, setTurnCounts] = useState('');
