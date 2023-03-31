@@ -104,8 +104,11 @@ function CreateMeeting() {
                 }),
             })
                 .then(response => {
+                    console.log(response.status);
+                    console.log(response);
                     if (response.status === 200) {
                         const meetingId = response.meetingId;
+                        console.log(meetingId);
                         navigate('/admin', {
                             state: {
                                 meetingId: meetingId,
