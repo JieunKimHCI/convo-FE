@@ -2,12 +2,15 @@ import { useState, useEffect } from "react";
 import { restUrl } from "../..";
 import Timer from '../discussion-timer';
 import DataTable from 'react-data-table-component';
+import { useLocation } from "react-router-dom";
 
 const { DeepstreamClient } = window.DeepstreamClient;
 const client = new DeepstreamClient('wss://conversation-agent-deepstream.herokuapp.com');
 client.login();
 
-function AdminUserControl({ meetingId }) {
+function AdminUserControl() {
+    const location = useLocation();
+    const { meetingId } = location.state;
     console.log("am inside admin-user-control" + meetingId);
     const [wordCounts, setWordCounts] = useState('');
     const [turnCounts, setTurnCounts] = useState('');
