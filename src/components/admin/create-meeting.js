@@ -106,13 +106,15 @@ function CreateMeeting() {
                 .then(response => {
                     console.log(response.status);
                     if (response.status === 200) {
-                        const meetingId = response.meetingId;
-                        console.log("Hi");
-                        console.log(meetingId);
-                        navigate('/admin', {
-                            state: {
-                                meetingId: meetingId,
-                            },
+                        response.json().then(data => {
+                            const meetingId = data.meetingId;
+                            console.log("Hi");
+                            console.log(meetingId);
+                            navigate('/admin', {
+                                state: {
+                                    meetingId: meetingId,
+                                },
+                            });
                         });
                     }
                     else if (response.status === 300) {
@@ -126,7 +128,7 @@ function CreateMeeting() {
         catch (error) {
             console.log('error', error);
         }
-    }
+    }    
 
     return (
         <div style={loginPopupStyle} id='login'>
