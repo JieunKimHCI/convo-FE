@@ -8,6 +8,7 @@ const client = new DeepstreamClient('wss://conversation-agent-deepstream.herokua
 client.login();
 
 function AdminUserControl({ meetingId }) {
+    console.log("am inside admin-user-control" + meetingId);
     const [wordCounts, setWordCounts] = useState('');
     const [turnCounts, setTurnCounts] = useState('');
     const [timeSilent, setTimeSilent] = useState('');
