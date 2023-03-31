@@ -15,6 +15,7 @@ function AdminUserControl({ meetingId }) {
     const [data, setData] = useState([]);
     const [submittedParticipants, setSubmittedParticipants] = useState([])
 
+    console.log(meetingId);
 
     const columns = [
         {
