@@ -16,8 +16,6 @@ function AdminMain() {
 
     const location = useLocation();
     const meetingId = location.state.meetingId;
-    console.log("am in admin main" + meetingId);
-    // const [meetingId, setMeetingId] = useState("");
     const [accumulatedTranscript, setAccumulatedTranscript] = useState("");
     const [message, setMessage] = useState();
     const [dropdownOptionChose, setDropdownOptionChose] = useState("");
@@ -152,7 +150,6 @@ function AdminMain() {
 
     function getActiveParticipants(meetingId) {
         try {
-            console.log("Admin main:getActiveParticipants"+meetingId);
             const url = restUrl + 'activeParticipants?meetingId=' + meetingId;
             fetch(url, {
                 method: 'GET',
@@ -239,7 +236,6 @@ function AdminMain() {
 
     function getAccumulatedTranscript(meetingId) {
         try {
-            console.log("Admin main:getAccumulatedTranscript"+meetingId);
             const url = restUrl + 'transcript?meetingId=' + meetingId;
             fetch(url, {
                 method: 'GET',

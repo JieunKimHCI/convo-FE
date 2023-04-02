@@ -11,15 +11,12 @@ client.login();
 function AdminUserControl() {
     const location = useLocation();
     const meetingId = location.state.meetingId;
-    console.log("am inside admin-user-control" + meetingId);
     const [wordCounts, setWordCounts] = useState('');
     const [turnCounts, setTurnCounts] = useState('');
     const [timeSilent, setTimeSilent] = useState('');
     const [nameCount, setNameCount] = useState('');
     const [data, setData] = useState([]);
     const [submittedParticipants, setSubmittedParticipants] = useState([])
-
-    console.log(meetingId);
 
     const columns = [
         {
@@ -133,7 +130,6 @@ function AdminUserControl() {
                 },
             })
                 .then(response => {
-                    console.log("admin user control - participantcounts response"+response.status);
                     if (response.status === 200) {
                         response.json().then(response => {
                             setWordCounts(response.wordCounts);
@@ -157,7 +153,6 @@ function AdminUserControl() {
                         });
                     }
                     else {
-                        console.log("admin-user-control error thrown here")
                         alert('Something went wrong!')
                         throw new Error();
                     }
