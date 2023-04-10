@@ -5,7 +5,6 @@ import { restUrl } from "../..";
 function CreateMeeting() {
 
     const navigate = useNavigate();
-    // const [meetingId, setMeetingId] = useState("");
     const [meetingName, setMeetingName] = useState("");
     const [taskId, setTaskId] = useState("");
 
@@ -74,7 +73,6 @@ function CreateMeeting() {
 
     function handleTextInputChange(event) {
         const value = event.target.value
-        // setMeetingId(value)
         setMeetingName(value)
         setTaskId("");
     }

@@ -363,7 +363,6 @@ function AdminMain() {
     useEffect(() => {
         const interval = setInterval(() => {
             if (MeetingActive) {
-                // setMeetingId(location.state.meetingId);
                 getActiveParticipants(location.state.meetingId);
                 getAccumulatedTranscript(location.state.meetingId);
             }
