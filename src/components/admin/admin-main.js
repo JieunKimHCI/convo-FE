@@ -13,7 +13,6 @@ const client = new DeepstreamClient('wss://conversation-agent-deepstream.herokua
 client.login();
 
 function AdminMain() {
-
     const location = useLocation();
     const [meetingId, setMeetingId] = useState("");
     const [accumulatedTranscript, setAccumulatedTranscript] = useState("");
@@ -60,6 +59,17 @@ function AdminMain() {
         cursor: 'pointer',
         width: '100%',
         padding: '2vh',
+        margin: '1em',
+    };
+
+    const promptButtonStyle = {
+        backgroundColor: 'green',
+        color: 'white',
+        border: 'none',
+        cursor: 'pointer',
+        width: '100%',
+        padding: '2vh',
+        margin: '1em',
     };
 
     const sendButtonStyleEnabled = {
@@ -262,6 +272,11 @@ function AdminMain() {
         }
     }
 
+    function promptSubmission() {
+        record.set('submissionPrompt', 'true');
+        alert('All participants were prompted to submit');
+    }
+
     function endMeeting() {
         try {
             const url = restUrl + 'endMeeting';
@@ -379,32 +394,34 @@ function AdminMain() {
         <><AdminUserControl meetingId={meetingId} />
             <div style={emotionDetectionPopupStyle}>
 
-                {MeetingActive && <div>
-                    <div style={gridContainer}>
-                        <label style={labelStyle}>Active Participants</label>
-                        {displayActiveParticipants.map((i) => <button style={userButtonStyle} key={i.name}> {i.name} </button>)}
-                    </div>
-                    <div style={fullWidth}>
-                        <center>
-                            <h2>Meeting ID: {meetingId}</h2>
-                            <textarea rows="10" style={textBoxStyle} value={accumulatedTranscript} readOnly />
-                        </center>
-                    </div>
-                    <br></br>
+                {MeetingActive &&
                     <div>
-                        <center>
-                            <label>Message: </label>
-                            <input style={inputTextStyle} id='messageInput' type="text" value={message} onChange={handleMessageInputChange} />
-                            <label>  Send To: </label>
-                            <select style={dropDownStyle} id='dropdown' value={dropdownOptionChose} onChange={handleDropdownOptionChange} />
-                            &nbsp;&nbsp;
-                            <button style={(message === "" || dropdownOptionChose === "") ? sendButtonStyleDisabled : sendButtonStyleEnabled} onClick={sendMessage} disabled={message === "" || dropdownOptionChose === ""}>Send</button>
-                            <TextToSpeech text={message} pitch={pitch} setPitch={setPitch} rate={rate} setRate={setRate} voiceIndex={voiceIndex} setVoiceIndex={setVoiceIndex} />
-                        </center>
-                    </div>
-                    <br></br><br></br><br></br><br></br>
-                    <button style={finishButtonStyle} onClick={endMeeting}>End Meeting</button>
-                </div>}
+                        <div style={gridContainer}>
+                            <label style={labelStyle}>Active Participants</label>
+                            {displayActiveParticipants.map((i) => <button style={userButtonStyle} key={i.name}> {i.name} </button>)}
+                        </div>
+                        <div style={fullWidth}>
+                            <center>
+                                <h2>Meeting ID: {meetingId}</h2>
+                                <textarea rows="10" style={textBoxStyle} value={accumulatedTranscript} readOnly />
+                            </center>
+                        </div>
+                        <br></br>
+                        <div>
+                            <center>
+                                <label>Message: </label>
+                                <input style={inputTextStyle} id='messageInput' type="text" value={message} onChange={handleMessageInputChange} />
+                                <label>  Send To: </label>
+                                <select style={dropDownStyle} id='dropdown' value={dropdownOptionChose} onChange={handleDropdownOptionChange} />
+                                &nbsp;&nbsp;
+                                <button style={(message === "" || dropdownOptionChose === "") ? sendButtonStyleDisabled : sendButtonStyleEnabled} onClick={sendMessage} disabled={message === "" || dropdownOptionChose === ""}>Send</button>
+                                <TextToSpeech text={message} pitch={pitch} setPitch={setPitch} rate={rate} setRate={setRate} voiceIndex={voiceIndex} setVoiceIndex={setVoiceIndex} />
+                            </center>
+                        </div>
+                        <br></br><br></br>
+                        <button style={promptButtonStyle} onClick={promptSubmission}>Prompt all participants to submit</button>
+                        <button style={finishButtonStyle} onClick={endMeeting}>End Meeting</button>
+                    </div>}
                 {!MeetingActive && <div>
                     <div style={fullWidth}>
                         <center>

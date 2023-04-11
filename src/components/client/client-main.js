@@ -30,6 +30,8 @@ function ClientMain() {
     const [sympathetic, setSympathetic] = useState('0.00');
     const [currentTranscript, setCurrentTranscipt] = useState("");
     const [meetingId, setMeetingId] = useState("");
+    const [promptCounter, setPromptCounter] = useState(-1);
+    const [submittable, setSubmittable] = useState(false);
 
     // intervention text
     const [intervention, setIntervention] = useState('');
@@ -245,6 +247,7 @@ function ClientMain() {
             setMeetingId(MeetingId);
             // to make sure that the intervention only pops up once and not periodically every few seconds
             let prevValue = '';
+            let submittable = false;
             if (record == null) {
                 record = client.record.getRecord(location.state.meetingId);
                 record.subscribe(location.state.netId, function (value) {
@@ -276,8 +279,14 @@ function ClientMain() {
                         navigate('/survey');
 
                     }
-                }
-                );
+                });
+                record.subscribe('submissionPrompt', function (value) {
+                    if (value === 'true' && !submittable) {
+                        submittable = true;
+                        setSubmittable(true);
+                        alert("Please finalize your response and submit!");
+                    }
+                });
             }
             if (sendDataBool) {
                 sendData(location.state.netId, location.state.meetingId, transcript);
@@ -311,7 +320,7 @@ function ClientMain() {
                 {sendDataBool &&
                     <div>
                         <div className={`Modal ${intervention ? 'Show' : ''}`}>
-                            <div style={{ padding: '10px', color: 'black' }}>Intervention received!</div>
+                            <div style={{ padding: '10px', color: 'black' }}>{intervention}</div>
                             <button onClick={() => speak({ text: intervention, voice, rate, pitch })}>Replay</button>
                             <button
                                 type="button"
@@ -324,8 +333,8 @@ function ClientMain() {
                         </div>
                         <div>
                             {location.state.taskId === 0 ?
-                                <DesertProblemShared /> :
-                                <HiddenProblemShared />
+                                <DesertProblemShared submittable={submittable} /> :
+                                <HiddenProblemShared submittable={submittable} />
                             }
                         </div>
                         <center>
