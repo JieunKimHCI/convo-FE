@@ -2,19 +2,21 @@ import { useState, useEffect } from "react";
 import { restUrl } from "../..";
 import Timer from '../discussion-timer';
 import DataTable from 'react-data-table-component';
+import { useLocation } from "react-router-dom";
 
 const { DeepstreamClient } = window.DeepstreamClient;
 const client = new DeepstreamClient('wss://conversation-agent-deepstream.herokuapp.com');
 client.login();
 
-function AdminUserControl({ meetingId }) {
+function AdminUserControl() {
+    const location = useLocation();
+    const meetingId = location.state.meetingId;
     const [wordCounts, setWordCounts] = useState('');
     const [turnCounts, setTurnCounts] = useState('');
     const [timeSilent, setTimeSilent] = useState('');
     const [nameCount, setNameCount] = useState('');
     const [data, setData] = useState([]);
     const [submittedParticipants, setSubmittedParticipants] = useState([])
-
 
     const columns = [
         {
@@ -128,7 +130,6 @@ function AdminUserControl({ meetingId }) {
                 },
             })
                 .then(response => {
-
                     if (response.status === 200) {
                         response.json().then(response => {
                             setWordCounts(response.wordCounts);
