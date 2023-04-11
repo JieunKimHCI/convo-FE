@@ -37,7 +37,6 @@ function DesertProblem({ submittable }) {
                     </>
 
                 </AreaWidth>
-                {/* {submittable && */}
                 <ItemWidth>
                     {!submittable ?
                         <div>
@@ -54,7 +53,6 @@ function DesertProblem({ submittable }) {
                         </div>
                     }
                 </ItemWidth>
-                {/* } */}
             </EmotionDetectionPopupStyle>
         </Container>
     );

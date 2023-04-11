@@ -262,12 +262,10 @@ function ClientMain() {
                 // redirect all users to survey page if (1) admin ends meeting or (2) user submits on behalf of group on group page
                 record.subscribe('endMeeting', function (value) {
                     if (value === 'true') {
-                        console.log('endmeeting true');
                         record.set('startGroupProblem', 'false');
                         endMeeting();
                         record.set('endMeeting', 'false');
                         record.set('endMeetingTimer', 'true');
-                        console.log('leaving end meeting')
                         navigate('/survey');
                     }
                 });
@@ -275,7 +273,6 @@ function ClientMain() {
                     if (value === 'true') {
                         record.set('startGroupProblem', 'false');
                         record.set('endMeetingTimer', 'true');
-                        console.log('leaving submitforgroup')
                         navigate('/survey');
 
                     }
