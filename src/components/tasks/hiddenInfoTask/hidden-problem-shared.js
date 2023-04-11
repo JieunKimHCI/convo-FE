@@ -77,7 +77,7 @@ function HiddenProblem() {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        'choice': choice,
+                        'choices': choice,
                         'meetingId': meetingId,
                         'netId': netId,
                         'timestamp': new Date().toISOString(),
@@ -87,7 +87,7 @@ function HiddenProblem() {
                         if (record == null) {
                             record = client.record.getRecord(location.state.meetingId);
                         }
-                        record.set('submitForGroup', 'true');
+                        record.set('submitForGroup', 'false');
                         navigate('/survey');
                     })
             }
