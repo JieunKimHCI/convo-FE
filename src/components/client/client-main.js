@@ -231,7 +231,7 @@ function ClientMain() {
     SpeechRecognition.startListening({ continuous: true })
 
     useEffect(() => {
-        if (intervention && voice) {
+        if (intervention && voice && intervention !== "dummy") {
             speak({ text: intervention, voice, rate, pitch });
         }
     }, [intervention, voice]);
@@ -247,11 +247,28 @@ function ClientMain() {
                 record = client.record.getRecord(location.state.meetingId);
                 record.subscribe(location.state.netId, function (value) {
                     if (value.message !== "" && !(JSON.stringify(value) === JSON.stringify(prevValue))) {
-                        prevValue = value;
-                        setPitch(value.pitch);
-                        setRate(value.rate);
-                        setVoiceIndex(value.voiceIndex);
-                        setIntervention(value.message);
+                        if(value.messageType !== "Audio") {
+                            prevValue = value;
+                            setPitch(1);
+                            setRate(1);
+                            setVoiceIndex(0);
+                            setIntervention("dummy");
+                        }
+                        if(value.messageType !== "Text") {
+                            prevValue = value;
+                            setPitch(value.pitch);
+                            setRate(value.rate);
+                            setVoiceIndex(value.voiceIndex);
+                            setIntervention(value.message);
+                        }
+
+                        var messageDiv = document.getElementById('message');
+                        if(value.messageType !== "Text")   {
+                            messageDiv.innerHTML = 'Intervention received!';
+                        }
+                        if(value.messageType !== "Audio")   {
+                            messageDiv.innerHTML = value.message;
+                        }
                     }
                 });
                 // redirect all users to survey page if (1) admin ends meeting or (2) user submits on behalf of group on group page
@@ -271,8 +288,7 @@ function ClientMain() {
                         navigate('/survey');
 
                     }
-                }
-                );
+                });
             }
             if (sendDataBool) {
                 sendData(location.state.netId, location.state.meetingId, transcript);
@@ -306,8 +322,12 @@ function ClientMain() {
                 {sendDataBool &&
                     <div>
                         <div className={`Modal ${intervention ? 'Show' : ''}`}>
-                            <div style={{ padding: '10px', color: 'black' }}>Intervention received!</div>
-                            <button onClick={() => speak({ text: intervention, voice, rate, pitch })}>Replay</button>
+                            <div id="message" style={{ padding: '10px', color: 'black' }}></div>
+                            {intervention !== "dummy" && (
+                                <button onClick={() => speak({ text: intervention, voice, rate, pitch })}>
+                                    Replay
+                                </button>
+                            )}
                             <button
                                 type="button"
                                 className="close"

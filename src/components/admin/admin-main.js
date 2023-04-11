@@ -19,6 +19,7 @@ function AdminMain() {
     const [accumulatedTranscript, setAccumulatedTranscript] = useState("");
     const [message, setMessage] = useState();
     const [dropdownOptionChose, setDropdownOptionChose] = useState("");
+    const [messageTypeChose, setMessageTypeChose] = useState("");
     // eslint-disable-next-line no-unused-vars
     const [meetingActive, setMeetingActive] = useState(true);
     const [summary, setSummary] = useState("");
@@ -141,7 +142,7 @@ function AdminMain() {
     }
 
     const inputTextStyle = {
-        width: '50%',
+        width: '35%',
     };
 
     const dropDownStyle = {
@@ -195,6 +196,14 @@ function AdminMain() {
                                     dropdownOptions += "<option value=" + netId + ">" + netId + "</option>"
                                 }
                                 document.getElementById('dropdown').innerHTML = dropdownOptions;
+
+                                let messageTypeOptions = "<option value=''/>";
+                                let messageType = ['Audio', 'Text', 'Both'];
+                                for (let type in messageType) {
+                                    messageTypeOptions += "<option value=" + messageType[type] + ">" + messageType[type] + "</option>"
+                                }
+                                document.getElementById('messageType').innerHTML = messageTypeOptions;
+
                             }
                         });
                     }
@@ -218,8 +227,14 @@ function AdminMain() {
         setDropdownOptionChose(value);
     }
 
+    function handleMessageTypeChange(event) {
+        const value = event.target.value;
+        setMessageTypeChose(value);
+    }
+
     function sendMessage(event) {
         if (dropdownOptionChose === "") alert('Select a valid participant!');
+        if (messageTypeChose === "") alert('Select a valid messsage type!');
         else if (message === "") alert('Message is empty!');
         else {
             record.set(dropdownOptionChose, {
@@ -227,10 +242,12 @@ function AdminMain() {
                 pitch: pitch,
                 rate: rate,
                 voiceIndex: voiceIndex,
+                messageType: messageTypeChose
             });
             alert('Message sent to ' + dropdownOptionChose);
             setMessage("");
             setDropdownOptionChose("");
+            setMessageTypeChose("");
         }
     }
 
@@ -395,8 +412,10 @@ function AdminMain() {
                             <input style={inputTextStyle} id='messageInput' type="text" value={message} onChange={handleMessageInputChange} />
                             <label>  Send To: </label>
                             <select style={dropDownStyle} id='dropdown' value={dropdownOptionChose} onChange={handleDropdownOptionChange} />
+                            <label>  Message Type: </label>
+                            <select style={dropDownStyle} id='messageType' value={messageTypeChose} onChange={handleMessageTypeChange} />
                             &nbsp;&nbsp;
-                            <button style={(message === "" || dropdownOptionChose === "") ? sendButtonStyleDisabled : sendButtonStyleEnabled} onClick={sendMessage} disabled={message === "" || dropdownOptionChose === ""}>Send</button>
+                            <button style={(message === "" || dropdownOptionChose === "" || messageTypeChose === "") ? sendButtonStyleDisabled : sendButtonStyleEnabled} onClick={sendMessage} disabled={message === "" || dropdownOptionChose === "" || messageTypeChose === ""}>Send</button>
                             <TextToSpeech text={message} pitch={pitch} setPitch={setPitch} rate={rate} setRate={setRate} voiceIndex={voiceIndex} setVoiceIndex={setVoiceIndex} />
                         </center>
                     </div>
