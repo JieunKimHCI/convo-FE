@@ -5,7 +5,7 @@ import { restUrl } from "../..";
 function CreateMeeting() {
 
     const navigate = useNavigate();
-    const [meetingId, setMeetingId] = useState("");
+    const [meetingName, setMeetingName] = useState("");
     const [taskId, setTaskId] = useState("");
 
     const loginPopupStyle = {
@@ -73,7 +73,7 @@ function CreateMeeting() {
 
     function handleTextInputChange(event) {
         const value = event.target.value
-        setMeetingId(value)
+        setMeetingName(value)
         setTaskId("");
     }
 
@@ -96,16 +96,20 @@ function CreateMeeting() {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    'meetingId': meetingId,
+                    // 'meetingId': meetingId,
+                    'meetingName': meetingName,
                     'taskId': taskId
                 }),
             })
                 .then(response => {
                     if (response.status === 200) {
-                        navigate('/admin', {
-                            state: {
-                                meetingId: meetingId,
-                            },
+                        response.json().then(data => {
+                            const meetingId = data.meetingId;
+                            navigate('/admin', {
+                                state: {
+                                    meetingId: meetingId,
+                                },
+                            });
                         });
                     }
                     else if (response.status === 300) {
@@ -119,43 +123,43 @@ function CreateMeeting() {
         catch (error) {
             console.log('error', error);
         }
-    }
+    }    
 
     return (
         <div style={loginPopupStyle} id='login'>
             <center>
                 <form style={innerBoxStyle}>
                     <div style={padding_top}>
-                        <b>Meeting ID</b>&nbsp;&nbsp;
-                        <input id='meetingId' name='meetingId' onChange={handleTextInputChange} />
+                        <b>Meeting Name</b>&nbsp;&nbsp;
+                        <input id='meetingName' name='meetingName' onChange={handleTextInputChange} />
                     </div>
                     <div style={taskButtonStyle}>
                         <input
                             id='desertTask'
-                            style={meetingId === "" || taskId === 1 ? taskButtonDisabledStyle : taskButtonEnabledStyle}
+                            style={meetingName === "" || taskId === 1 ? taskButtonDisabledStyle : taskButtonEnabledStyle}
                             type="button"
                             value="Select Desert Task"
                             onClick={handleTaskDesertChange}
-                            disabled={meetingId === ""}
+                            disabled={meetingName === ""}
                         />
                     </div>
                     <div style={taskButtonStyle}>
                         <input
                             id='hiddenTask'
-                            style={meetingId === "" || taskId === 0 ? taskButtonDisabledStyle : taskButtonEnabledStyle}
+                            style={meetingName === "" || taskId === 0 ? taskButtonDisabledStyle : taskButtonEnabledStyle}
                             type="button"
                             value="Select Hidden Task"
                             onClick={handleTaskHiddenChange}
-                            disabled={meetingId === ""}
+                            disabled={meetingName === ""}
                         />
                     </div>
                     <div style={{ paddingTop: '21vh' }}>
                         <input
-                            style={taskId === "" || meetingId === "" ? loginButtonDisabledStyle : loginButtonEnabledStyle}
+                            style={taskId === "" || meetingName === "" ? loginButtonDisabledStyle : loginButtonEnabledStyle}
                             type="button"
                             value="Create Meeting"
                             onClick={createMeeting}
-                            disabled={meetingId === "" || taskId === ""}
+                            disabled={meetingName === "" || taskId === ""}
                         />
                     </div>
                 </form>
