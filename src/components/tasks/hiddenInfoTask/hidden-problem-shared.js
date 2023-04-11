@@ -51,7 +51,7 @@ function HiddenProblem({ submittable }) {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        'choices': choice,
+                        'choice': choice,
                         'meetingId': meetingId,
                         'netId': netId,
                         'timestamp': new Date().toISOString(),
