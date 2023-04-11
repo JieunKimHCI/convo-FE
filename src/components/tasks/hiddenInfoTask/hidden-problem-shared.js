@@ -7,6 +7,7 @@ import React, { useState } from "react";
 import { restUrl } from "../../../index";
 import { Container, EmotionDetectionPopupStyle, H3, AreaWidth, ItemWidth, InstructionsArea, InstructionsParagraph, InstructionsBar } from '../task-styles';
 
+let record = null;
 const { DeepstreamClient } = window.DeepstreamClient;
 const client = new DeepstreamClient('wss://conversation-agent-deepstream.herokuapp.com');
 client.login();
@@ -24,12 +25,13 @@ const SubmitElementsButton = styled.input`
     ${'' /* border-radius: 6px; */}
 `;
 
-function HiddenProblem() {
+function HiddenProblem({ submittable }) {
     const { state } = useLocation();
     const { meetingId, netId } = state;
     const navigate = useNavigate();
     const location = useLocation();
     const [choice, setChoice] = useState([]);
+    console.log(submittable);
 
     const handleChoiceChange = (event) => {
         setChoice([event.target.value]);
@@ -105,34 +107,45 @@ function HiddenProblem() {
                     </>
 
                 </AreaWidth>
+
                 <ItemWidth>
-                    <InstructionsParagraph style={{ 'textAlign': "center" }}>
-                        <h2>Choose one of the below</h2>
-                    </InstructionsParagraph>
-                    <div className="radio-group">
-                        <label className="radio">
-                            <input type="radio" name="killer" value="john-doe" onChange={handleChoiceChange} />
-                            <span className="radio-custom"></span>
-                            <span className="radio-label">John Doe</span>
-                        </label>
-                        <label className="radio">
-                            <input type="radio" name="killer" value="jane-doe" onChange={handleChoiceChange} />
-                            <span className="radio-custom"></span>
-                            <span className="radio-label">Jane Doe</span>
-                        </label>
-                        <label className="radio">
-                            <input type="radio" name="killer" value="john-smith" onChange={handleChoiceChange} />
-                            <span className="radio-custom"></span>
-                            <span className="radio-label">John Smith</span>
-                        </label>
-                    </div>
-                    <SubmitElementsButton
-                        type="button"
-                        value="Submit"
-                        onClick={confirmSubmit}
-                        disabled={choice.length === 0}
-                        choice={choice}
-                    />
+                    {!submittable ?
+                        <div>
+                            <InstructionsParagraph style={{ 'textAlign': "center" }}>
+                                Submission options will appear only after consensus is reached!
+                            </InstructionsParagraph>
+                        </div>
+                        :
+                        <div>
+                            <InstructionsParagraph style={{ 'textAlign': "center" }}>
+                                <h2>Choose one of the below</h2>
+                            </InstructionsParagraph>
+                            <div className="radio-group">
+                                <label className="radio">
+                                    <input type="radio" name="killer" value="john-doe" onChange={handleChoiceChange} />
+                                    <span className="radio-custom"></span>
+                                    <span className="radio-label">John Doe</span>
+                                </label>
+                                <label className="radio">
+                                    <input type="radio" name="killer" value="jane-doe" onChange={handleChoiceChange} />
+                                    <span className="radio-custom"></span>
+                                    <span className="radio-label">Jane Doe</span>
+                                </label>
+                                <label className="radio">
+                                    <input type="radio" name="killer" value="john-smith" onChange={handleChoiceChange} />
+                                    <span className="radio-custom"></span>
+                                    <span className="radio-label">John Smith</span>
+                                </label>
+                            </div>
+                            <SubmitElementsButton
+                                type="button"
+                                value="Submit"
+                                onClick={confirmSubmit}
+                                disabled={choice.length === 0}
+                                choice={choice}
+                            />
+                        </div>
+                    }
                 </ItemWidth>
             </EmotionDetectionPopupStyle>
         </Container>
