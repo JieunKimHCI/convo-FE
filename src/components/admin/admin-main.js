@@ -15,7 +15,7 @@ client.login();
 function AdminMain() {
 
     const location = useLocation();
-    const [meetingId, setMeetingId] = useState("");
+    const meetingId = location.state.meetingId;
     const [accumulatedTranscript, setAccumulatedTranscript] = useState("");
     const [message, setMessage] = useState();
     const [dropdownOptionChose, setDropdownOptionChose] = useState("");
@@ -363,7 +363,6 @@ function AdminMain() {
     useEffect(() => {
         const interval = setInterval(() => {
             if (MeetingActive) {
-                setMeetingId(location.state.meetingId);
                 getActiveParticipants(location.state.meetingId);
                 getAccumulatedTranscript(location.state.meetingId);
             }
