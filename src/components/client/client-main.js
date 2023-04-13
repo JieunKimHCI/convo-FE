@@ -317,7 +317,7 @@ function ClientMain() {
                 {sendDataBool &&
                     <div>
                         <div className={`Modal ${intervention ? 'Show' : ''}`}>
-                            <div style={{ padding: '10px', color: 'black' }}>{intervention}</div>
+                            <div style={{ padding: '10px', color: 'black' }}>Intervention received!</div>
                             <button onClick={() => speak({ text: intervention, voice, rate, pitch })}>Replay</button>
                             <button
                                 type="button"
