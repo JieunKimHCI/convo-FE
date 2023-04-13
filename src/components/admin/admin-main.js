@@ -14,10 +14,11 @@ client.login();
 
 function AdminMain() {
     const location = useLocation();
-    const [meetingId, setMeetingId] = useState("");
+    const meetingId = location.state.meetingId;
     const [accumulatedTranscript, setAccumulatedTranscript] = useState("");
     const [message, setMessage] = useState();
     const [dropdownOptionChose, setDropdownOptionChose] = useState("");
+    const [messageTypeChose, setMessageTypeChose] = useState("");
     // eslint-disable-next-line no-unused-vars
     const [meetingActive, setMeetingActive] = useState(true);
     const [summary, setSummary] = useState("");
@@ -151,7 +152,7 @@ function AdminMain() {
     }
 
     const inputTextStyle = {
-        width: '50%',
+        width: '35%',
     };
 
     const dropDownStyle = {
@@ -205,6 +206,14 @@ function AdminMain() {
                                     dropdownOptions += "<option value=" + netId + ">" + netId + "</option>"
                                 }
                                 document.getElementById('dropdown').innerHTML = dropdownOptions;
+
+                                let messageTypeOptions = "<option value=''/>";
+                                let messageType = ['Audio', 'Text', 'Both'];
+                                for (let type in messageType) {
+                                    messageTypeOptions += "<option value=" + messageType[type] + ">" + messageType[type] + "</option>"
+                                }
+                                document.getElementById('messageType').innerHTML = messageTypeOptions;
+
                             }
                         });
                     }
@@ -228,8 +237,14 @@ function AdminMain() {
         setDropdownOptionChose(value);
     }
 
+    function handleMessageTypeChange(event) {
+        const value = event.target.value;
+        setMessageTypeChose(value);
+    }
+
     function sendMessage(event) {
         if (dropdownOptionChose === "") alert('Select a valid participant!');
+        if (messageTypeChose === "") alert('Select a valid messsage type!');
         else if (message === "") alert('Message is empty!');
         else {
             record.set(dropdownOptionChose, {
@@ -237,10 +252,12 @@ function AdminMain() {
                 pitch: pitch,
                 rate: rate,
                 voiceIndex: voiceIndex,
+                messageType: messageTypeChose
             });
             alert('Message sent to ' + dropdownOptionChose);
             setMessage("");
             setDropdownOptionChose("");
+            setMessageTypeChose("");
         }
     }
 
@@ -378,7 +395,6 @@ function AdminMain() {
     useEffect(() => {
         const interval = setInterval(() => {
             if (MeetingActive) {
-                setMeetingId(location.state.meetingId);
                 getActiveParticipants(location.state.meetingId);
                 getAccumulatedTranscript(location.state.meetingId);
             }
@@ -392,9 +408,9 @@ function AdminMain() {
     return (
         <><AdminUserControl meetingId={meetingId} />
             <div style={emotionDetectionPopupStyle}>
-
                 {MeetingActive &&
                     <div>
+
                         <div style={gridContainer}>
                             <label style={labelStyle}>Active Participants</label>
                             {displayActiveParticipants.map((i) => <button style={userButtonStyle} key={i.name}> {i.name} </button>)}

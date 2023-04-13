@@ -4,7 +4,8 @@ import { restUrl } from "../index";
 
 function UserConsent() {
 
-    const [name, setName] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
     const [netId, setNetId] = useState('');
     const [meetingId, setMeetingId] = useState('');
     const [screenRecordingAgreement, setScreenRecordingAgreement] = useState(false);
@@ -22,7 +23,8 @@ function UserConsent() {
     function handleTextInputChange(event) {
         const name = event.target.id
         const value = event.target.value
-        if (name === 'name') setName(value)
+        if (name === 'firstName') setFirstName(value)
+        else if (name === 'lastName') setLastName(value)
         else if (name === 'netId') setNetId(value)
         else setMeetingId(value)
     }
@@ -38,7 +40,8 @@ function UserConsent() {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    'name': name,
+                    'firstName': firstName,
+                    'lastName': lastName,
                     'netId': netId,
                     'meetingId': meetingId
                 }),
@@ -76,6 +79,8 @@ function UserConsent() {
         catch {
             alert("Please check the meeting id. If the issue persists, please contact the admin.")
         }
+
+        console.log(firstName,lastName)
     }
 
     const agreementPopupStyle = {
@@ -89,10 +94,18 @@ function UserConsent() {
         overflowY: 'auto',
     };
 
-    const padding_right = {
-        paddingRight: '2vh',
+    const padding_right_fname = {
+        paddingRight: '6vh',
     }
-
+    const padding_right_lname = {
+        paddingRight: '6.5vh',
+    }
+    const padding_right_netid = {
+        paddingRight: '10.5vh',
+    }
+    const padding_right_meetingid = {
+        paddingRight: '5.9vh',
+    }
     const padding_top = {
         paddingTop: '2vh',
     }
@@ -143,24 +156,28 @@ function UserConsent() {
                     <label htmlFor="finalConsentAgreement">I have read the above information. I consent to take part in the study.</label>
                 </p>
                 <div>
-                    <label style={padding_right}><b>Name</b></label>
-                    <input type="text" name="name" id="name" onChange={handleTextInputChange} />
+                    <label style={padding_right_fname}><b>First Name</b></label>
+                    <input type="text" name="firstName" id="firstName" onChange={handleTextInputChange} />
                 </div>
                 <div>
-                    <label style={padding_right}><b>Net ID</b></label>
+                    <label style={padding_right_lname}><b>Last Name</b></label>
+                    <input type="text" name="lastName" id="lastName" onChange={handleTextInputChange} />
+                </div>
+                <div>
+                    <label style={padding_right_netid}><b>Net ID</b></label>
                     <input type="text" name="netId" id="netId" onChange={handleTextInputChange} />
                 </div>
                 <div>
-                    <label style={padding_right}><b>Meeting ID</b></label>
+                    <label style={padding_right_meetingid}><b>Meeting ID</b></label>
                     <input type="text" name="meetingId" id="meetingId" onChange={handleTextInputChange} />
                 </div>
                 <div style={padding_top}>
                     <input
-                        style={(!screenRecordingAgreement || !finalConsentAgreement || name === "" || netId === "" || meetingId === "") ? nextButtonDisabledStyle : nextButtonEnabledStyle}
+                        style={(!screenRecordingAgreement || !finalConsentAgreement || firstName === "" || lastName==="" || netId === "" || meetingId === "") ? nextButtonDisabledStyle : nextButtonEnabledStyle}
                         type="button"
                         value="Next"
                         onClick={submitForm}
-                        disabled={(!screenRecordingAgreement || !finalConsentAgreement || name === "" || netId === "" || meetingId === "")}
+                        disabled={(!screenRecordingAgreement || !finalConsentAgreement || firstName === "" || lastName==="" || netId === "" || meetingId === "")}
                     />
                 </div>
             </form>

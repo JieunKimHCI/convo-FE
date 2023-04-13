@@ -60,7 +60,7 @@ function HiddenProblem() {
                 netId: netId,
                 meetingId: meetingId,
                 taskId: 1,
-                final: false
+                participantId: participantId
               },
             });
         });
