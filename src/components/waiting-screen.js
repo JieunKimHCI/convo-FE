@@ -42,7 +42,7 @@ function WaitingScreen() {
                         state: {
                             netId: location.state.netId,
                             meetingId: location.state.meetingId,
-                            taskId: location.state.taskId
+                            taskId: location.state.taskId,
                             participantId: location.state.participantId
                         },
                     });
