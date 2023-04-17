@@ -25,13 +25,12 @@ const SubmitElementsButton = styled.input`
     ${'' /* border-radius: 6px; */}
 `;
 
-function HiddenProblem({ submittable }) {
+function HiddenProblem() {
     const { state } = useLocation();
     const { meetingId, netId, participantId } = state;
     const navigate = useNavigate();
     const location = useLocation();
     const [choice, setChoice] = useState([]);
-    console.log(submittable);
 
     const infoPieces = {
         0: {
@@ -90,7 +89,7 @@ function HiddenProblem({ submittable }) {
                         }
                         record.set('submitForGroup', 'false');
                         navigate('/survey');
-                    });
+                    })
             }
         }
         catch (error) {
@@ -145,50 +144,39 @@ function HiddenProblem({ submittable }) {
                     </>
 
                 </AreaWidth>
-
                 <ItemWidth>
-                    {!submittable ?
-                        <div>
-                            <InstructionsParagraph style={{ 'textAlign': "center" }}>
-                                Submission options will appear only after consensus is reached!
-                            </InstructionsParagraph>
-                        </div>
-                        :
-                        <div>
-                            <InstructionsParagraph style={{ 'textAlign': "center" }}>
-                                <h2>Choose one of the below</h2>
-                            </InstructionsParagraph>
-                            <div class="radio-group">
-                                <label class="radio">
-                                    <input type="radio" name="CandidateA" value="CandidateA" onChange={handleChoiceChange} />
-                                    <span class="radio-custom"></span>
-                                    <span class="radio-label">CandidateA</span>
-                                </label>
-                                <label class="radio">
-                                    <input type="radio" name="CandidateB" value="CandidateB" onChange={handleChoiceChange} />
-                                    <span class="radio-custom"></span>
-                                    <span class="radio-label">CandidateB</span>
-                                </label>
-                                <label class="radio">
-                                    <input type="radio" name="CandidateC" value="CandidateC" onChange={handleChoiceChange} />
-                                    <span class="radio-custom"></span>
-                                    <span class="radio-label">CandidateC</span>
-                                </label>
-                                <label class="radio">
-                                    <input type="radio" name="CandidateD" value="CandidateD" onChange={handleChoiceChange} />
-                                    <span class="radio-custom"></span>
-                                    <span class="radio-label">CandidateD</span>
-                                </label>
-                            </div>
-                            <SubmitElementsButton
-                                type="button"
-                                value="Submit"
-                                onClick={confirmSubmit}
-                                disabled={choice.length === 0}
-                                choice={choice}
-                            />
-                        </div>
-                    }
+                    <InstructionsParagraph style={{ 'text-align': "center" }}>
+                        <h2>Choose one of the below</h2>
+                    </InstructionsParagraph>
+                    <div class="radio-group">
+                        <label class="radio">
+                            <input type="radio" name="CandidateA" value="CandidateA" onChange={handleChoiceChange} />
+                            <span class="radio-custom"></span>
+                            <span class="radio-label">CandidateA</span>
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="CandidateB" value="CandidateB" onChange={handleChoiceChange} />
+                            <span class="radio-custom"></span>
+                            <span class="radio-label">CandidateB</span>
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="CandidateC" value="CandidateC" onChange={handleChoiceChange} />
+                            <span class="radio-custom"></span>
+                            <span class="radio-label">CandidateC</span>
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="CandidateD" value="CandidateD" onChange={handleChoiceChange} />
+                            <span class="radio-custom"></span>
+                            <span class="radio-label">CandidateD</span>
+                        </label>
+                    </div>
+                    <SubmitElementsButton
+                        type="button"
+                        value="Submit"
+                        onClick={confirmSubmit}
+                        disabled={choice.length === 0}
+                        choice={choice}
+                    />
                 </ItemWidth>
             </EmotionDetectionPopupStyle>
         </Container>

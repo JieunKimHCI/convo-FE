@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition/lib/SpeechRecognition";
 import { restUrl } from "../..";
-import DesertProblemShared from '../tasks/desertTask/desert-problem-shared';
+//import DesertProblemShared from '../desert-problem-shared';
 import HiddenProblemShared from '../tasks/hiddenInfoTask/hidden-problem-shared';
 import { useSpeechSynthesis } from "react-speech-kit";
 import "./client-main.css";
@@ -30,8 +30,6 @@ function ClientMain() {
     const [sympathetic, setSympathetic] = useState('0.00');
     const [currentTranscript, setCurrentTranscipt] = useState("");
     const [meetingId, setMeetingId] = useState("");
-    const [promptCounter, setPromptCounter] = useState(-1);
-    const [submittable, setSubmittable] = useState(false);
 
     // intervention text
     const [intervention, setIntervention] = useState('');
@@ -100,8 +98,7 @@ function ClientMain() {
         })
             .then(response => {
                 SpeechRecognition.stopListening();
-                console.log('endmeeting true');
-                record.set('endMeeting', 'false');
+                record.set('endMeeting', 'true');
                 record.set('endMeetingTimer', 'true');
             });
     }
@@ -123,7 +120,6 @@ function ClientMain() {
         })
             .then(response => {
                 SpeechRecognition.stopListening();
-                console.log('leaving in leave meeting')
                 navigate('/survey');
             });
     }
@@ -247,7 +243,6 @@ function ClientMain() {
             setMeetingId(MeetingId);
             // to make sure that the intervention only pops up once and not periodically every few seconds
             let prevValue = '';
-            let submittable = false;
             if (record == null) {
                 record = client.record.getRecord(location.state.meetingId);
                 record.subscribe(location.state.netId, function (value) {
@@ -281,7 +276,7 @@ function ClientMain() {
                     if (value === 'true') {
                         record.set('startGroupProblem', 'false');
                         endMeeting();
-                        record.set('endMeeting', 'false');
+                        record.set('endMeeting', 'true');
                         record.set('endMeetingTimer', 'true');
                         navigate('/survey');
                     }
@@ -292,13 +287,6 @@ function ClientMain() {
                         record.set('endMeetingTimer', 'true');
                         navigate('/survey');
 
-                    }
-                });
-                record.subscribe('submissionPrompt', function (value) {
-                    if (value === 'true' && !submittable) {
-                        submittable = true;
-                        setSubmittable(true);
-                        alert("Please finalize your response and submit!");
                     }
                 });
             }
@@ -349,12 +337,7 @@ function ClientMain() {
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div>
-                            {location.state.taskId === 0 ?
-                                <DesertProblemShared submittable={submittable} /> :
-                                <HiddenProblemShared submittable={submittable} />
-                            }
-                        </div>
+                        <HiddenProblemShared />
                         <center>
                             <h3>Meeting ID: {meetingId}</h3>
                             <textarea style={textareaStyle} rows="10" value={currentTranscript} readOnly></textarea>

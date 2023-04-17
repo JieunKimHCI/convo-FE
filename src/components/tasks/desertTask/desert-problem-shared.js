@@ -2,7 +2,7 @@ import { useLocation } from "react-router-dom";
 import DragAndDropWrapper from '../../dragAndDrop/dragAndDropWrapper';
 import { Container, EmotionDetectionPopupStyle, H3, AreaWidth, ItemWidth, InstructionsArea, InstructionsParagraph, InstructionsBar } from '../task-styles';
 
-function DesertProblem({ submittable }) {
+function DesertProblem() {
     const { state } = useLocation();
     const { meetingId, netId } = state;
 
@@ -38,20 +38,10 @@ function DesertProblem({ submittable }) {
 
                 </AreaWidth>
                 <ItemWidth>
-                    {!submittable ?
-                        <div>
-                            <InstructionsParagraph style={{ 'textAlign': "center" }}>
-                                Submission options will appear only after consensus is reached!
-                            </InstructionsParagraph>
-                        </div>
-                        :
-                        <div>
-                            <InstructionsParagraph style={{ margin: "10px 5em" }}>
-                                Drag and rank items from 1 to 5.
-                            </InstructionsParagraph>
-                            <DragAndDropWrapper isGroup={true} meetingId={meetingId} netId={netId} />
-                        </div>
-                    }
+                    <InstructionsParagraph style={{ margin: "10px 5em" }}>
+                        Drag and rank items from 1 to 5.
+                    </InstructionsParagraph>
+                    <DragAndDropWrapper isGroup={true} meetingId={meetingId} netId={netId} />
                 </ItemWidth>
             </EmotionDetectionPopupStyle>
         </Container>
