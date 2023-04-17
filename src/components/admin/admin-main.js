@@ -428,6 +428,8 @@ function AdminMain() {
                                 <input style={inputTextStyle} id='messageInput' type="text" value={message} onChange={handleMessageInputChange} />
                                 <label>  Send To: </label>
                                 <select style={dropDownStyle} id='dropdown' value={dropdownOptionChose} onChange={handleDropdownOptionChange} />
+                                <label>  Message Type: </label>
+                                <select style={dropDownStyle} id='messageType' value={messageTypeChose} onChange={handleMessageTypeChange} />
                                 &nbsp;&nbsp;
                                 <button style={(message === "" || dropdownOptionChose === "") ? sendButtonStyleDisabled : sendButtonStyleEnabled} onClick={sendMessage} disabled={message === "" || dropdownOptionChose === ""}>Send</button>
                                 <TextToSpeech text={message} pitch={pitch} setPitch={setPitch} rate={rate} setRate={setRate} voiceIndex={voiceIndex} setVoiceIndex={setVoiceIndex} />
