@@ -392,10 +392,42 @@ function AdminMain() {
         }
     }
 
+    function getReadyParticipants() {
+        try {
+            const url = restUrl + 'submittedParticipants?meetingId=' + meetingId;
+            fetch(url, {
+                method: 'GET',
+                mode: 'cors',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then(response => {
+
+                    if (response.status === 200) {
+                        response.json().then(response => {
+                            var netIds = []
+                            for (let netId in response) {
+                                let id = response[netId];
+                                if (id.startsWith("group_")) {
+                                    netIds.append(id.slice(6)); // remove "group_" prefix
+                                }
+                            }
+                        });
+                    }
+                });
+        }
+        catch (error) {
+            alert('Something went wrong!');
+        }
+    }
+
     useEffect(() => {
         const interval = setInterval(() => {
             if (MeetingActive) {
                 getActiveParticipants(location.state.meetingId);
+                getReadyParticipants(location.state.meetingId);
                 getAccumulatedTranscript(location.state.meetingId);
             }
             if (record == null) {
@@ -410,11 +442,11 @@ function AdminMain() {
             <div style={emotionDetectionPopupStyle}>
                 {MeetingActive &&
                     <div>
-
                         <div style={gridContainer}>
                             <label style={labelStyle}>Active Participants</label>
                             {displayActiveParticipants.map((i) => <button style={userButtonStyle} key={i.name}> {i.name} </button>)}
                         </div>
+                        <button style={promptButtonStyle} onClick={promptSubmission}>Prompt all participants to submit</button>
                         <div style={fullWidth}>
                             <center>
                                 <h2>Meeting ID: {meetingId}</h2>
@@ -436,7 +468,6 @@ function AdminMain() {
                             </center>
                         </div>
                         <br></br><br></br>
-                        <button style={promptButtonStyle} onClick={promptSubmission}>Prompt all participants to submit</button>
                         <button style={finishButtonStyle} onClick={endMeeting}>End Meeting</button>
                     </div>}
                 {!MeetingActive && <div>
