@@ -187,7 +187,7 @@ function HiddenProblem({ submittable }) {
                     {!submittable ?
                         allReady ? 
                             <div>
-                                <InstructionsParagraph style={{ 'textAlign': "center" }}>
+                                <InstructionsParagraph style={{ 'textAlign': "center", 'padding': '20px', 'width':'90%'}}>
                                     <h3>Submission options will appear once everyone is ready!</h3>
                                 </InstructionsParagraph>
                             </div>
