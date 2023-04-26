@@ -395,7 +395,7 @@ function AdminMain() {
 
     function getReadyParticipants(meetingId) {
         try {
-            const url = restUrl + 'readyParticipants?meetingId=' + meetingId;
+            const url = restUrl + 'getReadyParticipants?meetingId=' + meetingId;
             fetch(url, {
                 method: 'GET',
                 mode: 'cors',
