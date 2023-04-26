@@ -24,6 +24,7 @@ function AdminMain() {
     const [summary, setSummary] = useState("");
     const [keywords, setKeywords] = useState("");
     const [displayActiveParticipants, setDisplayActiveParticipants] = useState([])
+    const [readyParticipants, setReadyParticipants] = useState([])
 
     // voice pitch
     const [pitch, setPitch] = useState(1);
@@ -392,9 +393,9 @@ function AdminMain() {
         }
     }
 
-    function getReadyParticipants() {
+    function getReadyParticipants(meetingId) {
         try {
-            const url = restUrl + 'submittedParticipants?meetingId=' + meetingId;
+            const url = restUrl + 'readyParticipants?meetingId=' + meetingId;
             fetch(url, {
                 method: 'GET',
                 mode: 'cors',
@@ -407,12 +408,8 @@ function AdminMain() {
 
                     if (response.status === 200) {
                         response.json().then(response => {
-                            var netIds = []
                             for (let netId in response) {
-                                let id = response[netId];
-                                if (id.startsWith("group_")) {
-                                    netIds.append(id.slice(6)); // remove "group_" prefix
-                                }
+                                setReadyParticipants(prevReadyParticipants => [...prevReadyParticipants, response[netId]])
                             }
                         });
                     }
@@ -444,7 +441,8 @@ function AdminMain() {
                     <div>
                         <div style={gridContainer}>
                             <label style={labelStyle}>Active Participants</label>
-                            {displayActiveParticipants.map((i) => <button style={userButtonStyle} key={i.name}> {i.name} </button>)}
+                            {displayActiveParticipants.map((i) => <button style={{...userButtonStyle,  
+                            backgroundColor: readyParticipants.includes(i.name) ? "yellow" : "white"}} key={i.name}> {i.name} </button>)}
                         </div>
                         <button style={promptButtonStyle} onClick={promptSubmission}>Prompt all participants to submit</button>
                         <div style={fullWidth}>

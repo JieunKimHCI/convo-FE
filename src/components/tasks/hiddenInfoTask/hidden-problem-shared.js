@@ -142,7 +142,7 @@ function HiddenProblem({ submittable }) {
                 'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                'netId': 'group_' + netId, // append group_ to netid when ready during group task
+                'netId': "group_"+netId, // append group_ to netid when ready during group task
                 'meetingId': meetingId,
                 }),
             })
