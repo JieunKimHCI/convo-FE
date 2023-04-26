@@ -206,6 +206,7 @@ function AdminMain() {
                                 for (let netId in response) {
                                     dropdownOptions += "<option value=" + netId + ">" + netId + "</option>"
                                 }
+                                dropdownOptions += "<option value='All'>All</option>"; // added an option value "All" at the end of dropdown
                                 document.getElementById('dropdown').innerHTML = dropdownOptions;
 
                                 let messageTypeOptions = "<option value=''/>";
@@ -248,14 +249,27 @@ function AdminMain() {
         if (messageTypeChose === "") alert('Select a valid messsage type!');
         else if (message === "") alert('Message is empty!');
         else {
-            record.set(dropdownOptionChose, {
-                message: message,
-                pitch: pitch,
-                rate: rate,
-                voiceIndex: voiceIndex,
-                messageType: messageTypeChose
-            });
-            alert('Message sent to ' + dropdownOptionChose);
+            if (dropdownOptionChose === "All") { // message will be sent to all active participants of the meeting
+                activeParticipants.forEach(participant => {
+                  record.set(participant.netId, {
+                    message: message,
+                    pitch: pitch,
+                    rate: rate,
+                    voiceIndex: voiceIndex,
+                    messageType: messageTypeChose
+                  });
+                });
+                alert('Message sent to all participants!');
+            } else {
+                record.set(dropdownOptionChose, {
+                  message: message,
+                  pitch: pitch,
+                  rate: rate,
+                  voiceIndex: voiceIndex,
+                  messageType: messageTypeChose
+                });
+                alert('Message sent to ' + dropdownOptionChose);
+              }
             setMessage("");
             setDropdownOptionChose("");
             setMessageTypeChose("");
