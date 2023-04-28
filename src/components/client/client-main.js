@@ -252,14 +252,14 @@ function ClientMain() {
                 record = client.record.getRecord(location.state.meetingId);
                 record.subscribe(location.state.netId, function (value) {
                     if (value.message !== "" && !(JSON.stringify(value) === JSON.stringify(prevValue))) {
-                        if(value.messageType !== "Audio") {
+                        if (value.messageType !== "Audio") {
                             prevValue = value;
                             setPitch(1);
                             setRate(1);
                             setVoiceIndex(0);
                             setIntervention("dummy");
                         }
-                        if(value.messageType !== "Text") {
+                        if (value.messageType !== "Text") {
                             prevValue = value;
                             setPitch(value.pitch);
                             setRate(value.rate);
@@ -268,15 +268,15 @@ function ClientMain() {
                         }
 
                         var messageDiv = document.getElementById('message');
-                        if(value.messageType !== "Text")   {
+                        if (value.messageType !== "Text") {
                             messageDiv.innerHTML = 'Intervention received!';
                         }
-                        if(value.messageType !== "Audio")   {
+                        if (value.messageType !== "Audio") {
                             messageDiv.innerHTML = value.message;
                         }
                     }
                 });
-                // redirect all users to survey page if (1) admin ends meeting or (2) user submits on behalf of group on group page
+                // redirect all users to survey page if (1) admin ends meeting
                 record.subscribe('endMeeting', function (value) {
                     if (value === 'true') {
                         record.set('startGroupProblem', 'false');
@@ -284,14 +284,6 @@ function ClientMain() {
                         record.set('endMeeting', 'false');
                         record.set('endMeetingTimer', 'true');
                         navigate('/survey');
-                    }
-                });
-                record.subscribe('submitForGroup', function (value) {
-                    if (value === 'true') {
-                        record.set('startGroupProblem', 'false');
-                        record.set('endMeetingTimer', 'true');
-                        navigate('/survey');
-
                     }
                 });
                 record.subscribe('submissionPrompt', function (value) {

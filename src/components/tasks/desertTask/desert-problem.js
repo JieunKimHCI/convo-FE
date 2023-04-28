@@ -5,7 +5,7 @@ import { Container, EmotionDetectionPopupStyle, H3, AreaWidth, ItemWidth, Instru
 function DesertProblem() {
     const { state } = useLocation();
     const { meetingId, netId } = state;
-    console.log(state)
+
     return (
         <Container>
             <EmotionDetectionPopupStyle>
