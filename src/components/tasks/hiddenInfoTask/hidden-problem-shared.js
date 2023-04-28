@@ -35,30 +35,30 @@ function HiddenProblem({ submittable }) {
 
     const infoPieces = {
         0: {
-          "A": "Candidate A can anticipant dangerous situations. They are able to see complex connections.",
-          "B": "Candidate B keeps calm in a crisis. They can be grumpy. They can be uncooperative.",
-          "C": "Candidate C can make correct decisions quickly. They handle stress very well. They have difficulty communicating their ideas.",
-          "D": "Candidate D responds to unexpected events adequately. They can concentrate very well."
+            "A": "Candidate A can anticipant dangerous situations. They are able to see complex connections.",
+            "B": "Candidate B keeps calm in a crisis. They can be grumpy. They can be uncooperative.",
+            "C": "Candidate C can make correct decisions quickly. They handle stress very well. They have difficulty communicating their ideas.",
+            "D": "Candidate D responds to unexpected events adequately. They can concentrate very well."
         },
         1: {
-          "A": "Candidate A has excellent spatial vision. They have very good leadership qualities. They are sometimes not good at taking criticism.",
-          "B": "Candidate B has relatively weak memory for numbers. They make nasty remarks about their colleagues.",
-          "C": "Candidate C creates a positive atmosphere with their crew. They are very conscientious.",
-          "D": "Candidate D is regarded as arrogant. They have relatively weak leadership skills. They are regarded as a 'know-it-all'."
+            "A": "Candidate A has excellent spatial vision. They have very good leadership qualities. They are sometimes not good at taking criticism.",
+            "B": "Candidate B has relatively weak memory for numbers. They make nasty remarks about their colleagues.",
+            "C": "Candidate C creates a positive atmosphere with their crew. They are very conscientious.",
+            "D": "Candidate D is regarded as arrogant. They have relatively weak leadership skills. They are regarded as a 'know-it-all'."
         },
         2: {
-          "A": "Candidate A can be unorganized. They are regarded as a show-off.",
-          "B": "Candidate B is good at assessing weather conditions. They have excellent computer skills. They are known to be 100% reliable.",
-          "C": "Candidate C understands complicated technology. They put concern for others above everything.",
-          "D": "Candidate D has a hot temper. They are considered moody. They are regarded as a loner."
+            "A": "Candidate A can be unorganized. They are regarded as a show-off.",
+            "B": "Candidate B is good at assessing weather conditions. They have excellent computer skills. They are known to be 100% reliable.",
+            "C": "Candidate C understands complicated technology. They put concern for others above everything.",
+            "D": "Candidate D has a hot temper. They are considered moody. They are regarded as a loner."
         },
         3: {
-          "A": "Candidate A is regarded as being not open to new ideas. They are unfriendly and eats unhealthily.",
-          "B": "Candidate B is regarded as pretentious. They sometimes adopt the wrong tone when communicating.",
-          "C": "Candidate C has excellent attention skills. They are regarded as egocentric. They are not very willing to futher their education.",
-          "D": "Candidate D solves problems extremely well. They take responsibility seriously."
+            "A": "Candidate A is regarded as being not open to new ideas. They are unfriendly and eats unhealthily.",
+            "B": "Candidate B is regarded as pretentious. They sometimes adopt the wrong tone when communicating.",
+            "C": "Candidate C has excellent attention skills. They are regarded as egocentric. They are not very willing to futher their education.",
+            "D": "Candidate D solves problems extremely well. They take responsibility seriously."
         },
-      };
+    };
 
     const handleChoiceChange = (event) => {
         setChoice([event.target.value]);
@@ -78,6 +78,7 @@ function HiddenProblem({ submittable }) {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
+                        'isGroup': true,
                         'choices': choice,
                         'meetingId': meetingId,
                         'netId': netId,
@@ -88,7 +89,7 @@ function HiddenProblem({ submittable }) {
                         if (record == null) {
                             record = client.record.getRecord(location.state.meetingId);
                         }
-                        record.set('submitForGroup', 'false');
+                        // record.set('submitForGroup', 'false');
                         navigate('/survey');
                     });
             }
@@ -129,18 +130,18 @@ function HiddenProblem({ submittable }) {
                         {/* <TextArea rows={5} defaultValue='' /> */}
                         {/* <H3>Hidden Info</H3> */}
                         <InstructionsArea>
-                        <InstructionsParagraph>
-                            {infoPieces[participantId.toString()]["A"]}
-                        </InstructionsParagraph>
-                        <InstructionsParagraph>
-                            {infoPieces[participantId.toString()]["B"]}
-                        </InstructionsParagraph>
-                        <InstructionsParagraph>
-                            {infoPieces[participantId.toString()]["C"]}
-                        </InstructionsParagraph>
-                        <InstructionsParagraph>
-                            {infoPieces[participantId.toString()]["D"]}
-                        </InstructionsParagraph>
+                            <InstructionsParagraph>
+                                {infoPieces[participantId.toString()]["A"]}
+                            </InstructionsParagraph>
+                            <InstructionsParagraph>
+                                {infoPieces[participantId.toString()]["B"]}
+                            </InstructionsParagraph>
+                            <InstructionsParagraph>
+                                {infoPieces[participantId.toString()]["C"]}
+                            </InstructionsParagraph>
+                            <InstructionsParagraph>
+                                {infoPieces[participantId.toString()]["D"]}
+                            </InstructionsParagraph>
                         </InstructionsArea>
                     </>
 
