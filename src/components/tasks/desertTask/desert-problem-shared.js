@@ -22,10 +22,10 @@ const ReadyButton = styled.input`
 function DesertProblem({ submittable }) {
     const { state } = useLocation();
     const { meetingId, netId } = state;
-    const [allReady, setAllReady] = useState(false);
+    const [groupReady, setGroupReady] = useState(false);
 
     const confirmReady = () => {
-        setAllReady(true);
+        setGroupReady(true);
         try {
             const url = restUrl + 'submitReady';
             fetch(url, {
@@ -79,7 +79,7 @@ function DesertProblem({ submittable }) {
                 </AreaWidth>
                 <ItemWidth>
                     {!submittable ?
-                        allReady ? 
+                        groupReady ? 
                             <div>
                                 <InstructionsParagraph style={{ 'textAlign': "center", 'padding': '20px', 'width':'90%'}}>
                                     <h3>Submission options will appear once everyone is ready!</h3>

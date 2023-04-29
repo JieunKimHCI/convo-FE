@@ -45,7 +45,7 @@ function HiddenProblem({ submittable }) {
     const navigate = useNavigate();
     const location = useLocation();
     const [choice, setChoice] = useState([]);
-    const [allReady, setAllReady] = useState(false);
+    const [groupReady, setGroupReady] = useState(false);
     console.log(submittable);
 
     const infoPieces = {
@@ -131,7 +131,7 @@ function HiddenProblem({ submittable }) {
     };
 
     const confirmReady = () => {
-        setAllReady(true);
+        setGroupReady(true);
         try {
             const url = restUrl + 'submitReady';
             fetch(url, {
@@ -185,7 +185,7 @@ function HiddenProblem({ submittable }) {
 
                 <ItemWidth>
                     {!submittable ?
-                        allReady ? 
+                        groupReady ? 
                             <div>
                                 <InstructionsParagraph style={{ 'textAlign': "center", 'padding': '20px', 'width':'90%'}}>
                                     <h3>Submission options will appear once everyone is ready!</h3>
