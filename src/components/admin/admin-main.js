@@ -24,7 +24,7 @@ function AdminMain() {
     const [summary, setSummary] = useState("");
     const [keywords, setKeywords] = useState("");
     const [displayActiveParticipants, setDisplayActiveParticipants] = useState([])
-    const [readyParticipants, setReadyParticipants] = useState([])
+    const [groupReadyParticipants, setGroupReadyParticipants] = useState([])
 
     // voice pitch
     const [pitch, setPitch] = useState(1);
@@ -407,9 +407,9 @@ function AdminMain() {
         }
     }
 
-    function getReadyParticipants(meetingId) {
+    function getGroupReadyParticipants(meetingId) {
         try {
-            const url = restUrl + 'getReadyParticipants?meetingId=' + meetingId;
+            const url = restUrl + 'getGroupReadyParticipants?meetingId=' + meetingId;
             fetch(url, {
                 method: 'GET',
                 mode: 'cors',
@@ -423,7 +423,7 @@ function AdminMain() {
                     if (response.status === 200) {
                         response.json().then(response => {
                             for (let netId in response) {
-                                setReadyParticipants(prevReadyParticipants => [...prevReadyParticipants, response[netId]])
+                                setGroupReadyParticipants(prevGroupReadyParticipants => [...prevGroupReadyParticipants, response[netId]])
                             }
                         });
                     }
@@ -438,7 +438,7 @@ function AdminMain() {
         const interval = setInterval(() => {
             if (MeetingActive) {
                 getActiveParticipants(location.state.meetingId);
-                getReadyParticipants(location.state.meetingId);
+                getGroupReadyParticipants(location.state.meetingId);
                 getAccumulatedTranscript(location.state.meetingId);
             }
             if (record == null) {
@@ -456,7 +456,7 @@ function AdminMain() {
                         <div style={gridContainer}>
                             <label style={labelStyle}>Active Participants</label>
                             {displayActiveParticipants.map((i) => <button style={{...userButtonStyle,  
-                            backgroundColor: readyParticipants.includes(i.name) ? "yellow" : "white"}} key={i.name}> {i.name} </button>)}
+                            backgroundColor: groupReadyParticipants.includes(i.name) ? "yellow" : "white"}} key={i.name}> {i.name} </button>)}
                         </div>
                         <button style={promptButtonStyle} onClick={promptSubmission}>Prompt all participants to submit</button>
                         <div style={fullWidth}>

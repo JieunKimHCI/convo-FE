@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { restUrl } from "../../../index";
 import { Container, EmotionDetectionPopupStyle, H3, AreaWidth, ItemWidth, InstructionsArea, InstructionsParagraph, InstructionsBar } from '../task-styles';
 
-const ReadyButton = styled.input`
+const GroupReadyButton = styled.input`
     background-color: #66e29a;
     border: none;
     cursor: pointer;
@@ -24,7 +24,7 @@ function DesertProblem({ submittable }) {
     const { meetingId, netId } = state;
     const [groupReady, setGroupReady] = useState(false);
 
-    const confirmReady = () => {
+    const confirmGroupReady = () => {
         setGroupReady(true);
         try {
             const url = restUrl + 'submitReady';
@@ -87,10 +87,10 @@ function DesertProblem({ submittable }) {
                             </div>
                             :
                             <div>
-                                <ReadyButton
+                                <GroupReadyButton
                                     type="button"
                                     value="Once your group has achieved consensus, press this button!"
-                                    onClick={confirmReady}
+                                    onClick={confirmGroupReady}
                                 />
                             </div>
                         :

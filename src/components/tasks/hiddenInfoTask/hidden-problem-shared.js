@@ -25,7 +25,7 @@ const SubmitElementsButton = styled.input`
     ${'' /* border-radius: 6px; */}
 `;
 
-const ReadyButton = styled.input`
+const GroupReadyButton = styled.input`
     background-color: #66e29a;
     border: none;
     cursor: pointer;
@@ -130,7 +130,7 @@ function HiddenProblem({ submittable }) {
         });
     };
 
-    const confirmReady = () => {
+    const confirmGroupReady = () => {
         setGroupReady(true);
         try {
             const url = restUrl + 'submitReady';
@@ -193,10 +193,10 @@ function HiddenProblem({ submittable }) {
                             </div>
                             :
                             <div>
-                                <ReadyButton
+                                <GroupReadyButton
                                     type="button"
                                     value="Once your group has achieved consensus, press this button!"
-                                    onClick={confirmReady}
+                                    onClick={confirmGroupReady}
                                 />
                             </div>
                         :
