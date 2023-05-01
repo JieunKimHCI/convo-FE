@@ -189,7 +189,6 @@ function DragList({ meetingId, netId, isGroup }) {
               if (record == null) {
                 record = client.record.getRecord(location.state.meetingId);
               }
-              // record.set('submitForGroup', 'true');
               navigate('/survey');
             } else {
 

@@ -104,7 +104,6 @@ function HiddenProblem({ submittable }) {
                         if (record == null) {
                             record = client.record.getRecord(location.state.meetingId);
                         }
-                        // record.set('submitForGroup', 'false');
                         navigate('/survey');
                     });
             }
@@ -139,12 +138,13 @@ function HiddenProblem({ submittable }) {
                 method: 'POST',
                 mode: 'cors',
                 headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                'netId': "group_"+netId, // append group_ to netid when ready during group task
-                'meetingId': meetingId,
+                    'netId': netId,
+                    'meetingId': meetingId,
+                    'isGroup': true
                 }),
             })
         }
@@ -186,9 +186,9 @@ function HiddenProblem({ submittable }) {
 
                 <ItemWidth>
                     {!submittable ?
-                        groupReady ? 
+                        groupReady ?
                             <div>
-                                <InstructionsParagraph style={{ 'textAlign': "center", 'padding': '20px', 'width':'90%'}}>
+                                <InstructionsParagraph style={{ 'textAlign': "center", 'padding': '20px', 'width': '90%' }}>
                                     <h3>Submission options will appear once everyone is ready!</h3>
                                 </InstructionsParagraph>
                             </div>
@@ -209,22 +209,22 @@ function HiddenProblem({ submittable }) {
                                 <label class="radio">
                                     <input type="radio" name="CandidateA" value="CandidateA" onChange={handleChoiceChange} />
                                     <span class="radio-custom"></span>
-                                    <span class="radio-label">CandidateA</span>
+                                    <span class="radio-label">Candidate A</span>
                                 </label>
                                 <label class="radio">
                                     <input type="radio" name="CandidateB" value="CandidateB" onChange={handleChoiceChange} />
                                     <span class="radio-custom"></span>
-                                    <span class="radio-label">CandidateB</span>
+                                    <span class="radio-label">Candidate B</span>
                                 </label>
                                 <label class="radio">
                                     <input type="radio" name="CandidateC" value="CandidateC" onChange={handleChoiceChange} />
                                     <span class="radio-custom"></span>
-                                    <span class="radio-label">CandidateC</span>
+                                    <span class="radio-label">Candidate C</span>
                                 </label>
                                 <label class="radio">
                                     <input type="radio" name="CandidateD" value="CandidateD" onChange={handleChoiceChange} />
                                     <span class="radio-custom"></span>
-                                    <span class="radio-label">CandidateD</span>
+                                    <span class="radio-label">Candidate D</span>
                                 </label>
                             </div>
                             <SubmitElementsButton
