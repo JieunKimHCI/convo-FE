@@ -1,10 +1,50 @@
 import { useLocation } from "react-router-dom";
+import styled from "styled-components";
 import DragAndDropWrapper from '../../dragAndDrop/dragAndDropWrapper';
+import React, { useState } from "react";
+import { restUrl } from "../../../index";
 import { Container, EmotionDetectionPopupStyle, H3, AreaWidth, ItemWidth, InstructionsArea, InstructionsParagraph, InstructionsBar } from '../task-styles';
+
+const GroupReadyButton = styled.input`
+    background-color: #66e29a;
+    border: none;
+    cursor: pointer;
+    width: 80%;
+    padding: 1rem;
+    margin: 0.5rem;
+    font-size: 15px;
+    white-space: normal;
+    align-self: center;
+    margin-top: 2rem;
+    border-radius: 6px;
+`;
 
 function DesertProblem({ submittable }) {
     const { state } = useLocation();
     const { meetingId, netId } = state;
+    const [groupReady, setGroupReady] = useState(false);
+
+    const confirmGroupReady = () => {
+        setGroupReady(true);
+        try {
+            const url = restUrl + 'submitReady';
+            fetch(url, {
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                'netId': 'group_' + netId, // append group_ to netid when ready during group task
+                'meetingId': meetingId,
+                }),
+            })
+        }
+        catch (error) {
+            console.log('error', error);
+        }
+    };
 
     return (
         <Container>
@@ -42,11 +82,20 @@ function DesertProblem({ submittable }) {
                 </AreaWidth>
                 <ItemWidth>
                     {!submittable ?
-                        <div>
-                            <InstructionsParagraph style={{ 'textAlign': "center" }}>
-                                Submission options will appear only after consensus is reached!
-                            </InstructionsParagraph>
-                        </div>
+                        groupReady ? 
+                            <div>
+                                <InstructionsParagraph style={{ 'textAlign': "center", 'padding': '20px', 'width':'90%'}}>
+                                    <h3>Submission options will appear once everyone is ready!</h3>
+                                </InstructionsParagraph>
+                            </div>
+                            :
+                            <div>
+                                <GroupReadyButton
+                                    type="button"
+                                    value="Once your group has achieved consensus, press this button!"
+                                    onClick={confirmGroupReady}
+                                />
+                            </div>
                         :
                         <div>
                             <InstructionsParagraph style={{ margin: "10px 5em" }}>

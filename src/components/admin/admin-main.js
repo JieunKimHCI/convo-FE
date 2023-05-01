@@ -24,6 +24,7 @@ function AdminMain() {
     const [summary, setSummary] = useState("");
     const [keywords, setKeywords] = useState("");
     const [displayActiveParticipants, setDisplayActiveParticipants] = useState([])
+    const [groupReadyParticipants, setGroupReadyParticipants] = useState([])
 
     // voice pitch
     const [pitch, setPitch] = useState(1);
@@ -407,10 +408,38 @@ function AdminMain() {
         }
     }
 
+    function getGroupReadyParticipants(meetingId) {
+        try {
+            const url = restUrl + 'getGroupReadyParticipants?meetingId=' + meetingId;
+            fetch(url, {
+                method: 'GET',
+                mode: 'cors',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then(response => {
+
+                    if (response.status === 200) {
+                        response.json().then(response => {
+                            for (let netId in response) {
+                                setGroupReadyParticipants(prevGroupReadyParticipants => [...prevGroupReadyParticipants, response[netId]])
+                            }
+                        });
+                    }
+                });
+        }
+        catch (error) {
+            alert('Something went wrong!');
+        }
+    }
+
     useEffect(() => {
         const interval = setInterval(() => {
             if (MeetingActive) {
                 getActiveParticipants(location.state.meetingId);
+                getGroupReadyParticipants(location.state.meetingId);
                 getAccumulatedTranscript(location.state.meetingId);
             }
             if (record == null) {
@@ -425,11 +454,12 @@ function AdminMain() {
             <div style={emotionDetectionPopupStyle}>
                 {MeetingActive &&
                     <div>
-
                         <div style={gridContainer}>
                             <label style={labelStyle}>Active Participants</label>
-                            {displayActiveParticipants.map((i) => <button style={userButtonStyle} key={i.name}> {i.name} </button>)}
+                            {displayActiveParticipants.map((i) => <button style={{...userButtonStyle,  
+                            backgroundColor: groupReadyParticipants.includes(i.name) ? "yellow" : "white"}} key={i.name}> {i.name} </button>)}
                         </div>
+                        <button style={promptButtonStyle} onClick={promptSubmission}>Prompt all participants to submit</button>
                         <div style={fullWidth}>
                             <center>
                                 <h2>Meeting ID: {meetingId}</h2>
@@ -451,7 +481,6 @@ function AdminMain() {
                             </center>
                         </div>
                         <br></br><br></br>
-                        <button style={promptButtonStyle} onClick={promptSubmission}>Prompt all participants to submit</button>
                         <button style={finishButtonStyle} onClick={endMeeting}>End Meeting</button>
                     </div>}
                 {!MeetingActive && <div>
