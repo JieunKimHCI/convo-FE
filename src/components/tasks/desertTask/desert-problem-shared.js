@@ -23,7 +23,7 @@ function DesertProblem({ submittable }) {
     const { state } = useLocation();
     const { meetingId, netId } = state;
     const [groupReady, setGroupReady] = useState(false);
-
+    console.log(submittable)
     const confirmGroupReady = () => {
         setGroupReady(true);
         try {
@@ -32,12 +32,13 @@ function DesertProblem({ submittable }) {
                 method: 'POST',
                 mode: 'cors',
                 headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                'netId': 'group_' + netId, // append group_ to netid when ready during group task
-                'meetingId': meetingId,
+                    'netId': netId,
+                    'meetingId': meetingId,
+                    'isGroup': true
                 }),
             })
         }
@@ -73,15 +74,18 @@ function DesertProblem({ submittable }) {
                             <InstructionsParagraph>
                                 Your task is to rank them according to their importance to your survival in the desert.
                             </InstructionsParagraph>
+                            <InstructionsParagraph>
+                                As a reminder, here are the items again: Knife 🗡️, Torch 🔦, Pistol 🔫, Water 💧, Coat 🧥.
+                            </InstructionsParagraph>
                         </InstructionsArea>
                     </>
 
                 </AreaWidth>
                 <ItemWidth>
                     {!submittable ?
-                        groupReady ? 
+                        groupReady ?
                             <div>
-                                <InstructionsParagraph style={{ 'textAlign': "center", 'padding': '20px', 'width':'90%'}}>
+                                <InstructionsParagraph style={{ 'textAlign': "center", 'padding': '20px', 'width': '90%' }}>
                                     <h3>Submission options will appear once everyone is ready!</h3>
                                 </InstructionsParagraph>
                             </div>

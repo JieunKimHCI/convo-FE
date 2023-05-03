@@ -164,6 +164,7 @@ function DragList({ meetingId, netId, isGroup }) {
 
   const submitElements = () => {
     try {
+      console.log(`insubmit ${isGroup}`)
       const url = restUrl + 'submitChoices';
       if (elements.sink.length === 0) {
         alert("Submissions with empty spaces are not allowed!")
@@ -176,6 +177,7 @@ function DragList({ meetingId, netId, isGroup }) {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
+            'isGroup': isGroup,
             'choices': elements,
             'meetingId': meetingId,
             'netId': netId,
@@ -187,7 +189,6 @@ function DragList({ meetingId, netId, isGroup }) {
               if (record == null) {
                 record = client.record.getRecord(location.state.meetingId);
               }
-              record.set('submitForGroup', 'true');
               navigate('/survey');
             } else {
 

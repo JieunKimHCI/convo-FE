@@ -50,6 +50,7 @@ function HiddenProblem() {
         body: JSON.stringify({
           'netId': netId,
           'meetingId': meetingId,
+          'isGroup': false
         }),
       })
         .then(response => {
@@ -95,7 +96,6 @@ function HiddenProblem() {
         </InstructionsBar>
         <AreaWidth>
           <>
-            {/* <H3>Hidden Info</H3> */}
             <InstructionsArea>
               <InstructionsParagraph>
                 You are a personnel manager in an airline company that is looking to hire a new pilot for long-distance flights. After multiple rounds of screening and interview processes, four candidates (A, B, C, D) were listed as finalists. In this stage, you need to select only one candidate among them to hire based on the information about their job qualities.

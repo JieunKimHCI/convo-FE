@@ -251,25 +251,25 @@ function AdminMain() {
         else {
             if (dropdownOptionChose === "All") { // message will be sent to all active participants of the meeting
                 activeParticipants.forEach(participant => {
-                  record.set(participant.netId, {
+                    record.set(participant.netId, {
+                        message: message,
+                        pitch: pitch,
+                        rate: rate,
+                        voiceIndex: voiceIndex,
+                        messageType: messageTypeChose
+                    });
+                });
+                alert('Message sent to all participants!');
+            } else {
+                record.set(dropdownOptionChose, {
                     message: message,
                     pitch: pitch,
                     rate: rate,
                     voiceIndex: voiceIndex,
                     messageType: messageTypeChose
-                  });
-                });
-                alert('Message sent to all participants!');
-            } else {
-                record.set(dropdownOptionChose, {
-                  message: message,
-                  pitch: pitch,
-                  rate: rate,
-                  voiceIndex: voiceIndex,
-                  messageType: messageTypeChose
                 });
                 alert('Message sent to ' + dropdownOptionChose);
-              }
+            }
             setMessage("");
             setDropdownOptionChose("");
             setMessageTypeChose("");
@@ -327,6 +327,7 @@ function AdminMain() {
                     if (response.status === 200) {
                         MeetingActive = false;
                         setMeetingActive(false);
+                        record.set('startGroupDiscussion', 'false');
                         record.set('endMeeting', 'true');
                         record.set('endMeetingTimer', 'true');
                     }
