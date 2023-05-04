@@ -10,7 +10,6 @@ import "./client-main.css";
 
 let MeetingId = '';
 let NetId = '';
-let sendDataBool = true;
 let record = null;
 let timeSilent = 0;
 const { DeepstreamClient } = window.DeepstreamClient;
@@ -32,6 +31,7 @@ function ClientMain() {
     const [meetingId, setMeetingId] = useState("");
     const [promptCounter, setPromptCounter] = useState(-1);
     const [submittable, setSubmittable] = useState(false);
+    const [sendDataBool, setSendDataBool] = useState(true);
 
     // intervention text
     const [intervention, setIntervention] = useState('');
@@ -84,7 +84,7 @@ function ClientMain() {
     navigator.mediaDevices.getUserMedia({ audio: true })
 
     function endMeeting() {
-        sendDataBool = false;
+        setSendDataBool(false);
         const url = restUrl + 'finish';
         fetch(url, {
             method: 'POST',
@@ -107,7 +107,7 @@ function ClientMain() {
     }
 
     function leaveMeeting() {
-        sendDataBool = false;
+        setSendDataBool(false);
         const url = restUrl + 'finish';
         fetch(url, {
             method: 'POST',
@@ -279,7 +279,7 @@ function ClientMain() {
                 // redirect all users to survey page if (1) admin ends meeting
                 record.subscribe('endMeeting', function (value) {
                     if (value === 'true') {
-                        record.set('startGroupProblem', 'false');
+                        // record.set('startGroupProblem', 'false');
                         endMeeting();
                         record.set('endMeeting', 'false');
                         record.set('endMeetingTimer', 'true');
@@ -304,7 +304,7 @@ function ClientMain() {
             }
         }, 7000);
         return () => clearInterval(interval);
-    }, [location, transcript, navigate]);
+    }, [location, transcript, navigate, sendDataBool]);
 
     // update ping counts of each user every 7 seconds
     useEffect(() => {
@@ -343,8 +343,8 @@ function ClientMain() {
                         </div>
                         <div>
                             {location.state.taskId === 0 ?
-                                <DesertProblemShared submittable={submittable} /> :
-                                <HiddenProblemShared submittable={submittable} />
+                                <DesertProblemShared submittable={submittable} setSendDataBool={setSendDataBool} /> :
+                                <HiddenProblemShared submittable={submittable} setSendDataBool={setSendDataBool} />
                             }
                         </div>
                         <center>
