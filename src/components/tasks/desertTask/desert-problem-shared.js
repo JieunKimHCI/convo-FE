@@ -93,7 +93,7 @@ function DesertProblem({ submittable }) {
                             <div>
                                 <GroupReadyButton
                                     type="button"
-                                    value="Once your group has achieved consensus, press this button!"
+                                    value="Once your group has achieved consensus, press this button to submit the group’s decision"
                                     onClick={confirmGroupReady}
                                 />
                             </div>
