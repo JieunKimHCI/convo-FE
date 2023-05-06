@@ -347,11 +347,6 @@ function ClientMain() {
                                 <HiddenProblemShared submittable={submittable} />
                             }
                         </div>
-                        <center>
-                            <h3>Meeting ID: {meetingId}</h3>
-                            <textarea style={textareaStyle} rows="10" value={currentTranscript} readOnly></textarea>
-                            <button style={finishButtonStyle} onClick={leaveMeeting}>Leave Meeting</button>
-                        </center>
                     </div>}
                 {!sendDataBool && <div>
                     <center>
