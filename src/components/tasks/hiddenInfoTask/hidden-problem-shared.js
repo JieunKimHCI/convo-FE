@@ -31,11 +31,9 @@ const GroupReadyButton = styled.input`
     cursor: pointer;
     width: 80%;
     padding: 1rem;
-    margin: 0.5rem;
-    font-size: 15px;
+    font-size: 16px;
     white-space: normal;
     align-self: center;
-    margin-top: 2rem;
     border-radius: 6px;
 `;
 
@@ -236,8 +234,6 @@ function HiddenProblem({ submittable }) {
                                     flex: i < 2 ? 1 : "calc(50% - 10px)",
                                     border: "1px solid #ccc", 
                                     padding: "10px",
-                                    marginBottom: i < 2 ? "20px" : 0,
-                                    marginRight: i % 2 === 0 && i < 2 ? "20px" : 0,
                                     boxSizing: "border-box"
                                 }}>
                                 <InstructionBox 
@@ -263,9 +259,12 @@ function HiddenProblem({ submittable }) {
                             </div>
                             :
                             <div>
+                                <InstructionsParagraph style={{ 'textAlign': "center", 'padding': '20px', 'width': '90%' }}>
+                                    <h4>Once your group has achieved consensus, press this button to submit the group’s decision</h4>
+                                </InstructionsParagraph>
                                 <GroupReadyButton
                                     type="button"
-                                    value="Once your group has achieved consensus, press this button to submit the group’s decision"
+                                    value="Ready to submit decision"
                                     onClick={confirmGroupReady}
                                 />
                             </div>
