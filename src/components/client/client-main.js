@@ -279,7 +279,7 @@ function ClientMain() {
                 // redirect all users to survey page if (1) admin ends meeting
                 record.subscribe('endMeeting', function (value) {
                     if (value === 'true') {
-                        // record.set('startGroupProblem', 'false');
+                        record.set('startGroupProblem', 'false');
                         endMeeting();
                         record.set('endMeeting', 'false');
                         record.set('endMeetingTimer', 'true');

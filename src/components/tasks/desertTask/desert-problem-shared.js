@@ -19,7 +19,7 @@ const GroupReadyButton = styled.input`
     border-radius: 6px;
 `;
 
-function DesertProblem({ submittable }) {
+function DesertProblem({ submittable, setSendDataBool }) {
     const { state } = useLocation();
     const { meetingId, netId } = state;
     const [groupReady, setGroupReady] = useState(false);
@@ -102,7 +102,7 @@ function DesertProblem({ submittable }) {
                             <InstructionsParagraph style={{ margin: "10px 5em" }}>
                                 Drag and rank items from 1 to 5.
                             </InstructionsParagraph>
-                            <DragAndDropWrapper isGroup={true} meetingId={meetingId} netId={netId} />
+                            <DragAndDropWrapper isGroup={true} meetingId={meetingId} netId={netId} setSendDataBool={setSendDataBool} />
                         </div>
                     }
                 </ItemWidth>

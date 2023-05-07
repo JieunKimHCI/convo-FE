@@ -131,7 +131,7 @@ const generateLists = () =>
     {}
   );
 
-function DragList({ meetingId, netId, isGroup }) {
+function DragList({ meetingId, netId, isGroup, setSendDataBool }) {
   const [elements, setElements] = React.useState(generateLists());
 
   const navigate = useNavigate();
@@ -164,7 +164,6 @@ function DragList({ meetingId, netId, isGroup }) {
 
   const submitElements = () => {
     try {
-      console.log(`insubmit ${isGroup}`)
       const url = restUrl + 'submitChoices';
       if (elements.sink.length === 0) {
         alert("Submissions with empty spaces are not allowed!")
@@ -189,6 +188,7 @@ function DragList({ meetingId, netId, isGroup }) {
               if (record == null) {
                 record = client.record.getRecord(location.state.meetingId);
               }
+              setSendDataBool(false);
               navigate('/survey');
             } else {
 
