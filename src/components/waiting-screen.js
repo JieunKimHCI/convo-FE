@@ -32,10 +32,10 @@ function WaitingScreen() {
 
     if (record == null) {
         record = client.record.getRecord(location.state.meetingId);
-
+        let startGroupProblem = false;
         record.subscribe('startGroupProblem', function (value) {
-            if (value === 'true' && !location.state.final) {
-                console.log('navigating in group');
+            if (value === 'true' && !startGroupProblem) {
+                startGroupProblem = true;
                 navigate(
                     '/client',
                     {

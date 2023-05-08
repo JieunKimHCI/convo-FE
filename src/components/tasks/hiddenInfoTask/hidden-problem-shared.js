@@ -39,14 +39,13 @@ const GroupReadyButton = styled.input`
     border-radius: 6px;
 `;
 
-function HiddenProblem({ submittable }) {
+function HiddenProblem({ submittable, setSendDataBool }) {
     const { state } = useLocation();
     const { meetingId, netId, participantId } = state;
     const navigate = useNavigate();
     const location = useLocation();
     const [choice, setChoice] = useState([]);
     const [groupReady, setGroupReady] = useState(false);
-    console.log(submittable);
 
     const infoPieces = {
         0: {
@@ -104,7 +103,14 @@ function HiddenProblem({ submittable }) {
                         if (record == null) {
                             record = client.record.getRecord(location.state.meetingId);
                         }
-                        navigate('/survey');
+                        setSendDataBool(false);
+                        navigate(
+                            '/survey',
+                            {
+                                state: {
+                                    taskId: location.state.taskId
+                                }
+                            })
                     });
             }
         }
@@ -164,8 +170,6 @@ function HiddenProblem({ submittable }) {
                     <>
                         <H3>Hiring Pilot Task</H3>
                         <H4>For your convenience, providing your unique information again.</H4>
-                        {/* <TextArea rows={5} defaultValue='' /> */}
-                        {/* <H3>Hidden Info</H3> */}
                         <InstructionsArea>
                             <InstructionsParagraph>
                                 {infoPieces[participantId.toString()]["A"]}
@@ -205,26 +209,26 @@ function HiddenProblem({ submittable }) {
                             <InstructionsParagraph style={{ 'textAlign': "center" }}>
                                 <h2>Choose one of the below</h2>
                             </InstructionsParagraph>
-                            <div class="radio-group">
-                                <label class="radio">
+                            <div className="radio-group">
+                                <label className="radio">
                                     <input type="radio" name="CandidateA" value="CandidateA" onChange={handleChoiceChange} />
-                                    <span class="radio-custom"></span>
-                                    <span class="radio-label">Candidate A</span>
+                                    <span className="radio-custom"></span>
+                                    <span className="radio-label">Candidate A</span>
                                 </label>
-                                <label class="radio">
+                                <label className="radio">
                                     <input type="radio" name="CandidateB" value="CandidateB" onChange={handleChoiceChange} />
-                                    <span class="radio-custom"></span>
-                                    <span class="radio-label">Candidate B</span>
+                                    <span className="radio-custom"></span>
+                                    <span className="radio-label">Candidate B</span>
                                 </label>
-                                <label class="radio">
+                                <label className="radio">
                                     <input type="radio" name="CandidateC" value="CandidateC" onChange={handleChoiceChange} />
-                                    <span class="radio-custom"></span>
-                                    <span class="radio-label">Candidate C</span>
+                                    <span className="radio-custom"></span>
+                                    <span className="radio-label">Candidate C</span>
                                 </label>
-                                <label class="radio">
+                                <label className="radio">
                                     <input type="radio" name="CandidateD" value="CandidateD" onChange={handleChoiceChange} />
-                                    <span class="radio-custom"></span>
-                                    <span class="radio-label">Candidate D</span>
+                                    <span className="radio-custom"></span>
+                                    <span className="radio-label">Candidate D</span>
                                 </label>
                             </div>
                             <SubmitElementsButton
