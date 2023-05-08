@@ -189,7 +189,13 @@ function DragList({ meetingId, netId, isGroup, setSendDataBool }) {
                 record = client.record.getRecord(location.state.meetingId);
               }
               setSendDataBool(false);
-              navigate('/survey');
+              navigate(
+                '/survey',
+                {
+                  state: {
+                    taskId: 0
+                  }
+                });
             } else {
 
               if (response.status === 200) {
