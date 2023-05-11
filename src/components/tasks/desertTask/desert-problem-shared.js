@@ -11,11 +11,9 @@ const GroupReadyButton = styled.input`
     cursor: pointer;
     width: 80%;
     padding: 1rem;
-    margin: 0.5rem;
-    font-size: 15px;
+    font-size: 16px;
     white-space: normal;
     align-self: center;
-    margin-top: 2rem;
     border-radius: 6px;
 `;
 
@@ -91,9 +89,12 @@ function DesertProblem({ submittable, setSendDataBool }) {
                             </div>
                             :
                             <div>
+                                <InstructionsParagraph style={{ 'textAlign': "center", 'padding': '20px', 'width': '90%' }}>
+                                    <h4>Once your group has achieved consensus, press this button to submit the group’s decision</h4>
+                                </InstructionsParagraph>
                                 <GroupReadyButton
                                     type="button"
-                                    value="Once your group has achieved consensus, press this button!"
+                                    value="Ready to submit decision"
                                     onClick={confirmGroupReady}
                                 />
                             </div>

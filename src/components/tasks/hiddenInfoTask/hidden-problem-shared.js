@@ -31,11 +31,9 @@ const GroupReadyButton = styled.input`
     cursor: pointer;
     width: 80%;
     padding: 1rem;
-    margin: 0.5rem;
-    font-size: 15px;
+    font-size: 16px;
     white-space: normal;
     align-self: center;
-    margin-top: 2rem;
     border-radius: 6px;
 `;
 
@@ -49,28 +47,67 @@ function HiddenProblem({ submittable, setSendDataBool }) {
 
     const infoPieces = {
         0: {
-            "A": "Candidate A can anticipant dangerous situations. They are able to see complex connections.",
-            "B": "Candidate B keeps calm in a crisis. They can be grumpy. They can be uncooperative.",
-            "C": "Candidate C can make correct decisions quickly. They handle stress very well. They have difficulty communicating their ideas.",
-            "D": "Candidate D responds to unexpected events adequately. They can concentrate very well."
+            "A0": "Candidate A :",
+            "A1": "Can anticipate dangerous situations",
+            "A2": "Is able to see complex connections",
+            "B0": "Candidate B :",
+            "B1": "Keeps calm in a crisis",
+            "B2": "They can be grumpy",
+            "B3": "They can be uncooperative",
+            "C0": "Candidate C :",
+            "C1": "Can make correct decisions quickly",
+            "C2": "They handle stress very well",
+            "C3": "They have difficulty communicating their ideas",
+            "D0": "Candidate D :",
+            "D1": "Responds to unexpected events adequately",
+            "D2": "Can concentrate very well"
         },
         1: {
-            "A": "Candidate A has excellent spatial vision. They have very good leadership qualities. They are sometimes not good at taking criticism.",
-            "B": "Candidate B has relatively weak memory for numbers. They make nasty remarks about their colleagues.",
-            "C": "Candidate C creates a positive atmosphere with their crew. They are very conscientious.",
-            "D": "Candidate D is regarded as arrogant. They have relatively weak leadership skills. They are regarded as a 'know-it-all'."
+            "A0": "Candidate A :",
+            "A1": "Has excellent spatial vision",
+            "A2": "Have very good leadership qualities",
+            "A3": "Are sometimes not good at taking criticism.",
+            "B0": "Candidate B :",
+            "B1": "Has relatively weak memory for numbers",
+            "B2": "Make nasty remarks about their colleagues.",
+            "C0": "Candidate C :",
+            "C1": "Creates a positive atmosphere with their crew",
+            "C2": "Are very conscientious.",
+            "D0": "Candidate D :",
+            "D1": "Is regarded as arrogant",
+            "D2": "Have relatively weak leadership skills",
+            "D3": "Is regarded as a 'know-it-all'."
         },
         2: {
-            "A": "Candidate A can be unorganized. They are regarded as a show-off.",
-            "B": "Candidate B is good at assessing weather conditions. They have excellent computer skills. They are known to be 100% reliable.",
-            "C": "Candidate C understands complicated technology. They put concern for others above everything.",
-            "D": "Candidate D has a hot temper. They are considered moody. They are regarded as a loner."
+            "A0": "Candidate A :",
+            "A1": "Can be unorganized",
+            "A2": "Is are regarded as a show-off.",
+            "B0": "Candidate B :",
+            "B1": "Is good at assessing weather conditions",
+            "B2": "Have excellent computer skills",
+            "B3": "Is known to be 100% reliable.",
+            "C0": "Candidate C :",
+            "C1": "Understands complicated technology",
+            "C2": "They put concern for others above everything",
+            "D0": "Candidate D :",
+            "D1": "Has a hot temper",
+            "D2": "Is considered moody",
+            "D3": "Is regarded as a loner."
         },
         3: {
-            "A": "Candidate A is regarded as being not open to new ideas. They are unfriendly and eats unhealthily.",
-            "B": "Candidate B is regarded as pretentious. They sometimes adopt the wrong tone when communicating.",
-            "C": "Candidate C has excellent attention skills. They are regarded as egocentric. They are not very willing to futher their education.",
-            "D": "Candidate D solves problems extremely well. They take responsibility seriously."
+            "A0": "Candidate A :",
+            "A1": "Is regarded as being not open to new ideas",
+            "A2": "Is unfriendly and eats unhealthily",
+            "B0": "Candidate B :",
+            "B1": "Is regarded as pretentious",
+            "B2": "They sometimes adopt the wrong tone when communicating",
+            "C0": "Candidate C :",
+            "C1": "Has excellent attention skills",
+            "C2": "Is regarded as egocentric",
+            "C3": "Is not very willing to futher their education",
+            "D0": "Candidate D :",
+            "D1": "Solves problems extremely well",
+            "D2": "Take responsibility seriously."
         },
     };
 
@@ -159,6 +196,30 @@ function HiddenProblem({ submittable, setSendDataBool }) {
         }
     };
 
+    const InstructionBox = ({ title, content }) => {
+        return (
+          <div style={{ flex: 1, padding: "15px" }}>
+            <p style={{ textAlign: "left" }}>{title}</p>
+            <ul style={{ textAlign: "left" }}>
+              {content}
+            </ul>
+          </div>
+        );
+    };
+    
+    const getBullets = (content, candidate) => {
+        const items = [];
+        for (let i = 1; i <= 10; i++) {
+            const bulletKey = `${content[`${candidate}${i}`]}`;
+            if (bulletKey !== "undefined") {
+            items.push(<li key={bulletKey}>{bulletKey}</li>);
+            } else {
+            return items;
+            }
+        }
+        return items;
+    };
+
     return (
         <Container>
             <EmotionDetectionPopupStyle>
@@ -171,18 +232,22 @@ function HiddenProblem({ submittable, setSendDataBool }) {
                         <H3>Hiring Pilot Task</H3>
                         <H4>For your convenience, providing your unique information again.</H4>
                         <InstructionsArea>
-                            <InstructionsParagraph>
-                                {infoPieces[participantId.toString()]["A"]}
-                            </InstructionsParagraph>
-                            <InstructionsParagraph>
-                                {infoPieces[participantId.toString()]["B"]}
-                            </InstructionsParagraph>
-                            <InstructionsParagraph>
-                                {infoPieces[participantId.toString()]["C"]}
-                            </InstructionsParagraph>
-                            <InstructionsParagraph>
-                                {infoPieces[participantId.toString()]["D"]}
-                            </InstructionsParagraph>
+                        <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
+                            {[...Array(4)].map((_, i) => (
+                                <div key={i} style={{ 
+                                    flex: i < 2 ? 1 : "calc(50% - 10px)",
+                                    border: "1px solid #ccc", 
+                                    padding: "10px",
+                                    boxSizing: "border-box"
+                                }}>
+                                <InstructionBox 
+                                    title={infoPieces[participantId.toString()][`${String.fromCharCode(65+i)}0`]} 
+                                    content={getBullets(infoPieces[participantId.toString()], String.fromCharCode(65+i))}
+                                />
+                                </div>
+                            ))}
+                        </div>
+
                         </InstructionsArea>
                     </>
 
@@ -198,9 +263,12 @@ function HiddenProblem({ submittable, setSendDataBool }) {
                             </div>
                             :
                             <div>
+                                <InstructionsParagraph style={{ 'textAlign': "center", 'padding': '20px', 'width': '90%' }}>
+                                    <h4>Once your group has achieved consensus, press this button to submit the group’s decision</h4>
+                                </InstructionsParagraph>
                                 <GroupReadyButton
                                     type="button"
-                                    value="Once your group has achieved consensus, press this button!"
+                                    value="Ready to submit decision"
                                     onClick={confirmGroupReady}
                                 />
                             </div>
