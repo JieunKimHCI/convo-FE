@@ -73,7 +73,7 @@ function DesertProblem({ submittable, setSendDataBool }) {
                                 Your task is to rank them according to their importance to your survival in the desert.
                             </InstructionsParagraph>
                             <InstructionsParagraph>
-                                As a reminder, here are the items again: Knife 🗡️, Torch 🔦, Pistol 🔫, Water 💧, Coat 🧥.
+                                As a reminder, here are the items again: Mirror , Torch , Pistol , Water , Coat .
                             </InstructionsParagraph>
                         </InstructionsArea>
                     </>
