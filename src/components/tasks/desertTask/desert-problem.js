@@ -31,15 +31,21 @@ function DesertProblem() {
                                 <u>Before the plane caught fire, your group was able to save the 5 items on the desk.</u>
                             </InstructionsParagraph>
                             <InstructionsParagraph>
-                                Your task is to rank them according to their importance to your survival in the desert.
+                               Mirror, Torch, Pistol, Water, Coat
+                            </InstructionsParagraph>
+                            <InstructionsParagraph>
+                                <b>Your task is to rank them according to their importance to your survival in the desert.</b>
                             </InstructionsParagraph>
                         </InstructionsArea>
                     </>
 
                 </AreaWidth>
                 <ItemWidth>
-                    <InstructionsParagraph style={{ margin: "10px 5em" }}>
-                        Drag and rank items from 1 to 5.
+                    <InstructionsParagraph style={{ margin: "0px 0.5em" ,textAlign: "center"}}>
+                        Drag and rank items.
+                    </InstructionsParagraph>
+                    <InstructionsParagraph style={{ margin: "0px 0.5em",textAlign: "center" }}>
+                        from the top (1) to the bottom (5).
                     </InstructionsParagraph>
                     <DragAndDropWrapper meetingId={meetingId} netId={netId} isGroup={false} />
                 </ItemWidth>

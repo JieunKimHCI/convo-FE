@@ -135,7 +135,7 @@ function UserConsent() {
     }
 
     const purposeOfStudyMessage = "The goal of this study is to understand the group dynamics where multiple users verbally interact with each other and make a group decision through an online video conferencing platform. Participants will discuss with other participants to make a consensus on the item ranking and successfully submit the group decision.";
-    const procedureMessage = "In this experiment, you will first be asked to make an individual decision on ranking the items for desert survival. Once submitting the result, you will join a group meeting and discuss with other participants to make a consensus on the item ranking. Once the group decision is made and submitted, a survey link will be provided.";
+    const procedureMessage = "In this experiment, you will first be asked to make an individual decision on ranking the provided items. Once submitting the result, you will join a group meeting and discuss it with other participants to make a consensus on the item ranking. Once the group decision is made and submitted, a survey link will be provided.";
 
     return (
         <div style={agreementPopupStyle} id='agreement'>
