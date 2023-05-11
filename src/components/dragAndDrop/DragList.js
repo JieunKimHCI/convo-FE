@@ -85,27 +85,27 @@ const getItems = (prefix) => {
       {
         "id": "1",
         prefix,
-        "content": "Knife 🗡️"
+        "content": "Mirror"
       },
       {
         "id": "2",
         prefix,
-        "content": "Torch 🔦"
+        "content": "Torch"
       },
       {
         "id": "3",
         prefix,
-        "content": "Pistol 🔫"
+        "content": "Pistol"
       },
       {
         "id": "4",
         prefix,
-        "content": "Water 💧"
+        "content": "Water"
       },
       {
         "id": "5",
         prefix,
-        "content": "Coat 🧥"
+        "content": "Coat"
       },
     ]
   }

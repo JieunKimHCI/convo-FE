@@ -66,7 +66,7 @@ function Instructions() {
                     <h3>Please check each box to confirm the system setup</h3>
                     <p align="left"><input type="checkbox" id="check1" name="check1" value={check1} onChange={handleCheckboxInputChange} />I confirm that I am using Chrome browser.</p>
                     <p align="left"><input type="checkbox" id="check2" name="check2" value={check2} onChange={handleCheckboxInputChange} />I have enabled microphone access when prompted.</p>
-                    <p align="left"><input type="checkbox" id="check3" name="check3" value={check3} onChange={handleCheckboxInputChange} />I received the meeting ID.</p>
+                    <p align="left"><input type="checkbox" id="check3" name="check3" value={check3} onChange={handleCheckboxInputChange} />I received the meeting ID from the researcher.</p>
                     <p align="left"><input type="checkbox" id="check4" name="check4" value={check4} onChange={handleCheckboxInputChange} />I am using earphones/headphones with microphone support.</p>
                     <p align="left"><input type="checkbox" id="check5" name="check5" value={check5} onChange={handleCheckboxInputChange} /><b>I am in a quiet place without background noises.</b></p>
                     <input
