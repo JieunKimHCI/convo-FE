@@ -50,64 +50,65 @@ function HiddenProblem({ submittable, setSendDataBool }) {
             "A0": "Candidate A :",
             "A1": "Can anticipate dangerous situations",
             "A2": "Is able to see complex connections",
+            "A3": "Has excellent spatial visions",
             "B0": "Candidate B :",
-            "B1": "Keeps calm in a crisis",
-            "B2": "They can be grumpy",
-            "B3": "They can be uncooperative",
+            "B1": "Is unfriendly",
+            "B2": "Eats unhealthy",
+            "B3": "Can be grumpy",
             "C0": "Candidate C :",
-            "C1": "Can make correct decisions quickly",
-            "C2": "They handle stress very well",
-            "C3": "They have difficulty communicating their ideas",
+            "C1": "Is regarded as a 'know-it-all'",
+            "C2": "Has a hot temper",
             "D0": "Candidate D :",
-            "D1": "Responds to unexpected events adequately",
-            "D2": "Can concentrate very well"
+            "D1": "Takes responsibility seriously",
+            "D2": "Is regarded as being open to new ideas"
         },
         1: {
             "A0": "Candidate A :",
-            "A1": "Has excellent spatial vision",
-            "A2": "Have very good leadership qualities",
-            "A3": "Are sometimes not good at taking criticism.",
+            "A1": "Understands complicated technology",
+            "A2": "Puts concern for others above everything",
             "B0": "Candidate B :",
-            "B1": "Has relatively weak memory for numbers",
-            "B2": "Make nasty remarks about their colleagues.",
+            "B1": "Has very good leadership qualities",
+            "B2": "Keeps calm in a crisis",
+            "B3": "Known to be 100% reliable",
             "C0": "Candidate C :",
-            "C1": "Creates a positive atmosphere with their crew",
-            "C2": "Are very conscientious.",
+            "C1": "Can be uncooperative",
+            "C2": "Has a relatively weak memory for numbers",
+            "C3": "Makes nasty remarks about his colleagues",
             "D0": "Candidate D :",
-            "D1": "Is regarded as arrogant",
-            "D2": "Have relatively weak leadership skills",
-            "D3": "Is regarded as a 'know-it-all'."
+            "D1": "Is considered moody",
+            "D2": "Is regarded as a loner"
         },
         2: {
             "A0": "Candidate A :",
-            "A1": "Can be unorganized",
-            "A2": "Is are regarded as a show-off.",
+            "A1": "Is regarded as egocentric",
+            "A2": "Is not very willing to further his education",
             "B0": "Candidate B :",
-            "B1": "Is good at assessing weather conditions",
-            "B2": "Have excellent computer skills",
-            "B3": "Is known to be 100% reliable.",
+            "B1": "Has excellent attention skills",
+            "B2": "Responds to unexpected events adequetly",
             "C0": "Candidate C :",
-            "C1": "Understands complicated technology",
-            "C2": "They put concern for others above everything",
+            "C1": "Good at accessing weather conditions",
+            "C2": "Has excellent computer skills",
+            "C3": "Can make correct decisions quickly",
             "D0": "Candidate D :",
-            "D1": "Has a hot temper",
-            "D2": "Is considered moody",
-            "D3": "Is regarded as a loner."
+            "D1": "Is regarded as pretentious",
+            "D2": "Sometimes adopts the wrong tone when communicating",
+            "D3": "Has difficulty communicating ideas"
         },
         3: {
             "A0": "Candidate A :",
-            "A1": "Is regarded as being not open to new ideas",
-            "A2": "Is unfriendly and eats unhealthily",
+            "A1": "Is sometimes not good at taking criticism",
+            "A2": "Can be unorganized",
+            "A3": "Is regarded as a show-off",
             "B0": "Candidate B :",
-            "B1": "Is regarded as pretentious",
-            "B2": "They sometimes adopt the wrong tone when communicating",
+            "B1": "Is regarded as arrogant",
+            "B2": "Has relatively weak leadership skills",
             "C0": "Candidate C :",
-            "C1": "Has excellent attention skills",
-            "C2": "Is regarded as egocentric",
-            "C3": "Is not very willing to futher their education",
+            "C1": "Can concentrate very well",
+            "C2": "Solves problems extremely well",
             "D0": "Candidate D :",
-            "D1": "Solves problems extremely well",
-            "D2": "Take responsibility seriously."
+            "D1": "Handles stress very well",
+            "D2": "Creates a positive atmosphere with his crew",
+            "D3": "Is very conscientious"
         },
     };
 
@@ -230,7 +231,7 @@ function HiddenProblem({ submittable, setSendDataBool }) {
                 <AreaWidth>
                     <>
                         <H3>Hiring Pilot Task</H3>
-                        <H4>For your convenience, providing your unique information again.</H4>
+                        <H4>Please feel free to share the candidate information below with your teammates</H4>
                         <InstructionsArea>
                         <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
                             {[...Array(4)].map((_, i) => (
