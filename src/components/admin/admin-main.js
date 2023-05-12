@@ -26,6 +26,7 @@ function AdminMain() {
     const [displayActiveParticipants, setDisplayActiveParticipants] = useState([])
     const [groupReadyParticipants, setGroupReadyParticipants] = useState([])
     const [submittedFinalParticipants, setSubmittedFinalParticipants] = useState([])
+    const [promptedParticipants, setPromptedParticipants] = useState(false)
 
     // voice pitch
     const [pitch, setPitch] = useState(1);
@@ -66,13 +67,13 @@ function AdminMain() {
     };
 
     const promptButtonStyle = {
-        backgroundColor: 'green',
+        backgroundColor: promptedParticipants ? 'skyblue' : 'green',
         color: 'white',
         border: 'none',
         cursor: 'pointer',
         width: '100%',
         padding: '2vh',
-        margin: '1em',
+        margin: '1em'
     };
 
     const sendButtonStyleEnabled = {
@@ -308,6 +309,7 @@ function AdminMain() {
     function promptSubmission() {
         record.set('submissionPrompt', 'true');
         alert('All participants were prompted to submit');
+        setPromptedParticipants(true);
     }
 
     function endMeeting() {
