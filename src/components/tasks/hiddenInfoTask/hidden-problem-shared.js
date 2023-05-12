@@ -231,7 +231,7 @@ function HiddenProblem({ submittable, setSendDataBool }) {
                 <AreaWidth>
                     <>
                         <H3>Hiring Pilot Task</H3>
-                        <H4>For your convenience, providing your unique information again.</H4>
+                        <H4>Please feel free to share the candidate information below with your teammates</H4>
                         <InstructionsArea>
                         <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
                             {[...Array(4)].map((_, i) => (
