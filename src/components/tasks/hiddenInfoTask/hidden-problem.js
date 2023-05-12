@@ -41,7 +41,7 @@ function HiddenProblem() {
         "C3": "Makes nasty remarks about his colleagues",
         "D0": "Candidate D :",
         "D1": "Is considered moody",
-        "D2": "Is regarded as a loner."
+        "D2": "Is regarded as a loner"
     },
     2: {
         "A0": "Candidate A :",
@@ -73,7 +73,7 @@ function HiddenProblem() {
         "D0": "Candidate D :",
         "D1": "Handles stress very well",
         "D2": "Creates a positive atmosphere with his crew",
-        "D2": "Is very conscientious"
+        "D3": "Is very conscientious"
     },
   };
 
