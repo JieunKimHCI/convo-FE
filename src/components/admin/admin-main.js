@@ -487,8 +487,8 @@ function AdminMain() {
                         <div style={gridContainer}>
                             <label style={labelStyle}>Active Participants</label>
                             {displayActiveParticipants.map((i) => <button style={{...userButtonStyle,  
-                            backgroundColor: groupReadyParticipants.includes(i.name) ? "yellow" : 
-                                submittedFinalParticipants.includes(i.name) ? "red" : "white"}} key={i.name}> {i.name} </button>)}
+                            backgroundColor: submittedFinalParticipants.includes(i.name) ? "red" :
+                                groupReadyParticipants.includes(i.name) ? "yellow" : "white"}} key={i.name}> {i.name} </button>)}
                         </div>
                         <button style={promptButtonStyle} onClick={promptSubmission}>Prompt all participants to submit</button>
                         <div style={fullWidth}>
