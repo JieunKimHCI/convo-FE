@@ -25,7 +25,7 @@ function AdminMain() {
     const [keywords, setKeywords] = useState("");
     const [displayActiveParticipants, setDisplayActiveParticipants] = useState([])
     const [groupReadyParticipants, setGroupReadyParticipants] = useState([])
-    const [submittedFinalParticipants, setSubmittedParticipants] = useState([])
+    const [submittedFinalParticipants, setSubmittedFinalParticipants] = useState([])
 
     // voice pitch
     const [pitch, setPitch] = useState(1);
