@@ -53,10 +53,10 @@ const SerialNumber = styled.span`
   padding: 10px 0px;
   width: 70%;
   ${'' /* border-radius: 6px; */}
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  background: white;
-  border: 1px solid #000;
-  margin: 0 0 11px 6px;
+  ${'' /* box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);*/}
+  ${'' /* background: white; */}
+  ${'' /*border: 1px solid #000;*/}
+  margin: 0 0 13.5px 6px;
   display: grid;
   grid-gap: 20px;
   flex-direction: column;
