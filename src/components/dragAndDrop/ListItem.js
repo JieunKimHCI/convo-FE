@@ -9,7 +9,7 @@ const DragItem = styled.div`
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   background: white;
   border: 1px solid #000;
-  margin: 0 0 9px 0;
+  margin: 0 0 11.5px 0;
   display: grid;
   grid-gap: 20px;
   flex-direction: column;
