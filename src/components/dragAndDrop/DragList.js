@@ -13,6 +13,12 @@ const { DeepstreamClient } = window.DeepstreamClient;
 const client = new DeepstreamClient('wss://conversation-agent-deepstream.herokuapp.com');
 client.login();
 
+// Function to set the cookie
+function setCookie(name, value, days) {
+  const expires = new Date();
+  expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
+  document.cookie = name + '=' + JSON.stringify(value) + ';expires=' + expires.toUTCString();
+}
 
 const DragDropContextContainer = styled.div`
   padding: 1rem;
@@ -168,6 +174,7 @@ function DragList({ meetingId, netId, isGroup, setSendDataBool }) {
       if (elements.sink.length === 0) {
         alert("Submissions with empty spaces are not allowed!")
       } else {
+        setCookie('elementSelection', elements.sink.map(obj => obj['content']), 2);
         fetch(url, {
           method: 'POST',
           mode: 'cors',

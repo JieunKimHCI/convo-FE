@@ -17,6 +17,18 @@ const GroupReadyButton = styled.input`
     border-radius: 6px;
 `;
 
+function getCookie(name) {
+    const cookieName = name + '=';
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      let cookie = cookies[i].trim();
+      if (cookie.indexOf(cookieName) === 0) {
+        return JSON.parse(cookie.substring(cookieName.length, cookie.length));
+      }
+    }
+    return null;
+}
+
 function DesertProblem({ submittable, setSendDataBool }) {
     const { state } = useLocation();
     const { meetingId, netId } = state;
@@ -74,6 +86,9 @@ function DesertProblem({ submittable, setSendDataBool }) {
                             </InstructionsParagraph>
                             <InstructionsParagraph>
                                 As a reminder, here are the items again: Mirror , Torch , Pistol , Water , Coat .
+                            </InstructionsParagraph>
+                            <InstructionsParagraph>
+                                Your item selection from most to least important was: {getCookie('elementSelection').join(", ")}.
                             </InstructionsParagraph>
                         </InstructionsArea>
                     </>
