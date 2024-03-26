@@ -2,6 +2,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { CenteredInstruction, CenteredChoiceSelection, AreaWidth, InstructionsArea, InstructionsParagraph, InstructionsBar, SubmitButton } from '../task-styles';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import '../../../tsOverride.css'
 import { restUrl } from "../../../index";
 import { useState,} from "react";
 
@@ -120,7 +121,7 @@ function HiddenProblem() {
     else {
       confirmAlert({
         title: 'Confirmation',
-        message: 'Have you finished reading?',
+        message: 'Do you confirm your selection?',
         buttons: [
           {
             label: 'Yes',
@@ -205,7 +206,7 @@ function HiddenProblem() {
       </CenteredChoiceSelection>
       <SubmitButton
         type="button"
-        value="Ready"
+        value="Submit"
         onClick={confirmReady}
       />
     </div>
