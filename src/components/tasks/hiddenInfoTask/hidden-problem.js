@@ -1,12 +1,14 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import { CenteredInstruction, AreaWidth, InstructionsArea, InstructionsParagraph, InstructionsBar, SubmitButton } from '../task-styles';
+import { CenteredInstruction, CenteredChoiceSelection, AreaWidth, InstructionsArea, InstructionsParagraph, InstructionsBar, SubmitButton } from '../task-styles';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { restUrl } from "../../../index";
+import { useState,} from "react";
 
 function HiddenProblem() {
   const { state } = useLocation();
   const { meetingId, netId, participantId } = state;
+  const [selectedCandidate, setSelectedCandidate] = useState("None");
 
   const navigate = useNavigate();
 
@@ -90,7 +92,8 @@ function HiddenProblem() {
         body: JSON.stringify({
           'netId': netId,
           'meetingId': meetingId,
-          'isGroup': false
+          'isGroup': false,
+          'candidate': selectedCandidate,
         }),
       })
         .then(response => {
@@ -111,29 +114,46 @@ function HiddenProblem() {
   };
 
   const confirmReady = () => {
-    confirmAlert({
-      title: 'Confirmation',
-      message: 'Have you finished reading?',
-      buttons: [
-        {
-          label: 'Yes',
-          onClick: submitReady
-        },
-        {
-          label: 'No',
-          onClick: () => console.log('Clicked No Taking Back')
-        }
-      ]
-    });
+    if (selectedCandidate === "None") {
+      alert("A candidate must be selected before proceeding");
+    }
+    else {
+      confirmAlert({
+        title: 'Confirmation',
+        message: 'Have you finished reading?',
+        buttons: [
+          {
+            label: 'Yes',
+            onClick: submitReady
+          },
+          {
+            label: 'No',
+          }
+        ]
+      });
+    }
   };
 
-  const InstructionBox = ({ title, content }) => {
+  const InstructionBox = ({ title, content, myid }) => {
+    const [isClicked,] = useState(false);
+    const [boxId,] = useState(myid);
+
+    const handleClick = () => {
+      let selection = boxId;
+      setSelectedCandidate(() => selection);
+    };
+
     return (
-      <div style={{ flex: 1, padding: "15px" }}>
-        <p style={{ textAlign: "left" }}>{title}</p>
-        <ul style={{ textAlign: "left" }}>
-          {content}
-        </ul>
+      <div
+        style={{
+          flex: 1,
+          padding: '15px',
+          cursor: 'pointer',
+        }}
+        onClick={handleClick}
+      >
+        <p style={{ textAlign: 'left' }}>{title}</p>
+        <ul style={{ textAlign: 'left' }}>{content}</ul>
       </div>
     );
   };
@@ -166,20 +186,23 @@ function HiddenProblem() {
                 After reviewing the following information, you will need to discuss with your teammate which candidate is best for the position. Each of your team members will have different pieces of information about the candidates.
               </InstructionsParagraph>
               <div style={{ display: "flex", gap: "20px" }}>
-                {[...Array(4)].map((_, i) => (
-                  <div key={i} style={{ flex: 1, border: "1px solid #ccc", padding: "10px" }}>
-                    <InstructionBox 
-                      title={infoPieces[participantId.toString()][`${String.fromCharCode(65+i)}0`]} 
-                      content={getBullets(infoPieces[participantId.toString()], String.fromCharCode(65+i))}
-                    />
-                  </div>
-                ))}
+              {[...Array(4)].map((_, i) => (
+                <div key={i} style={{ flex: 1, border: '1px solid #ccc', padding: '10px' }}>
+                  <InstructionBox
+                    title={infoPieces[participantId.toString()][`${String.fromCharCode(65 + i)}0`]}
+                    content={getBullets(infoPieces[participantId.toString()], String.fromCharCode(65 + i))}
+                    myid={['A', 'B', 'C', 'D'][i]}
+                  />
+                </div>
+              ))}
               </div>
-
             </InstructionsArea>
           </>
         </AreaWidth>
       </CenteredInstruction>
+      <CenteredChoiceSelection>
+        Selected Candidate: {selectedCandidate}
+      </CenteredChoiceSelection>
       <SubmitButton
         type="button"
         value="Ready"

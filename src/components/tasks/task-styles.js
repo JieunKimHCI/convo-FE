@@ -21,13 +21,25 @@ export const EmotionDetectionPopupStyle = styled.div`
 
 export const CenteredInstruction = styled.div`
         display: grid;
-        grid-template-rows: 10em 30em;
+        grid-template-rows: 8em 30em;
         background-color: white;
         color: black;
         z-index: 9;
         width: 75rem;
         text-align: center;
-        padding: 2rem 2rem;
+        padding: 2rem 2rem 0rem 2rem;
+    `;
+
+export const CenteredChoiceSelection = styled.div`
+        display: grid;
+        grid-template-rows: auto;
+        background-color: white;
+        color: black;
+        z-index: 9;
+        text-align: center;
+        font-size: 25px;
+        font-weight: 700;
+        padding: 0rem 0rem 2rem 0rem;
     `;
 
 export const SubmitButton = styled.input`
