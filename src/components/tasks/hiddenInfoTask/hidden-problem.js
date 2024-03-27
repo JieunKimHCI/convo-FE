@@ -52,7 +52,7 @@ function HiddenProblem() {
         "A2": "Is not very willing to further his education",
         "B0": "Candidate B :",
         "B1": "Has excellent attention skills",
-        "B2": "Responds to unexpected events adequetly",
+        "B2": "Responds to unexpected events adequately",
         "C0": "Candidate C :",
         "C1": "Good at accessing weather conditions",
         "C2": "Has excellent computer skills",
