@@ -280,22 +280,22 @@ function HiddenProblem({ submittable, setSendDataBool }) {
                             </InstructionsParagraph>
                             <div className="radio-group">
                                 <label className="radio">
-                                    <input type="radio" name="CandidateA" value="CandidateA" onChange={handleChoiceChange} />
+                                    <input type="radio" name="Candidate" value="CandidateA" onChange={handleChoiceChange} />
                                     <span className="radio-custom"></span>
                                     <span className="radio-label">Candidate A</span>
                                 </label>
                                 <label className="radio">
-                                    <input type="radio" name="CandidateB" value="CandidateB" onChange={handleChoiceChange} />
+                                    <input type="radio" name="Candidate" value="CandidateB" onChange={handleChoiceChange} />
                                     <span className="radio-custom"></span>
                                     <span className="radio-label">Candidate B</span>
                                 </label>
                                 <label className="radio">
-                                    <input type="radio" name="CandidateC" value="CandidateC" onChange={handleChoiceChange} />
+                                    <input type="radio" name="Candidate" value="CandidateC" onChange={handleChoiceChange} />
                                     <span className="radio-custom"></span>
                                     <span className="radio-label">Candidate C</span>
                                 </label>
                                 <label className="radio">
-                                    <input type="radio" name="CandidateD" value="CandidateD" onChange={handleChoiceChange} />
+                                    <input type="radio" name="Candidate" value="CandidateD" onChange={handleChoiceChange} />
                                     <span className="radio-custom"></span>
                                     <span className="radio-label">Candidate D</span>
                                 </label>
