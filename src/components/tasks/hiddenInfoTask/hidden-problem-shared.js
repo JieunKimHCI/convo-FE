@@ -43,6 +43,7 @@ function HiddenProblem({ submittable, setSendDataBool }) {
     const navigate = useNavigate();
     const location = useLocation();
     const [choice, setChoice] = useState([]);
+    const [altChoice, setAltChoice] = useState([]);
     const [groupReady, setGroupReady] = useState(false);
 
     const infoPieces = {
@@ -116,10 +117,14 @@ function HiddenProblem({ submittable, setSendDataBool }) {
         setChoice([event.target.value]);
     };
 
+    const altHandleChoiceChange = (event) => {
+        setAltChoice([event.target.value]);
+    };
+
     const submitChoice = () => {
         try {
             const url = restUrl + 'submitChoices';
-            if (choice.length === 0) {
+            if (choice.length === 0 || altChoice.length === 0) {
                 alert("Submissions with no choice selection are not allowed!")
             } else {
                 fetch(url, {
@@ -132,6 +137,7 @@ function HiddenProblem({ submittable, setSendDataBool }) {
                     body: JSON.stringify({
                         'isGroup': true,
                         'choices': choice,
+                        'altChoices': altChoice,
                         'meetingId': meetingId,
                         'netId': netId,
                         'timestamp': new Date().toISOString(),
@@ -305,22 +311,22 @@ function HiddenProblem({ submittable, setSendDataBool }) {
                             </InstructionsParagraph>
                             <div className="radio-group">
                                 <label className="radio">
-                                    <input type="radio" name="CandidateAlt" value="CandidateA" onChange={handleChoiceChange} />
+                                    <input type="radio" name="CandidateAlt" value="CandidateA" onChange={altHandleChoiceChange} />
                                     <span className="radio-custom"></span>
                                     <span className="radio-label">Candidate A</span>
                                 </label>
                                 <label className="radio">
-                                    <input type="radio" name="CandidateAlt" value="CandidateB" onChange={handleChoiceChange} />
+                                    <input type="radio" name="CandidateAlt" value="CandidateB" onChange={altHandleChoiceChange} />
                                     <span className="radio-custom"></span>
                                     <span className="radio-label">Candidate B</span>
                                 </label>
                                 <label className="radio">
-                                    <input type="radio" name="CandidateAlt" value="CandidateC" onChange={handleChoiceChange} />
+                                    <input type="radio" name="CandidateAlt" value="CandidateC" onChange={altHandleChoiceChange} />
                                     <span className="radio-custom"></span>
                                     <span className="radio-label">Candidate C</span>
                                 </label>
                                 <label className="radio">
-                                    <input type="radio" name="CandidateAlt" value="CandidateD" onChange={handleChoiceChange} />
+                                    <input type="radio" name="CandidateAlt" value="CandidateD" onChange={altHandleChoiceChange} />
                                     <span className="radio-custom"></span>
                                     <span className="radio-label">Candidate D</span>
                                 </label>
@@ -329,8 +335,9 @@ function HiddenProblem({ submittable, setSendDataBool }) {
                                 type="button"
                                 value="Submit"
                                 onClick={confirmSubmit}
-                                disabled={choice.length === 0}
+                                disabled={choice.length === 0 || altChoice.length === 0}
                                 choice={choice}
+                                altChoice={altChoice}
                             />
                         </div>
                     }
