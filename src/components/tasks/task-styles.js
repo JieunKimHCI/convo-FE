@@ -20,8 +20,6 @@ export const EmotionDetectionPopupStyle = styled.div`
     `;
 
 export const CenteredInstruction = styled.div`
-        display: grid;
-        grid-template-rows: 8em 30em;
         background-color: white;
         color: black;
         z-index: 9;
@@ -39,7 +37,7 @@ export const CenteredChoiceSelection = styled.div`
         text-align: center;
         font-size: 25px;
         font-weight: 700;
-        padding: 0rem 0rem 2rem 0rem;
+        padding: 1rem 0rem 1rem 0rem;
     `;
 
 export const SubmitButton = styled.input`
@@ -65,7 +63,7 @@ export const ItemWidth = styled.div`
     `;
 
 export const InstructionsArea = styled.div`
-       padding:2em;
+       padding: 0em 2em 2em 2em;
     `;
 
 export const InstructionsParagraph = styled.p`
@@ -89,6 +87,6 @@ export const H4 = styled.h3`
 
 export const InstructionsBar = styled.div`
     grid-area: 1 / 1 / 2 / 4;
-    height: 5rem;
+    height: 6rem;
     `;
 
