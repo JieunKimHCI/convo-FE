@@ -74,7 +74,7 @@ export const InstructionsParagraph = styled.p`
         color:  black;
         text-align: justify;
         font-weight: 400;
-        line-height: 1.7em;
+        line-height: 1.2em;
     `;
 
 export const H3 = styled.h3`

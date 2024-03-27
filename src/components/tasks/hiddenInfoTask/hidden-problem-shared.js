@@ -226,7 +226,7 @@ function HiddenProblem({ submittable, setSendDataBool }) {
             <EmotionDetectionPopupStyle>
                 <InstructionsBar>
                     <h2>Group Decision-Making Task</h2>
-                    <h3><strong>Discuss with your teammates which candidate is best for the pilot position.</strong></h3>
+                    <h3><strong>Now, please discuss with your teammates to determine the most suitable candidate for the pilot position. Given that each member possesses unique information about each candidate, consider gathering everyone's information to arrive at the most informed decision regarding candidate selection.</strong></h3>
                 </InstructionsBar>
                 <AreaWidth>
                     <>
@@ -276,7 +276,7 @@ function HiddenProblem({ submittable, setSendDataBool }) {
                         :
                         <div>
                             <InstructionsParagraph style={{ 'textAlign': "center" }}>
-                                <h2>Choose one of the below</h2>
+                                <h3>Which candidate did your group decide to choose?</h3>
                             </InstructionsParagraph>
                             <div className="radio-group">
                                 <label className="radio">
@@ -296,6 +296,31 @@ function HiddenProblem({ submittable, setSendDataBool }) {
                                 </label>
                                 <label className="radio">
                                     <input type="radio" name="Candidate" value="CandidateD" onChange={handleChoiceChange} />
+                                    <span className="radio-custom"></span>
+                                    <span className="radio-label">Candidate D</span>
+                                </label>
+                            </div>
+                            <InstructionsParagraph style={{ 'textAlign': "center" }}>
+                                <h3>Regardless of your team’s decision, which candidate do you believe is most suitable for the position? (If you agree with the team’s choice, please select the same option as the question above.)</h3>
+                            </InstructionsParagraph>
+                            <div className="radio-group">
+                                <label className="radio">
+                                    <input type="radio" name="CandidateAlt" value="CandidateA" onChange={handleChoiceChange} />
+                                    <span className="radio-custom"></span>
+                                    <span className="radio-label">Candidate A</span>
+                                </label>
+                                <label className="radio">
+                                    <input type="radio" name="CandidateAlt" value="CandidateB" onChange={handleChoiceChange} />
+                                    <span className="radio-custom"></span>
+                                    <span className="radio-label">Candidate B</span>
+                                </label>
+                                <label className="radio">
+                                    <input type="radio" name="CandidateAlt" value="CandidateC" onChange={handleChoiceChange} />
+                                    <span className="radio-custom"></span>
+                                    <span className="radio-label">Candidate C</span>
+                                </label>
+                                <label className="radio">
+                                    <input type="radio" name="CandidateAlt" value="CandidateD" onChange={handleChoiceChange} />
                                     <span className="radio-custom"></span>
                                     <span className="radio-label">Candidate D</span>
                                 </label>
