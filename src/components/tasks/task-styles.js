@@ -8,13 +8,13 @@ export const Container = styled.div`
 export const EmotionDetectionPopupStyle = styled.div`
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: 10em 45em;
+        grid-template-rows: 10em 49em;
         grid-column-gap: 20px;
         background-color: white;
         color: black;
         z-index: 9;
         width: 75rem;
-        height: 55rem;
+        height: 60rem;
         text-align: center;
         padding: 0rem 2rem;
     `;
