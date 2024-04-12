@@ -13,7 +13,7 @@ const client = new DeepstreamClient('wss://conversation-agent-deepstream.herokua
 client.login();
 
 const SubmitElementsButton = styled.input`
-    background-color: ${props => props.choice.length === 1 ? '#66e29a' : '#d4d4d4'};
+    background-color: ${props => (props.choice.length === 1 & props.altChoice.length === 1) ? '#66e29a' : '#d4d4d4'};
     color: white;
     border: none;
     cursor: pointer;
