@@ -90,7 +90,7 @@ function UserConsent() {
         width: '125vh',
         height: '75vh',
         textAlign: 'left',
-        padding: '2vh',
+        padding: '6vh',
         overflowY: 'auto',
     };
 
@@ -101,7 +101,7 @@ function UserConsent() {
         paddingRight: '6.5vh',
     }
     const padding_right_netid = {
-        paddingRight: '10.5vh',
+        paddingRight: '9.9vh',
     }
     const padding_right_meetingid = {
         paddingRight: '5.9vh',
@@ -110,10 +110,22 @@ function UserConsent() {
         paddingTop: '2vh',
     }
 
+    const h2Special = {
+        display: 'inline'
+    }
+
+    const h2Statement = {
+        border: '2px solid Black',
+        padding: '7px',
+        borderRadius: '15px',
+        display: 'inline'
+    }
+
     const textareaStyle = {
         maxWidth: '99%',
         width: '99%',
-        fontSize: '14px'
+        fontSize: '18px',
+        padding: '2px'
     }
 
     const nextButtonEnabledStyle = {
@@ -141,34 +153,43 @@ function UserConsent() {
         <div style={agreementPopupStyle} id='agreement'>
             <form>
                 <p>
-                    <b>Purpose of Study</b>
-                    <textarea style={textareaStyle} rows="3" value={purposeOfStudyMessage} readOnly></textarea>
+                    <h2 style={h2Special}><u>Purpose of Study</u></h2><br></br><br></br>
+                    <textarea style={textareaStyle} rows="4" value={purposeOfStudyMessage} readOnly></textarea>
                 </p>
                 <p>
-                    <b>Experiment Procedure</b>
-                    <textarea style={textareaStyle} rows="3" value={procedureMessage} readOnly></textarea>
+                    <h2 style={h2Special}><u>Experiment Procedure</u></h2><br></br><br></br>
+                    <textarea style={textareaStyle} rows="4" value={procedureMessage} readOnly></textarea>
                 </p>
                 <p>
-                    <b>Statement of Consent</b><br></br>
-                    <input type="checkbox" id="screenRecordingAgreement" name="screenRecordingAgreement" value={screenRecordingAgreement} onChange={handleCheckboxInputChange} />
-                    <label htmlFor="screenRecordingAgreement">I understand and agree that my screen recording is necessary to participate in this study.</label> <br></br>
-                    <input type="checkbox" id="finalConsentAgreement" name="finalConsentAgreement" value={finalConsentAgreement} onChange={handleCheckboxInputChange} />
-                    <label htmlFor="finalConsentAgreement">I have read the above information. I consent to take part in the study.</label>
+                    <h2 style={h2Special}><u>Statement of Consent</u></h2><br></br><br></br>
+                    <div class="checkbox-wrapper-19">
+                        <input type="checkbox" id="screenRecordingAgreement" name="screenRecordingAgreement" value={screenRecordingAgreement} onChange={handleCheckboxInputChange} />
+                        <label for="screenRecordingAgreement" htmlFor="screenRecordingAgreement" class="check-box"></label>
+                        &ensp;I understand and agree that my screen recording is necessary to participate in this study.
+                    </div>
+
+                    <div class="checkbox-wrapper-19">
+                        <input type="checkbox" id="finalConsentAgreement" name="finalConsentAgreement" value={finalConsentAgreement} onChange={handleCheckboxInputChange} />
+                        <label for="finalConsentAgreement" class="check-box" htmlFor="finalConsentAgreement"></label>
+                        &ensp;I have read the above information. I consent to take part in the study.
+                    </div>
+                    
+                    
                 </p>
                 <div>
-                    <label style={padding_right_fname}><b>First Name</b></label>
+                    <label style={padding_right_fname}><b>First Name:</b></label>
                     <input type="text" name="firstName" id="firstName" onChange={handleTextInputChange} />
                 </div>
                 <div>
-                    <label style={padding_right_lname}><b>Last Name</b></label>
+                    <label style={padding_right_lname}><b>Last Name:</b></label>
                     <input type="text" name="lastName" id="lastName" onChange={handleTextInputChange} />
                 </div>
                 <div>
-                    <label style={padding_right_netid}><b>Net ID</b></label>
+                    <label style={padding_right_netid}><b>Net ID:</b></label>
                     <input type="text" name="netId" id="netId" onChange={handleTextInputChange} />
                 </div>
                 <div>
-                    <label style={padding_right_meetingid}><b>Meeting ID</b></label>
+                    <label style={padding_right_meetingid}><b>Meeting ID:</b></label>
                     <input type="text" name="meetingId" id="meetingId" onChange={handleTextInputChange} />
                 </div>
                 <div style={padding_top}>
@@ -186,3 +207,5 @@ function UserConsent() {
 }
 
 export default UserConsent;
+
+

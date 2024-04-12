@@ -45,6 +45,13 @@ function Instructions() {
         padding: '2vh',
     }
 
+    const h2Special = {
+        border: '2px solid black',
+        padding: '10px',
+        borderRadius: '20px',
+    }
+
+
     function nextPage() {
         navigate('/user-consent')
     }
@@ -63,12 +70,12 @@ function Instructions() {
         <div style={instructionsPopupStyle} id='instructions'>
             <center>
                 <div style={innerBoxStyle}>
-                    <h3>Please check each box to confirm the system setup</h3>
-                    <p align="left"><input type="checkbox" id="check1" name="check1" value={check1} onChange={handleCheckboxInputChange} />I confirm that I am using Chrome browser.</p>
-                    <p align="left"><input type="checkbox" id="check2" name="check2" value={check2} onChange={handleCheckboxInputChange} />I have enabled microphone access when prompted.</p>
-                    <p align="left"><input type="checkbox" id="check3" name="check3" value={check3} onChange={handleCheckboxInputChange} />I received the meeting ID from the researcher.</p>
-                    <p align="left"><input type="checkbox" id="check4" name="check4" value={check4} onChange={handleCheckboxInputChange} />I am using earphones/headphones with microphone support.</p>
-                    <p align="left"><input type="checkbox" id="check5" name="check5" value={check5} onChange={handleCheckboxInputChange} /><b>I am in a quiet place without background noises.</b></p>
+                    <h1 style={h2Special}>Please check each box to confirm the system setup.</h1>
+                    <p align="left" class="checkbox-wrapper-19"><input type="checkbox" id="check1" name="check1" value={check1} onChange={handleCheckboxInputChange} /><label for="check1" class="check-box"/>&ensp;I confirm that I am using Chrome browser.</p>
+                    <p align="left" class="checkbox-wrapper-19"><input type="checkbox" id="check2" name="check2" value={check2} onChange={handleCheckboxInputChange} /><label for="check2" class="check-box"/>&ensp;I have enabled microphone access when prompted.</p>
+                    <p align="left" class="checkbox-wrapper-19"><input type="checkbox" id="check3" name="check3" value={check3} onChange={handleCheckboxInputChange} /><label for="check3" class="check-box"/>&ensp;I received the meeting ID from the researcher.</p>
+                    <p align="left" class="checkbox-wrapper-19"><input type="checkbox" id="check4" name="check4" value={check4} onChange={handleCheckboxInputChange} /><label for="check4" class="check-box"/>&ensp;I am using earphones/headphones with microphone support.</p>
+                    <p align="left" class="checkbox-wrapper-19"><input type="checkbox" id="check5" name="check5" value={check5} onChange={handleCheckboxInputChange} /><label for="check5" class="check-box"/><b>&ensp;I am in a quiet place without background noises.</b></p>
                     <input
                         style={(!check1 || !check2 || !check3 || !check4 || !check5) ? nextButtonDisabledStyle : nextButtonEnabledStyle}
                         type="button"
@@ -77,8 +84,12 @@ function Instructions() {
                         disabled={(!check1 || !check2 || !check3 || !check4 || !check5)}
                     />
                 </div>
+
+
             </center>
         </div>
     );
 }
 export default Instructions;
+
+
