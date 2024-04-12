@@ -231,8 +231,8 @@ function HiddenProblem({ submittable, setSendDataBool }) {
         <Container>
             <EmotionDetectionPopupStyle>
                 <InstructionsBar>
-                    <h2>Group Decision-Making Task</h2>
-                    <h3><strong>Now, please discuss with your teammates to determine the most suitable candidate for the pilot position. Given that each member possesses unique information about each candidate, consider gathering everyone's information to arrive at the most informed decision regarding candidate selection.</strong></h3>
+                    <h1>Group Decision-Making Task</h1>
+                    <h3>Discuss with your teammates and choose the best pilot candidate. Gather and share unique candidate insights for an informed decision.</h3>
                 </InstructionsBar>
                 <AreaWidth>
                     <>
@@ -307,7 +307,7 @@ function HiddenProblem({ submittable, setSendDataBool }) {
                                 </label>
                             </div>
                             <InstructionsParagraph style={{ 'textAlign': "center" }}>
-                                <h3>Regardless of your team’s decision, which candidate do you believe is most suitable for the position? (If you agree with the team’s choice, please select the same option as the question above.)</h3>
+                                <h3>Who do you think is the best candidate, regardless of what the team decides?</h3>
                             </InstructionsParagraph>
                             <div className="radio-group">
                                 <label className="radio">
