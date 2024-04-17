@@ -206,7 +206,9 @@ function HiddenProblem() {
           flex: 1,
           padding: '15px',
           cursor: 'pointer',
+          margin: '-2px'
         }}
+        className="hov"
         onClick={handleClick}
       >
         <p style={{ textAlign: 'left' }}>{title}</p>

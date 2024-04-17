@@ -44,3 +44,7 @@
   font-size: 16px;
   cursor: pointer;
 }
+
+.hov:hover {
+  border: 2px solid #90EE90;
+}
