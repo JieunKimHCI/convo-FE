@@ -314,30 +314,91 @@ function AdminMain() {
 
     function endMeeting() {
         try {
-            const url = restUrl + 'endMeeting';
-            fetch(url, {
-                method: 'POST',
+            // write meeting metrics to DB
+            const metric_url = restUrl + 'participantCounts?meetingId=' + meetingId;
+            fetch(metric_url, {
+                method: 'GET',
                 mode: 'cors',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    'meetingId': meetingId,
-                }),
             })
                 .then(response => {
+                    let wordCounts = [], turnCounts = [], timeSilent = [], names = [];
                     if (response.status === 200) {
-                        MeetingActive = false;
-                        setMeetingActive(false);
-                        record.set('startGroupDiscussion', 'false');
-                        record.set('endMeeting', 'true');
-                        record.set('endMeetingTimer', 'true');
-                    }
+                        response.json().then(response => {
+                            wordCounts = response.wordCounts;
+                            turnCounts = response.turnCounts;
+                            timeSilent = response.timeSilent;
+                            names = response.names;
+
+                            // end actual meeting
+                            const url = restUrl + 'endMeeting';
+                            console.log(wordCounts, turnCounts, timeSilent, names);
+                            fetch(url, {
+                                method: 'POST',
+                                mode: 'cors',
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    'meetingId': meetingId,
+                                    'wordCounts': wordCounts,
+                                    'turnCounts': turnCounts,
+                                    'timeSilent': timeSilent,
+                                    'names': names,
+                                }),
+                            })
+                                .then(response => {
+                                    if (response.status === 200) {
+                                        MeetingActive = false;
+                                        setMeetingActive(false);
+                                        record.set('startGroupDiscussion', 'false');
+                                        record.set('endMeeting', 'true');
+                                        record.set('endMeetingTimer', 'true');
+                                    }
+                                    else {
+                                        alert('Something went wrong! Please try to end the meeting again.');
+                                        throw new Error();
+                                    }
+                                });
+                        });
+                        }
                     else {
-                        alert('Something went wrong! Please try to end the meeting again.');
-                        throw new Error();
-                    }
+                        // end actual meeting
+                        const url = restUrl + 'endMeeting';
+                        console.log(wordCounts, turnCounts, timeSilent, names);
+                        fetch(url, {
+                            method: 'POST',
+                            mode: 'cors',
+                            headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                'meetingId': meetingId,
+                                'wordCounts': wordCounts,
+                                'turnCounts': turnCounts,
+                                'timeSilent': timeSilent,
+                                'names': names,
+                            }),
+                        })
+                            .then(response => {
+                                if (response.status === 200) {
+                                    MeetingActive = false;
+                                    setMeetingActive(false);
+                                    record.set('startGroupDiscussion', 'false');
+                                    record.set('endMeeting', 'true');
+                                    record.set('endMeetingTimer', 'true');
+                                }
+                                else {
+                                    alert('Something went wrong! Please try to end the meeting again.');
+                                    throw new Error();
+                                }
+                            });
+                        }
                 });
         }
         catch (error) {
